@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 class User::SessionsController < Devise::SessionsController
   # before_filter :configure_sign_in_params, only: [:create]
+  prepend_before_action :require_no_authentication, only: [:create]
+  protect_from_forgery except: :create
 
   # GET /resource/sign_in
   # def new
@@ -8,9 +10,15 @@ class User::SessionsController < Devise::SessionsController
   # end
 
   # POST /resource/sign_in
-  # def create
-  #   super
-  # end
+  def create
+    respond_to do |format|
+      format.html { super }
+      format.json do
+        resource = warden.authenticate!(auth_options)
+        sign_in(resource_name, resource)
+      end
+    end
+  end
 
   # DELETE /resource/sign_out
   # def destroy
