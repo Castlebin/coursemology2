@@ -9,8 +9,7 @@ import {
 import { Operation } from 'types/store';
 
 import CourseAPI from 'api/course';
-
-import { actions } from './store';
+import { timelinesActions as actions } from 'bundles/course/reference-timelines/store';
 
 export const fetchTimelines = (): Operation => async (dispatch) => {
   const response = await CourseAPI.referenceTimelines.index();
