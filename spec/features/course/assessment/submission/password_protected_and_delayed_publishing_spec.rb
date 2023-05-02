@@ -30,7 +30,7 @@ RSpec.describe 'Course: Assessment: Submissions: Exam', js: true do
           click_link 'Attempt'
         end
         # The user should be redirect to submission edit page
-        expect(page).to have_selector('div#course-assessments')
+        expect(page).to have_selector('div#app-root')
 
         # Logout and login again and visit the same submission
         logout
@@ -46,7 +46,7 @@ RSpec.describe 'Course: Assessment: Submissions: Exam', js: true do
         fill_in 'password', with: assessment.session_password
         click_button('Submit')
 
-        expect(page).to have_selector('div#course-assessments')
+        expect(page).to have_selector('div#app-root')
       end
 
       scenario 'I can edit and save my submission' do
