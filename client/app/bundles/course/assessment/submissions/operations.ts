@@ -1,15 +1,14 @@
 import { Operation } from 'types/store';
 
 import CourseAPI from 'api/course';
-
-import * as actions from './actions';
+import { saveSubmissionList } from 'bundles/course/assessment/submissions/store';
 
 export function fetchSubmissions(): Operation {
   return async (dispatch) =>
     CourseAPI.submissions.index().then((response) => {
       const data = response.data;
       dispatch(
-        actions.saveSubmissionList(
+        saveSubmissionList(
           data.submissions,
           data.metaData,
           data.permissions,
@@ -24,7 +23,7 @@ export function fetchMyStudentsPendingSubmissions(): Operation {
     CourseAPI.submissions.pending(true).then((response) => {
       const data = response.data;
       dispatch(
-        actions.saveSubmissionList(
+        saveSubmissionList(
           data.submissions,
           data.metaData,
           data.permissions,
@@ -39,7 +38,7 @@ export function fetchAllStudentsPendingSubmissions(): Operation {
     CourseAPI.submissions.pending(false).then((response) => {
       const data = response.data;
       dispatch(
-        actions.saveSubmissionList(
+        saveSubmissionList(
           data.submissions,
           data.metaData,
           data.permissions,
@@ -54,7 +53,7 @@ export function fetchCategorySubmissions(categoryId: number): Operation {
     CourseAPI.submissions.category(categoryId).then((response) => {
       const data = response.data;
       dispatch(
-        actions.saveSubmissionList(
+        saveSubmissionList(
           data.submissions,
           data.metaData,
           data.permissions,
@@ -77,7 +76,7 @@ export function filterSubmissions(
       .then((response) => {
         const data = response.data;
         dispatch(
-          actions.saveSubmissionList(
+          saveSubmissionList(
             data.submissions,
             data.metaData,
             data.permissions,
@@ -97,7 +96,7 @@ export function filterPendingSubmissions(
       .then((response) => {
         const data = response.data;
         dispatch(
-          actions.saveSubmissionList(
+          saveSubmissionList(
             data.submissions,
             data.metaData,
             data.permissions,
