@@ -19,6 +19,7 @@ import { getForumTopic } from '../../selectors';
 import ForumTopicPostNew from '../ForumTopicPostNew';
 
 import TopicPostTrees from './TopicPostTrees';
+import ScrollToTop from 'lib/components/navigation/ScrollToTop';
 
 const translations = defineMessages({
   header: {
@@ -138,6 +139,7 @@ const ForumTopicShow: FC = () => {
 
   return (
     <>
+      <ScrollToTop />
       <PageHeader
         returnLink={forumTopic?.forumUrl}
         title={forumPageHeaderTitle}

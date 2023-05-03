@@ -8,6 +8,7 @@ import AddButton from 'lib/components/core/buttons/AddButton';
 import LoadingIndicator from 'lib/components/core/LoadingIndicator';
 import PageHeader from 'lib/components/navigation/PageHeader';
 import useTranslation from 'lib/hooks/useTranslation';
+import ScrollToTop from 'lib/components/navigation/ScrollToTop';
 
 import MarkAllAsReadButton from '../../components/buttons/MarkAllAsReadButton';
 import NextUnreadButton from '../../components/buttons/NextUnreadButton';
@@ -104,6 +105,7 @@ const ForumsIndex: FC = () => {
 
   return (
     <>
+      <ScrollToTop />
       <PageHeader title={t(translations.header)} toolbars={headerToolbars} />
       {!isLoading && isForumNewDialogOpen && (
         <ForumNew
