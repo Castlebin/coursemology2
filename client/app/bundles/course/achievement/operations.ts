@@ -3,9 +3,13 @@ import { AchievementFormData } from 'types/course/achievements';
 import { Operation } from 'types/store';
 
 import CourseAPI from 'api/course';
-
-import * as actions from './actions';
 import { SaveAchievementAction } from './types';
+import {
+  saveAchievement,
+  saveAchievementCourseUsers,
+  saveAchievementList,
+  deleteAchievement as storeDeleteAchievement,
+} from './store';
 
 /**
  * Prepares and maps object attributes to a FormData object for an post/patch request.
@@ -34,9 +38,7 @@ export function fetchAchievements(): Operation {
     CourseAPI.achievements.index().then((response) => {
       const data = response.data;
 
-      dispatch(
-        actions.saveAchievementList(data.achievements, data.permissions),
-      );
+      dispatch(saveAchievementList(data.achievements, data.permissions));
     });
 }
 
@@ -46,9 +48,7 @@ export function loadAchievement(
   return async (dispatch) =>
     CourseAPI.achievements
       .fetch(achievementId)
-      .then((response) =>
-        dispatch(actions.saveAchievement(response.data.achievement)),
-      );
+      .then((response) => dispatch(saveAchievement(response.data.achievement)));
 }
 
 export function loadAchievementCourseUsers(achievementId: number): Operation {
@@ -57,7 +57,7 @@ export function loadAchievementCourseUsers(achievementId: number): Operation {
       .fetchAchievementCourseUsers(achievementId)
       .then((response) => {
         dispatch(
-          actions.saveAchievementCourseUsers(
+          saveAchievementCourseUsers(
             achievementId,
             response.data.achievementCourseUsers,
           ),
@@ -85,7 +85,7 @@ export function updateAchievement(
 export function deleteAchievement(achievementId: number): Operation {
   return async (dispatch) =>
     CourseAPI.achievements.delete(achievementId).then(() => {
-      dispatch(actions.deleteAchievement(achievementId));
+      dispatch(storeDeleteAchievement(achievementId));
     });
 }
 
@@ -98,7 +98,7 @@ export function awardAchievement(
     CourseAPI.achievements
       .update(achievementId, attributes)
       .then((response) => {
-        dispatch(actions.saveAchievement(response.data.achievement));
+        dispatch(saveAchievement(response.data.achievement));
       });
 }
 
@@ -111,6 +111,6 @@ export function updatePublishedAchievement(
     CourseAPI.achievements
       .update(achievementId, attributes)
       .then((response) => {
-        dispatch(actions.saveAchievement(response.data.achievement));
+        dispatch(saveAchievement(response.data.achievement));
       });
 }

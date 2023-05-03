@@ -13,6 +13,9 @@ import EditTextResponsePage from 'bundles/course/assessment/question/text-respon
 import AccountSettings from 'bundles/user/AccountSettings';
 import NewVoicePage from 'bundles/course/assessment/question/voice-responses/NewVoicePage';
 import EditVoicePage from 'bundles/course/assessment/question/voice-responses/EditVoicePage';
+import GlobalAnnouncementIndex from 'bundles/announcements/pages/GlobalAnnouncementIndex';
+import AchievementsIndex from 'bundles/course/achievement/pages/AchievementsIndex';
+import AchievementShow from 'bundles/course/achievement/pages/AchievementShow';
 
 const RoutedApp = (): JSX.Element => {
   return (
@@ -76,6 +79,20 @@ const RoutedApp = (): JSX.Element => {
 
           <Route element={<AccountSettings />} path="/user/profile/edit" />
 
+          <Route
+            element={<GlobalAnnouncementIndex />}
+            path="/announcements"
+          />
+
+          <Route
+            element={<AchievementsIndex />}
+            path="/courses/:courseId/achievements/"
+          />
+
+          <Route
+            element={<AchievementShow />}
+            path="/courses/:courseId/achievements/:achievementId"
+          />
         </Routes>
       </BrowserRouter>
     </App>
