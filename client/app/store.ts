@@ -11,6 +11,7 @@ import skillsReducer from './bundles/course/assessment/skills/store';
 import coursesReducer from './bundles/course/courses/store';
 import commentsReducer from './bundles/course/discussion/topics/store';
 import forumsReducer from './bundles/course/forum/store';
+import leaderboardReducer from './bundles/course/leaderboard/store';
 
 enableMapSet();
 
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   courses: coursesReducer,
   comments: commentsReducer,
   forums: forumsReducer,
+  leaderboard: leaderboardReducer,
 });
 
 export const store = configureStore({

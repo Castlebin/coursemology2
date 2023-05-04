@@ -24,6 +24,7 @@ import CommentIndex from 'bundles/course/discussion/topics/pages/CommentIndex';
 import ForumsIndex from 'bundles/course/forum/pages/ForumsIndex';
 import ForumShow from 'bundles/course/forum/pages/ForumShow';
 import ForumTopicShow from 'bundles/course/forum/pages/ForumTopicShow';
+import LeaderboardIndex from 'bundles/course/leaderboard/pages/LeaderboardIndex';
 
 const RoutedApp = (): JSX.Element => {
   return (
@@ -119,13 +120,20 @@ const RoutedApp = (): JSX.Element => {
           />
 
           <Route element={<ForumsIndex />} path="courses/:courseId/forums" />
+
           <Route
             element={<ForumShow />}
             path="courses/:courseId/forums/:forumId"
           />
+
           <Route
             element={<ForumTopicShow />}
             path="courses/:courseId/forums/:forumId/topics/:topicId"
+          />
+
+          <Route
+            element={<LeaderboardIndex />}
+            path="/courses/:courseId/leaderboard/"
           />
         </Routes>
       </BrowserRouter>
