@@ -21,6 +21,9 @@ import SkillsIndex from 'bundles/course/assessment/skills/pages/SkillsIndex';
 import CoursesIndex from 'bundles/course/courses/pages/CoursesIndex';
 import CourseShow from 'bundles/course/courses/pages/CourseShow';
 import CommentIndex from 'bundles/course/discussion/topics/pages/CommentIndex';
+import ForumsIndex from 'bundles/course/forum/pages/ForumsIndex';
+import ForumShow from 'bundles/course/forum/pages/ForumShow';
+import ForumTopicShow from 'bundles/course/forum/pages/ForumTopicShow';
 
 const RoutedApp = (): JSX.Element => {
   return (
@@ -113,6 +116,16 @@ const RoutedApp = (): JSX.Element => {
           <Route
             element={<CommentIndex />}
             path="/courses/:courseId/comments"
+          />
+
+          <Route element={<ForumsIndex />} path="courses/:courseId/forums" />
+          <Route
+            element={<ForumShow />}
+            path="courses/:courseId/forums/:forumId"
+          />
+          <Route
+            element={<ForumTopicShow />}
+            path="courses/:courseId/forums/:forumId/topics/:topicId"
           />
         </Routes>
       </BrowserRouter>

@@ -7,8 +7,10 @@ import {
   forumAdapter,
   forumTopicAdapter,
   forumTopicPostAdapter,
-} from './reducers';
-import { RootState } from './store';
+} from './store';
+import { store } from 'store';
+
+type RootState = ReturnType<typeof store.getState>;
 
 const forumSelectors = forumAdapter.getSelectors<RootState>(
   (state) => state.forums.forums,
