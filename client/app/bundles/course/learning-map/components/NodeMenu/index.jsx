@@ -5,7 +5,7 @@ import { ListItemText, ListSubheader, MenuItem, MenuList } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 
-import { addParentNode } from 'course/learning-map/actions';
+import { actions } from 'course/learning-map/store';
 
 import { nodeShape, relatedNodeShape } from '../../propTypes';
 import translations from '../../translations.intl';
@@ -52,7 +52,7 @@ const NodeMenu = (props) => {
 
   const onClickMenuItem = (selectedNode) => {
     onCloseMenu();
-    dispatch(addParentNode(parentNode.id, selectedNode.id));
+    dispatch(actions.addParentNode(parentNode.id, selectedNode.id));
   };
 
   return (

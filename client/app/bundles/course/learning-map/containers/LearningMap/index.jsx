@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { fetchNodes } from 'course/learning-map/actions';
+import { actions } from 'course/learning-map/store';
 
 import Canvas from '../Canvas';
 import Dashboard from '../Dashboard';
@@ -18,7 +18,7 @@ const LearningMap = (props) => {
   const { dispatch, isLoading } = props;
 
   useEffect(() => {
-    dispatch(fetchNodes());
+    dispatch(actions.fetchNodes());
   }, [dispatch]);
 
   return (

@@ -25,6 +25,7 @@ import ForumsIndex from 'bundles/course/forum/pages/ForumsIndex';
 import ForumShow from 'bundles/course/forum/pages/ForumShow';
 import ForumTopicShow from 'bundles/course/forum/pages/ForumTopicShow';
 import LeaderboardIndex from 'bundles/course/leaderboard/pages/LeaderboardIndex';
+import LearningMap from 'bundles/course/learning-map/containers/LearningMap';
 
 const RoutedApp = (): JSX.Element => {
   return (
@@ -134,6 +135,11 @@ const RoutedApp = (): JSX.Element => {
           <Route
             element={<LeaderboardIndex />}
             path="/courses/:courseId/leaderboard/"
+          />
+
+          <Route
+            element={<LearningMap />}
+            path="/courses/:courseId/learning_map"
           />
         </Routes>
       </BrowserRouter>

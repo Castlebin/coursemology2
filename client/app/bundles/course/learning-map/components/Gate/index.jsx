@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { green, red } from '@mui/material/colors';
 import PropTypes from 'prop-types';
 
-import { selectGate } from 'course/learning-map/actions';
+import { actions } from 'course/learning-map/store';
 
 import { elementTypes, satisfiabilityTypes } from '../../constants';
 import { nodeShape, selectedElementShape } from '../../propTypes';
@@ -70,7 +70,7 @@ const Gate = (props) => {
   const onGateClick = (event) => {
     if (canModify) {
       event.stopPropagation();
-      dispatch(selectGate(id));
+      dispatch(actions.selectGate(id));
     }
   };
 

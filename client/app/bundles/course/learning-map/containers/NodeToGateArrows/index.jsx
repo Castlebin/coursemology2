@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import Xarrow from 'react-xarrows';
 import PropTypes from 'prop-types';
 
-import { selectArrow } from 'course/learning-map/actions';
+import { actions } from 'course/learning-map/store';
 
 import { elementTypes } from '../../constants';
 import {
@@ -29,7 +29,7 @@ const NodeToGateArrows = (props) => {
   const onArrowClick = (event, arrowId) => {
     if (canModify) {
       event.stopPropagation();
-      dispatch(selectArrow(arrowId));
+      dispatch(actions.selectArrow(arrowId));
     }
   };
 

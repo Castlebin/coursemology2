@@ -7,11 +7,7 @@ import { Card, CardContent, CircularProgress, IconButton } from '@mui/material';
 import { green, orange, red } from '@mui/material/colors';
 import PropTypes from 'prop-types';
 
-import {
-  removeParentNode,
-  resetSelection,
-  toggleSatisfiabilityType,
-} from 'course/learning-map/actions';
+import { actions } from 'course/learning-map/store';
 import ConfirmationDialog from 'lib/components/core/dialogs/ConfirmationDialog';
 
 import { elementTypes, satisfiabilityTypes } from '../../constants';
@@ -61,7 +57,7 @@ const Dashboard = (props) => {
 
     if (selectedElement.type === elementTypes.arrow) {
       const arrowIdTokens = selectedElement.id.split('-to-');
-      dispatch(removeParentNode(arrowIdTokens[0], arrowIdTokens[1]));
+      dispatch(actions.removeParentNode(arrowIdTokens[0], arrowIdTokens[1]));
     }
   };
 
@@ -71,12 +67,12 @@ const Dashboard = (props) => {
   const toggleNodeSatisfiabilityType = () => {
     if (selectedElement.type === elementTypes.gate) {
       const node = getNodeForSelectedGate();
-      dispatch(toggleSatisfiabilityType(node.id));
+      dispatch(actions.toggleSatisfiabilityType(node.id));
     }
   };
 
   const reset = () => {
-    dispatch(resetSelection());
+    dispatch(actions.resetSelection());
   };
 
   const responseDisplay = () => ({
