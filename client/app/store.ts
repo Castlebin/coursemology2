@@ -6,6 +6,8 @@ import disbursementReducer from './bundles/course/experience-points/disbursement
 import timelinesReducer from './bundles/course/reference-timelines/store';
 import globalAnnouncementReducer from './bundles/announcements/store';
 import achievementsReducer from './bundles/course/achievement/store';
+import announcementsReducer from './bundles/course/announcements/store';
+import skillsReducer from './bundles/course/assessment/skills/store';
 
 enableMapSet();
 
@@ -13,8 +15,10 @@ const rootReducer = combineReducers({
   disbursement: disbursementReducer,
   submissions: submissionsReducer,
   timelines: timelinesReducer,
-  global: combineReducers({ announcements : globalAnnouncementReducer }),
+  global: combineReducers({ announcements: globalAnnouncementReducer }),
   achievements: achievementsReducer,
+  announcements: announcementsReducer,
+  skills: skillsReducer,
 });
 
 export const store = configureStore({

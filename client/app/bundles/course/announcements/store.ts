@@ -1,26 +1,87 @@
-import { enableMapSet } from 'immer';
-import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
-import thunkMiddleware from 'redux-thunk';
+import produce from 'immer';
+import {
+  AnnouncementsActionType,
+  AnnouncementsState,
+  DELETE_ANNOUNCEMENT,
+  DeleteAnnouncementAction,
+  SAVE_ANNOUNCEMENT,
+  SAVE_ANNOUNCEMENT_LIST,
+  SaveAnnouncementAction,
+  SaveAnnouncementListAction,
+} from './types';
+import {
+  createEntityStore,
+  removeFromStore,
+  saveEntityToStore,
+  saveListToStore,
+} from 'utilities/store';
+import {
+  AnnouncementData,
+  AnnouncementListData,
+  AnnouncementPermissions,
+} from 'types/course/announcements';
 
-import announcementsReducer from './reducers';
+const initialState: AnnouncementsState = {
+  announcements: createEntityStore(),
+  permissions: { canCreate: false },
+};
 
-const defaultReducers = {};
+const reducer = produce(
+  (draft: AnnouncementsState, action: AnnouncementsActionType) => {
+    switch (action.type) {
+      case SAVE_ANNOUNCEMENT_LIST: {
+        const announcementList = action.announcementList;
+        const entityList = announcementList.map((data) => ({ ...data }));
 
-const rootReducer = combineReducers({
-  announcements: announcementsReducer,
-});
+        saveListToStore(draft.announcements, entityList);
+        draft.permissions = action.announcementPermissions;
+        break;
+      }
 
-enableMapSet();
+      case SAVE_ANNOUNCEMENT: {
+        const announcementData = action.announcement;
+        const announcementEntity = { ...announcementData };
+        saveEntityToStore(draft.announcements, announcementEntity);
+        break;
+      }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function configureStore(): any {
-  const storeCreator =
-    // @ts-ignore: ignore ts warning for process
-    process.env.NODE_ENV === 'development'
-      ? compose(
-          /* eslint-disable-next-line global-require, import/no-extraneous-dependencies */ // @ts-ignore: ignore ts warning for require
-          applyMiddleware(thunkMiddleware, require('redux-logger').logger),
-        )(createStore)
-      : compose(applyMiddleware(thunkMiddleware))(createStore);
-  return storeCreator(rootReducer, defaultReducers);
-}
+      case DELETE_ANNOUNCEMENT: {
+        const announcementId = action.id;
+        if (draft.announcements.byId[announcementId]) {
+          removeFromStore(draft.announcements, announcementId);
+        }
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+  },
+  initialState,
+);
+
+export const actions = {
+  saveAnnouncementList: (
+    announcementList: AnnouncementListData[],
+    announcementPermissions: AnnouncementPermissions,
+  ): SaveAnnouncementListAction => {
+    return {
+      type: SAVE_ANNOUNCEMENT_LIST,
+      announcementList,
+      announcementPermissions,
+    };
+  },
+  saveAnnouncement: (
+    announcement: AnnouncementData,
+  ): SaveAnnouncementAction => {
+    return { type: SAVE_ANNOUNCEMENT, announcement };
+  },
+  deleteAnnouncement: (announcementId: number): DeleteAnnouncementAction => {
+    return {
+      type: DELETE_ANNOUNCEMENT,
+      id: announcementId,
+    };
+  },
+};
+
+export default reducer;

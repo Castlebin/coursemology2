@@ -16,6 +16,8 @@ import EditVoicePage from 'bundles/course/assessment/question/voice-responses/Ed
 import GlobalAnnouncementIndex from 'bundles/announcements/pages/GlobalAnnouncementIndex';
 import AchievementsIndex from 'bundles/course/achievement/pages/AchievementsIndex';
 import AchievementShow from 'bundles/course/achievement/pages/AchievementShow';
+import AnnouncementsIndex from 'bundles/course/announcements/pages/AnnouncementsIndex';
+import SkillsIndex from 'bundles/course/assessment/skills/pages/SkillsIndex';
 
 const RoutedApp = (): JSX.Element => {
   return (
@@ -79,10 +81,7 @@ const RoutedApp = (): JSX.Element => {
 
           <Route element={<AccountSettings />} path="/user/profile/edit" />
 
-          <Route
-            element={<GlobalAnnouncementIndex />}
-            path="/announcements"
-          />
+          <Route element={<GlobalAnnouncementIndex />} path="/announcements" />
 
           <Route
             element={<AchievementsIndex />}
@@ -92,6 +91,16 @@ const RoutedApp = (): JSX.Element => {
           <Route
             element={<AchievementShow />}
             path="/courses/:courseId/achievements/:achievementId"
+          />
+
+          <Route
+            element={<AnnouncementsIndex />}
+            path="courses/:courseId/announcements"
+          />
+
+          <Route
+            element={<SkillsIndex />}
+            path="/courses/:courseId/assessments/skills"
           />
         </Routes>
       </BrowserRouter>
