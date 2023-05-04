@@ -16,6 +16,7 @@ import learningMapReducer from './bundles/course/learning-map/store';
 import foldersReducer from './bundles/course/material/folders/store';
 import videosReducer from './bundles/course/video/store';
 import globalUserReducer from './bundles/users/store';
+import levelsReducer from './bundles/course/level/store';
 
 enableMapSet();
 
@@ -37,6 +38,7 @@ const rootReducer = combineReducers({
   learningMap: learningMapReducer,
   folders: foldersReducer,
   videos: videosReducer,
+  levels: levelsReducer,
 });
 
 export const store = configureStore({

@@ -21,6 +21,7 @@ import { VideosState } from 'bundles/course/video/types';
 import { AdminState } from 'bundles/system/admin/admin/types';
 import { InstanceAdminState } from 'bundles/system/admin/instance/instance/types';
 import { GlobalUserState } from 'bundles/users/types';
+import { LevelsState } from 'bundles/course/level/types';
 
 /**
  * Describes the overall shape of the application's Redux store state.
@@ -35,6 +36,7 @@ export interface AppState {
   folders: FoldersState;
   forums: ForumsState;
   users: UsersState;
+  levels: LevelsState;
   leaderboard: LeaderboardState;
   skills: SkillState;
   submissions: SubmissionsState;

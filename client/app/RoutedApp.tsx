@@ -33,6 +33,8 @@ import VideoSubmissionEdit from 'bundles/course/video/submission/pages/VideoSubm
 import VideoSubmissionShow from 'bundles/course/video/submission/pages/VideoSubmissionShow';
 import VideoSubmissionsIndex from 'bundles/course/video/submission/pages/VideoSubmissionsIndex';
 import UserShow from 'bundles/users/pages/UserShow';
+import NotificationPopup from 'lib/containers/NotificationPopup';
+import Level from 'bundles/course/level/pages/Level';
 
 const RoutedApp = (): JSX.Element => {
   return (
@@ -173,6 +175,16 @@ const RoutedApp = (): JSX.Element => {
           />
 
           <Route element={<UserShow />} path="/users/:userId" />
+
+          <Route
+            element={
+              <div>
+                <NotificationPopup />
+                <Level />
+              </div>
+            }
+            path="/courses/:courseId/levels"
+          />
         </Routes>
       </BrowserRouter>
     </App>

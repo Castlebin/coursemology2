@@ -13,14 +13,7 @@ import {
 } from '@mui/material';
 import PropTypes from 'prop-types';
 
-import {
-  addLevel,
-  deleteLevel,
-  fetchLevels,
-  saveLevels,
-  sortLevels,
-  updateExpThreshold,
-} from 'course/level/actions';
+import { actions } from 'course/level/store';
 import LevelRow from 'course/level/components/LevelRow';
 import { defaultComponentTitles } from 'course/translations.intl';
 import LoadingIndicator from 'lib/components/core/LoadingIndicator';
@@ -104,21 +97,21 @@ class Level extends Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(fetchLevels());
+    this.props.dispatch(actions.fetchLevels());
   }
 
   handleCreateLevel = () => (e) => {
     e.preventDefault();
-    this.props.dispatch(addLevel());
+    this.props.dispatch(actions.addLevel());
   };
 
   handleDeleteLevel = (levelNumber) => (e) => {
     e.preventDefault();
-    this.props.dispatch(deleteLevel(levelNumber));
+    this.props.dispatch(actions.deleteLevel(levelNumber));
   };
 
   handleLevelTextBlur = () => {
-    this.props.dispatch(sortLevels());
+    this.props.dispatch(actions.sortLevels());
   };
 
   handleSaveLevels = () => {
@@ -132,13 +125,13 @@ class Level extends Component {
         const failureMessage = (
           <FormattedMessage {...translations.saveFailure} />
         );
-        dispatch(saveLevels(levels, successMessage, failureMessage));
+        dispatch(actions.saveLevels(levels, successMessage, failureMessage));
       }
     };
   };
 
   handleUpdateExpThreshold = (levelNumber, newValue) => {
-    this.props.dispatch(updateExpThreshold(levelNumber, newValue));
+    this.props.dispatch(actions.updateExpThreshold(levelNumber, newValue));
   };
 
   // Only the first element of the levels prop should be 0 as it is the default threshold.
