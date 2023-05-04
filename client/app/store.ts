@@ -13,6 +13,7 @@ import commentsReducer from './bundles/course/discussion/topics/store';
 import forumsReducer from './bundles/course/forum/store';
 import leaderboardReducer from './bundles/course/leaderboard/store';
 import learningMapReducer from './bundles/course/learning-map/store';
+import foldersReducer from './bundles/course/material/folders/store';
 
 enableMapSet();
 
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
   forums: forumsReducer,
   leaderboard: leaderboardReducer,
   learningMap: learningMapReducer,
+  folders: foldersReducer,
 });
 
 export const store = configureStore({
