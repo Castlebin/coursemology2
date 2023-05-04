@@ -1,11 +1,12 @@
 import actionTypes from 'course/level/constants';
+import CourseAPI from 'api/course';
+import { setNotification } from 'lib/actions';
 
 const initialState = {
   canManage: false,
   levels: [],
   isLoading: false,
   isSaving: false,
-  message: null,
 };
 
 function isNumeric(n) {
@@ -79,9 +80,6 @@ const reducer = (state = initialState, action) => {
     }
     case actionTypes.SAVE_LEVELS_FAILURE: {
       return { ...state, isSaving: false };
-    }
-    case actionTypes.SET_NOTIFICATION: {
-      return { message: action.message };
     }
     default:
       return state;

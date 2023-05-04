@@ -232,9 +232,9 @@ Level.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
-export default connect(({ levelEdit }) => ({
-  canManage: levelEdit.canManage,
-  isLoading: levelEdit.isLoading,
-  isSaving: levelEdit.isSaving,
-  levels: levelEdit.levels,
+export default connect(({ levels }) => ({
+  canManage: levels.canManage,
+  isLoading: levels.isLoading,
+  isSaving: levels.isSaving,
+  levels: levels.levels,
 }))(Level);
