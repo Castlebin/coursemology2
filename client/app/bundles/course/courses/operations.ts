@@ -4,12 +4,12 @@ import { Operation } from 'types/store';
 
 import CourseAPI from 'api/course';
 
-import * as actions from './actions';
 import {
   CancelEnrolAction,
   SaveCourseAction,
   SubmitEnrolAction,
 } from './types';
+import { actions } from './store';
 
 const formatAttributes = (data: NewCourseFormData): FormData => {
   const payload = new FormData();

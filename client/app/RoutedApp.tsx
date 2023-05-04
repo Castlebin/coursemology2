@@ -18,6 +18,8 @@ import AchievementsIndex from 'bundles/course/achievement/pages/AchievementsInde
 import AchievementShow from 'bundles/course/achievement/pages/AchievementShow';
 import AnnouncementsIndex from 'bundles/course/announcements/pages/AnnouncementsIndex';
 import SkillsIndex from 'bundles/course/assessment/skills/pages/SkillsIndex';
+import CoursesIndex from 'bundles/course/courses/pages/CoursesIndex';
+import CourseShow from 'bundles/course/courses/pages/CourseShow';
 
 const RoutedApp = (): JSX.Element => {
   return (
@@ -102,6 +104,10 @@ const RoutedApp = (): JSX.Element => {
             element={<SkillsIndex />}
             path="/courses/:courseId/assessments/skills"
           />
+
+          <Route element={<CoursesIndex />} path="/courses" />
+
+          <Route element={<CourseShow />} path="/courses/:courseId" />
         </Routes>
       </BrowserRouter>
     </App>

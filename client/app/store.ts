@@ -8,6 +8,7 @@ import globalAnnouncementReducer from './bundles/announcements/store';
 import achievementsReducer from './bundles/course/achievement/store';
 import announcementsReducer from './bundles/course/announcements/store';
 import skillsReducer from './bundles/course/assessment/skills/store';
+import coursesReducer from './bundles/course/courses/store';
 
 enableMapSet();
 
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   achievements: achievementsReducer,
   announcements: announcementsReducer,
   skills: skillsReducer,
+  courses: coursesReducer,
 });
 
 export const store = configureStore({
