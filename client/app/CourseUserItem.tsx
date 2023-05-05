@@ -1,24 +1,18 @@
+import { useState } from 'react';
 import {
   Avatar,
-  Collapse,
   Divider,
-  Fade,
-  Grow,
   List,
   ListItem,
   ListItemButton,
   ListItemText,
   ListSubheader,
-  Menu,
-  MenuItem,
   Popover,
-  Slide,
   Typography,
-  Zoom,
 } from '@mui/material';
-import { COURSE_USER_ROLES } from 'lib/constants/sharedConstants';
-import { useState } from 'react';
 import { CourseLayoutData } from 'types/course/courses';
+
+import { COURSE_USER_ROLES } from 'lib/constants/sharedConstants';
 
 interface CourseUserItemProps {
   from: CourseLayoutData;

@@ -63,9 +63,10 @@ const AssessmentsTable = (props: AssessmentsTableProps): JSX.Element => {
         header: t(translations.neededFor),
         content: (assessment) => (
           <StackedBadges
-            assessmentUrl={assessment.url}
             badges={assessment.topConditionals}
             remainingCount={assessment.remainingConditionalsCount}
+            seeRemainingTooltip={t(translations.seeAllRequirements)}
+            seeRemainingUrl={assessment.url}
           />
         ),
         hideColumnWhen: !display.isAchievementsEnabled,

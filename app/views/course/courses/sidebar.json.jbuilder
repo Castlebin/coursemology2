@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-json.courseName current_course.title
+json.courseTitle current_course.title
 json.courseLogoUrl url_to_course_logo(current_course)
 json.courseUserUrl url_to_user_or_course_user(current_course_user || current_user)
 json.userName current_user.name
@@ -34,4 +34,12 @@ if current_course_user.present?
   end
 
   json.hasNotifications UserNotification.next_unread_popup_for(current_course_user).present?
+end
+
+my_courses = user_signed_in? && Course.containing_user(current_user).ordered_by_start_at
+if my_courses.present?
+  json.courses my_courses do |course|
+    json.title course.title
+    json.url course_path(course)
+  end
 end

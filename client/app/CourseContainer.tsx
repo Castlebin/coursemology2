@@ -14,6 +14,7 @@ import SidebarItem from './SidebarItem';
 import CourseUserItem from './CourseUserItem';
 import CourseUserProgression from './CourseUserProgress';
 import Link from 'lib/components/core/Link';
+import CourseItem from './CourseItem';
 
 interface StatefulCourseContainerProps {
   with: CourseLayoutData;
@@ -27,13 +28,9 @@ const StatefulCourseContainer = (
   return (
     <main className="flex h-screen w-full">
       <aside className="border-only-r-neutral-200 flex h-full w-80 shrink-0 flex-col bg-neutral-100">
-        <section className="border-only-b-neutral-200 space-y-5 py-20">
-          <div className="line-clamp-3 px-4">
-            <Typography variant="body2">{data.courseName}</Typography>
-          </div>
-
+        <section className="border-only-b-neutral-200">
+          <CourseItem in={data} />
           <CourseUserItem from={data} />
-
           {data.progress && <CourseUserProgression from={data.progress} />}
         </section>
 

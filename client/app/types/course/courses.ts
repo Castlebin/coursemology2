@@ -85,13 +85,13 @@ export interface CourseUserProgressData {
   level?: number;
   exp?: number;
   nextLevelPercentage?: number;
-  nextLevelExpDelta?: number;
+  nextLevelExpDelta?: number | 'max';
   recentAchievements?: AchievementBadgeData[];
   remainingAchievementsCount?: number;
 }
 
 export interface CourseLayoutData {
-  courseName: string;
+  courseTitle: string;
   courseLogoUrl: string;
   courseUserUrl: string;
   userName: string;
@@ -103,4 +103,5 @@ export interface CourseLayoutData {
   manageEmailSubscriptionUrl?: string;
   hasNotifications?: boolean;
   progress?: CourseUserProgressData;
+  courses?: { title: string; url: string }[];
 }
