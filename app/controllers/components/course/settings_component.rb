@@ -22,6 +22,7 @@ class Course::SettingsComponent < SimpleDelegator
 
     [
       {
+        key: :admin,
         icon: 'gear',
         title: t('layouts.course_admin.title'),
         type: :admin,

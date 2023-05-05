@@ -1,4 +1,5 @@
-const { merge } = require('webpack-merge');
+const { merge, mergeWithRules } = require('webpack-merge');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 const common = require('./webpack.common');
 
@@ -28,9 +29,26 @@ module.exports = merge(common, {
   devServer: {
     port: DEV_SERVER_PORT,
     headers: { 'Access-Control-Allow-Origin': '*' },
+    client: {
+      overlay: {
+        errors: true,
+        warnings: false,
+      },
+    },
   },
   optimization: {
     removeAvailableModules: false,
     removeEmptyChunks: false,
+  },
+  plugins: [new ReactRefreshWebpackPlugin()],
+  module: {
+    rules: [
+      mergeWithRules({
+        test: 'match',
+        use: { loader: 'match', options: 'merge' },
+      })(common.module.rules[0], {
+        use: { options: { plugins: ['react-refresh/babel'] } },
+      }),
+    ],
   },
 });

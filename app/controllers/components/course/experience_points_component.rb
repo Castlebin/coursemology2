@@ -15,6 +15,7 @@ class Course::ExperiencePointsComponent < SimpleDelegator
 
     [
       {
+        key: :disburse_experience_points,
         icon: 'magic',
         title: t('course.experience_points.disbursement.sidebar_title'),
         type: :admin,

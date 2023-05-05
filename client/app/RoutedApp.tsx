@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import App from './App';
 
 import SubmissionsIndex from 'bundles/course/assessment/submissions/pages/SubmissionsIndex';
 import DisbursementIndex from 'bundles/course/experience-points/disbursement/pages/DisbursementIndex';
@@ -48,199 +47,209 @@ import PersonalTimes from 'bundles/course/users/pages/PersonalTimes';
 import PersonalTimesShow from 'bundles/course/users/pages/PersonalTimesShow';
 import ExperiencePointsRecords from 'bundles/course/users/pages/ExperiencePointsRecords';
 
+import App from './App';
+import CourseContainer from './CourseContainer';
+
 const RoutedApp = (): JSX.Element => {
   return (
     <App>
       <BrowserRouter>
         <Routes>
-          <Route
-            element={<SubmissionsIndex />}
-            path="/courses/:courseId/assessments/submissions"
-          />
+          <Route element={<CourseContainer />} path="/courses/:courseId">
+            <Route
+              element={<SubmissionsIndex />}
+              path="assessments/submissions"
+            />
 
-          <Route
-            element={<TimelineDesigner />}
-            path="/courses/:course_id/timelines"
-          />
+            <Route element={<TimelineDesigner />} path="timelines" />
 
-          <Route
-            element={<DisbursementIndex />}
-            path="/courses/:courseId/users/disburse_experience_points"
-          />
+            <Route
+              element={<DisbursementIndex />}
+              path="/courses/:courseId/users/disburse_experience_points"
+            />
 
-          <Route
-            element={<NewForumPostResponsePage />}
-            path="courses/:courseId/assessments/:assessmentId/question/forum_post_responses/new"
-          />
+            <Route
+              element={<NewForumPostResponsePage />}
+              path="courses/:courseId/assessments/:assessmentId/question/forum_post_responses/new"
+            />
 
-          <Route
-            element={<EditForumPostResponsePage />}
-            path="/courses/:courseId/assessments/:assessmentId/question/forum_post_responses/:questionId/edit"
-          />
+            <Route
+              element={<EditForumPostResponsePage />}
+              path="/courses/:courseId/assessments/:assessmentId/question/forum_post_responses/:questionId/edit"
+            />
 
-          <Route
-            element={<NewMcqMrqPage />}
-            path="/courses/:courseId/assessments/:assessmentId/question/multiple_responses/new"
-          />
+            <Route
+              element={<NewMcqMrqPage />}
+              path="/courses/:courseId/assessments/:assessmentId/question/multiple_responses/new"
+            />
 
-          <Route
-            element={<EditMcqMrqPage />}
-            path="/courses/:courseId/assessments/:assessmentId/question/multiple_responses/:questionId/edit"
-          />
+            <Route
+              element={<EditMcqMrqPage />}
+              path="/courses/:courseId/assessments/:assessmentId/question/multiple_responses/:questionId/edit"
+            />
 
-          <Route
-            element={<NewTextResponsePage />}
-            path="courses/:courseId/assessments/:assessmentId/question/text_responses/new"
-          />
+            <Route
+              element={<NewTextResponsePage />}
+              path="courses/:courseId/assessments/:assessmentId/question/text_responses/new"
+            />
 
-          <Route
-            element={<EditTextResponsePage />}
-            path="/courses/:courseId/assessments/:assessmentId/question/text_responses/:questionId/edit"
-          />
+            <Route
+              element={<EditTextResponsePage />}
+              path="/courses/:courseId/assessments/:assessmentId/question/text_responses/:questionId/edit"
+            />
 
-          <Route
-            element={<NewVoicePage />}
-            path="courses/:courseId/assessments/:assessmentId/question/voice_responses/new"
-          />
+            <Route
+              element={<NewVoicePage />}
+              path="courses/:courseId/assessments/:assessmentId/question/voice_responses/new"
+            />
 
-          <Route
-            element={<EditVoicePage />}
-            path="/courses/:courseId/assessments/:assessmentId/question/voice_responses/:questionId/edit"
-          />
+            <Route
+              element={<EditVoicePage />}
+              path="/courses/:courseId/assessments/:assessmentId/question/voice_responses/:questionId/edit"
+            />
 
-          <Route element={<AccountSettings />} path="/user/profile/edit" />
+            <Route element={<AccountSettings />} path="/user/profile/edit" />
 
-          <Route element={<GlobalAnnouncementIndex />} path="/announcements" />
+            <Route
+              element={<GlobalAnnouncementIndex />}
+              path="/announcements"
+            />
 
-          <Route
-            element={<AchievementsIndex />}
-            path="/courses/:courseId/achievements/"
-          />
+            <Route
+              element={<AchievementsIndex />}
+              path="/courses/:courseId/achievements/"
+            />
 
-          <Route
-            element={<AchievementShow />}
-            path="/courses/:courseId/achievements/:achievementId"
-          />
+            <Route
+              element={<AchievementShow />}
+              path="/courses/:courseId/achievements/:achievementId"
+            />
 
-          <Route
-            element={<AnnouncementsIndex />}
-            path="courses/:courseId/announcements"
-          />
+            <Route
+              element={<AnnouncementsIndex />}
+              path="courses/:courseId/announcements"
+            />
 
-          <Route
-            element={<SkillsIndex />}
-            path="/courses/:courseId/assessments/skills"
-          />
+            <Route
+              element={<SkillsIndex />}
+              path="/courses/:courseId/assessments/skills"
+            />
 
-          <Route element={<CoursesIndex />} path="/courses" />
+            <Route element={<CoursesIndex />} path="/courses" />
 
-          <Route element={<CourseShow />} path="/courses/:courseId" />
+            <Route element={<CourseShow />} path="/courses/:courseId" />
 
-          <Route
-            element={<CommentIndex />}
-            path="/courses/:courseId/comments"
-          />
+            <Route
+              element={<CommentIndex />}
+              path="/courses/:courseId/comments"
+            />
 
-          <Route element={<ForumsIndex />} path="courses/:courseId/forums" />
+            <Route element={<ForumsIndex />} path="courses/:courseId/forums" />
 
-          <Route
-            element={<ForumShow />}
-            path="courses/:courseId/forums/:forumId"
-          />
+            <Route
+              element={<ForumShow />}
+              path="courses/:courseId/forums/:forumId"
+            />
 
-          <Route
-            element={<ForumTopicShow />}
-            path="courses/:courseId/forums/:forumId/topics/:topicId"
-          />
+            <Route
+              element={<ForumTopicShow />}
+              path="courses/:courseId/forums/:forumId/topics/:topicId"
+            />
 
-          <Route
-            element={<LeaderboardIndex />}
-            path="/courses/:courseId/leaderboard/"
-          />
+            <Route
+              element={<LeaderboardIndex />}
+              path="/courses/:courseId/leaderboard/"
+            />
 
-          <Route
-            element={<LearningMap />}
-            path="/courses/:courseId/learning_map"
-          />
+            <Route
+              element={<LearningMap />}
+              path="/courses/:courseId/learning_map"
+            />
 
-          <Route
-            element={<FolderShow />}
-            path="/courses/:courseId/materials/folders/:folderId"
-          />
+            <Route
+              element={<FolderShow />}
+              path="/courses/:courseId/materials/folders/:folderId"
+            />
 
-          <Route element={<VideosIndex />} path="courses/:courseId/videos" />
-          <Route
-            element={<VideoShow />}
-            path="courses/:courseId/videos/:videoId"
-          />
-          <Route
-            element={<VideoSubmissionsIndex />}
-            path="courses/:courseId/videos/:videoId/submissions"
-          />
-          <Route
-            element={<VideoSubmissionShow />}
-            path="courses/:courseId/videos/:videoId/submissions/:submissionId"
-          />
-          <Route
-            element={<VideoSubmissionEdit />}
-            path="courses/:courseId/videos/:videoId/submissions/:submissionId/edit"
-          />
+            <Route element={<VideosIndex />} path="courses/:courseId/videos" />
+            <Route
+              element={<VideoShow />}
+              path="courses/:courseId/videos/:videoId"
+            />
+            <Route
+              element={<VideoSubmissionsIndex />}
+              path="courses/:courseId/videos/:videoId/submissions"
+            />
+            <Route
+              element={<VideoSubmissionShow />}
+              path="courses/:courseId/videos/:videoId/submissions/:submissionId"
+            />
+            <Route
+              element={<VideoSubmissionEdit />}
+              path="courses/:courseId/videos/:videoId/submissions/:submissionId/edit"
+            />
 
-          <Route element={<UserShow />} path="/users/:userId" />
+            <Route element={<UserShow />} path="/users/:userId" />
 
-          <Route
-            element={
-              <div>
-                <NotificationPopup />
-                <Level />
-              </div>
-            }
-            path="/courses/:courseId/levels"
-          />
+            <Route
+              element={
+                <div>
+                  <NotificationPopup />
+                  <Level />
+                </div>
+              }
+              path="/courses/:courseId/levels"
+            />
 
-          <Route element={<GroupIndex />} path="courses/:courseId/groups">
-            <Route element={<GroupShow />} path=":groupCategoryId" />
+            <Route element={<GroupIndex />} path="courses/:courseId/groups">
+              <Route element={<GroupShow />} path=":groupCategoryId" />
+            </Route>
+
+            <Route
+              element={<StatisticsIndex />}
+              path="/courses/:courseId/statistics"
+            />
+
+            <Route element={<UsersIndex />} path="/courses/:courseId/users" />
+            <Route
+              element={<UserShow />}
+              path="/courses/:courseId/users/:userId"
+            />
+            <Route
+              element={<ManageStudents />}
+              path="/courses/:courseId/students"
+            />
+            <Route
+              element={<UserRequests />}
+              path="/courses/:courseId/enrol_requests"
+            />
+            <Route
+              element={<InviteUsers />}
+              path="/courses/:courseId/users/invite/"
+            />
+            <Route
+              element={<InvitationsIndex />}
+              path="/courses/:courseId/user_invitations"
+            />
+            <Route element={<ManageStaff />} path="/courses/:courseId/staff" />
+            <Route
+              element={<PersonalTimes />}
+              path="/courses/:courseId/users/personal_times"
+            />
+            <Route
+              element={<PersonalTimesShow />}
+              path="/courses/:courseId/users/:userId/personal_times"
+            />
+            <Route
+              element={<ExperiencePointsRecords />}
+              path="/courses/:courseId/users/:userId/experience_points_records"
+            />
+
+            <Route
+              element={<DisbursementIndex />}
+              path="users/disburse_experience_points"
+            />
           </Route>
-
-          <Route
-            element={<StatisticsIndex />}
-            path="/courses/:courseId/statistics"
-          />
-
-          <Route element={<UsersIndex />} path="/courses/:courseId/users" />
-          <Route
-            element={<UserShow />}
-            path="/courses/:courseId/users/:userId"
-          />
-          <Route
-            element={<ManageStudents />}
-            path="/courses/:courseId/students"
-          />
-          <Route
-            element={<UserRequests />}
-            path="/courses/:courseId/enrol_requests"
-          />
-          <Route
-            element={<InviteUsers />}
-            path="/courses/:courseId/users/invite/"
-          />
-          <Route
-            element={<InvitationsIndex />}
-            path="/courses/:courseId/user_invitations"
-          />
-          <Route element={<ManageStaff />} path="/courses/:courseId/staff" />
-          <Route
-            element={<PersonalTimes />}
-            path="/courses/:courseId/users/personal_times"
-          />
-          <Route
-            element={<PersonalTimesShow />}
-            path="/courses/:courseId/users/:userId/personal_times"
-          />
-          <Route
-            element={<ExperiencePointsRecords />}
-            path="/courses/:courseId/users/:userId/experience_points_records"
-          />
         </Routes>
       </BrowserRouter>
     </App>

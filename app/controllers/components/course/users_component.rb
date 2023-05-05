@@ -39,6 +39,7 @@ class Course::UsersComponent < SimpleDelegator
 
     [
       {
+        key: :manage_users,
         icon: 'user-plus',
         title: t('layouts.course_users.title'),
         type: :admin,

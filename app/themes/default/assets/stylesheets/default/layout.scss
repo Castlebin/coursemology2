@@ -1,9 +1,5 @@
-@import 'application';
-@import 'pygments-css/github';
-
-body {
-  padding-top: $navbar-height + $navbar-margin-bottom;
-}
+@import "application";
+@import "pygments-css/github";
 
 .navbar {
   .courses-menu {

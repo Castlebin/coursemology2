@@ -14,7 +14,7 @@
   }
 
   .key {
-    @apply rounded-xl border border-solid py-0.5 px-2;
+    @apply rounded-xl border border-solid px-2 py-0.5;
   }
 
   /* For Firefox 64+ and Firefox for Android 64+ */

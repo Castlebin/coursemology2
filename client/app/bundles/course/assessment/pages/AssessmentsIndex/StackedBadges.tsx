@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { Avatar, Tooltip, Typography } from '@mui/material';
-import { AssessmentListData } from 'types/course/assessment/assessments';
+import { AchievementBadgeData } from 'types/course/assessment/assessments';
 
 import Link from 'lib/components/core/Link';
 import useTranslation from 'lib/hooks/useTranslation';
@@ -15,7 +15,7 @@ interface StackableBadgeProps {
 }
 
 interface StackedBadgesProps {
-  badges?: AssessmentListData['topConditionals'];
+  badges?: AchievementBadgeData[];
   remainingCount?: number;
   assessmentUrl?: string;
 }
