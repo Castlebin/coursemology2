@@ -38,6 +38,15 @@ import Level from 'bundles/course/level/pages/Level';
 import GroupIndex from 'bundles/course/group/pages/GroupIndex';
 import GroupShow from 'bundles/course/group/pages/GroupShow';
 import StatisticsIndex from 'bundles/course/statistics/pages/StatisticsIndex';
+import UsersIndex from 'bundles/course/users/pages/UsersIndex';
+import ManageStudents from 'bundles/course/users/pages/ManageStudents';
+import UserRequests from 'bundles/course/enrol-requests/pages/UserRequests';
+import InviteUsers from 'bundles/course/user-invitations/pages/InviteUsers';
+import InvitationsIndex from 'bundles/course/user-invitations/pages/InvitationsIndex';
+import ManageStaff from 'bundles/course/users/pages/ManageStaff';
+import PersonalTimes from 'bundles/course/users/pages/PersonalTimes';
+import PersonalTimesShow from 'bundles/course/users/pages/PersonalTimesShow';
+import ExperiencePointsRecords from 'bundles/course/users/pages/ExperiencePointsRecords';
 
 const RoutedApp = (): JSX.Element => {
   return (
@@ -196,6 +205,41 @@ const RoutedApp = (): JSX.Element => {
           <Route
             element={<StatisticsIndex />}
             path="/courses/:courseId/statistics"
+          />
+
+          <Route element={<UsersIndex />} path="/courses/:courseId/users" />
+          <Route
+            element={<UserShow />}
+            path="/courses/:courseId/users/:userId"
+          />
+          <Route
+            element={<ManageStudents />}
+            path="/courses/:courseId/students"
+          />
+          <Route
+            element={<UserRequests />}
+            path="/courses/:courseId/enrol_requests"
+          />
+          <Route
+            element={<InviteUsers />}
+            path="/courses/:courseId/users/invite/"
+          />
+          <Route
+            element={<InvitationsIndex />}
+            path="/courses/:courseId/user_invitations"
+          />
+          <Route element={<ManageStaff />} path="/courses/:courseId/staff" />
+          <Route
+            element={<PersonalTimes />}
+            path="/courses/:courseId/users/personal_times"
+          />
+          <Route
+            element={<PersonalTimesShow />}
+            path="/courses/:courseId/users/:userId/personal_times"
+          />
+          <Route
+            element={<ExperiencePointsRecords />}
+            path="/courses/:courseId/users/:userId/experience_points_records"
           />
         </Routes>
       </BrowserRouter>

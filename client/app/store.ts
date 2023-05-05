@@ -20,6 +20,7 @@ import levelsReducer from './bundles/course/level/store';
 import notificationPopupReducer from 'lib/reducers/notificationPopup';
 import groupsReducer from './bundles/course/group/store';
 import statisticsReducer from './bundles/course/statistics/store';
+import usersReducer from './bundles/course/users/store';
 
 enableMapSet();
 
@@ -45,6 +46,7 @@ const rootReducer = combineReducers({
   levels: levelsReducer,
   notificationPopup: notificationPopupReducer,
   statistics: statisticsReducer,
+  users: usersReducer,
 });
 
 export const store = configureStore({

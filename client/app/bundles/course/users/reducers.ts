@@ -21,10 +21,10 @@ import {
   UPDATE_PERSONAL_TIME,
   UPDATE_USER_OPTION,
   UsersActionType,
-  UsersState,
+  UsersState2,
 } from './types';
 
-const initialState: UsersState = {
+const initialState: UsersState2 = {
   users: createEntityStore(),
   userOptions: createEntityStore(),
   permissions: {
@@ -48,7 +48,7 @@ const initialState: UsersState = {
   timelines: {},
 };
 
-const reducer = produce((draft: UsersState, action: UsersActionType) => {
+const reducer = produce((draft: UsersState2, action: UsersActionType) => {
   switch (action.type) {
     case SAVE_USER_LIST: {
       const userList = action.userList;

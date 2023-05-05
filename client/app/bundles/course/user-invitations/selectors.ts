@@ -3,7 +3,7 @@ import { AppState } from 'types/store';
 import { selectMiniEntities } from 'utilities/store';
 
 function getLocalState(state: AppState) {
-  return state.invitations;
+  return state.users.invitations;
 }
 
 export function getAllInvitationsMiniEntities(state: AppState) {

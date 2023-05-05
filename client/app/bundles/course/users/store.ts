@@ -1,31 +1,167 @@
-import { enableMapSet } from 'immer';
-import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
-import thunkMiddleware from 'redux-thunk';
+import { combineReducers } from '@reduxjs/toolkit';
 
 import enrolRequestsReducer from '../enrol-requests/reducers';
 import invitationsReducer from '../user-invitations/reducers';
-
 import usersReducer from './reducers';
 
-const defaultReducers = {};
+import {
+  CourseUserBasicListData,
+  CourseUserData,
+  CourseUserListData,
+  ManageCourseUsersPermissions,
+  ManageCourseUsersSharedData,
+} from 'types/course/courseUsers';
+import { ExperiencePointsRecordListData } from 'types/course/experiencePointsRecords';
+import { PersonalTimeListData } from 'types/course/personalTimes';
+import { TimelineData } from 'types/course/referenceTimelines';
 
-const rootReducer = combineReducers({
+import {
+  DELETE_EXPERIENCE_POINTS_RECORD,
+  DELETE_PERSONAL_TIME,
+  DELETE_USER,
+  DELETE_USER_OPTION,
+  DeleteExperiencePointsRecordAction,
+  DeletePersonalTimeAction,
+  DeleteUserAction,
+  DeleteUserOptionAction,
+  SAVE_EXPERIENCE_POINTS_RECORD_LIST,
+  SAVE_MANAGE_USER_LIST,
+  SAVE_PERSONAL_TIME_LIST,
+  SAVE_USER,
+  SAVE_USER_LIST,
+  SaveExperiencePointsRecordListAction,
+  SaveManageUserListAction,
+  SavePersonalTimeListAction,
+  SaveUserAction,
+  SaveUserListAction,
+  UPDATE_EXPERIENCE_POINTS_RECORD,
+  UPDATE_PERSONAL_TIME,
+  UPDATE_USER_OPTION,
+  UpdateExperiencePointsRecordAction,
+  UpdatePersonalTimeAction,
+  UpdateUserOptionAction,
+} from './types';
+
+const reducer = combineReducers({
   users: usersReducer,
   invitations: invitationsReducer,
   enrolRequests: enrolRequestsReducer,
 });
 
-enableMapSet();
+export const actions = {
+  saveUserList: (
+    userList: CourseUserListData[],
+    manageCourseUsersPermissions: ManageCourseUsersPermissions,
+  ): SaveUserListAction => {
+    return {
+      type: SAVE_USER_LIST,
+      userList,
+      manageCourseUsersPermissions,
+    };
+  },
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function configureStore(): any {
-  const storeCreator =
-    // @ts-ignore: ignore ts warning for process
-    process.env.NODE_ENV === 'development'
-      ? compose(
-          /* eslint-disable-next-line global-require, import/no-extraneous-dependencies */ // @ts-ignore: ignore ts warning for require
-          applyMiddleware(thunkMiddleware, require('redux-logger').logger),
-        )(createStore)
-      : compose(applyMiddleware(thunkMiddleware))(createStore);
-  return storeCreator(rootReducer, defaultReducers);
-}
+  saveManageUserList: (
+    userList: CourseUserListData[],
+    manageCourseUsersPermissions: ManageCourseUsersPermissions,
+    manageCourseUsersData: ManageCourseUsersSharedData,
+    userOptions: CourseUserBasicListData[] = [],
+    timelines?: Record<TimelineData['id'], string>,
+  ): SaveManageUserListAction => {
+    return {
+      type: SAVE_MANAGE_USER_LIST,
+      userList,
+      manageCourseUsersPermissions,
+      manageCourseUsersData,
+      userOptions,
+      timelines,
+    };
+  },
+
+  deleteUser: (userId: number): DeleteUserAction => {
+    return {
+      type: DELETE_USER,
+      userId,
+    };
+  },
+
+  saveUser: (user: CourseUserData): SaveUserAction => {
+    return {
+      type: SAVE_USER,
+      user,
+    };
+  },
+
+  savePersonalTimeList: (
+    personalTimes: PersonalTimeListData[],
+  ): SavePersonalTimeListAction => {
+    return {
+      type: SAVE_PERSONAL_TIME_LIST,
+      personalTimes,
+    };
+  },
+
+  updatePersonalTime: (
+    personalTime: PersonalTimeListData,
+  ): UpdatePersonalTimeAction => {
+    return {
+      type: UPDATE_PERSONAL_TIME,
+      personalTime,
+    };
+  },
+
+  deletePersonalTime: (personalTimeId: number): DeletePersonalTimeAction => {
+    return {
+      type: DELETE_PERSONAL_TIME,
+      personalTimeId,
+    };
+  },
+
+  updateUserOption: (
+    userOption: CourseUserBasicListData,
+  ): UpdateUserOptionAction => {
+    return {
+      type: UPDATE_USER_OPTION,
+      userOption,
+    };
+  },
+
+  deleteUserOption: (id: number): DeleteUserOptionAction => {
+    return {
+      type: DELETE_USER_OPTION,
+      id,
+    };
+  },
+
+  saveExperiencePointsRecordList: (
+    courseUserName: string,
+    rowCount: number,
+    experiencePointRecords: ExperiencePointsRecordListData[],
+  ): SaveExperiencePointsRecordListAction => {
+    return {
+      type: SAVE_EXPERIENCE_POINTS_RECORD_LIST,
+      courseUserName,
+      rowCount,
+      experiencePointRecords,
+    };
+  },
+
+  updateExperiencePointsRecord: (
+    data: ExperiencePointsRecordListData,
+  ): UpdateExperiencePointsRecordAction => {
+    return {
+      type: UPDATE_EXPERIENCE_POINTS_RECORD,
+      data,
+    };
+  },
+
+  deleteExperiencePointsRecord: (
+    id: number,
+  ): DeleteExperiencePointsRecordAction => {
+    return {
+      type: DELETE_EXPERIENCE_POINTS_RECORD,
+      id,
+    };
+  },
+};
+
+export default reducer;

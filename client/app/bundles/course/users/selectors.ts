@@ -9,7 +9,7 @@ import {
 import { STAFF_ROLES } from 'lib/constants/sharedConstants';
 
 function getLocalState(state: AppState) {
-  return state.users;
+  return state.users.users;
 }
 
 export function getUserMiniEntity(state: AppState, id: SelectionKey) {
