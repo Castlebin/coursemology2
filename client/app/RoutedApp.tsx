@@ -37,6 +37,7 @@ import NotificationPopup from 'lib/containers/NotificationPopup';
 import Level from 'bundles/course/level/pages/Level';
 import GroupIndex from 'bundles/course/group/pages/GroupIndex';
 import GroupShow from 'bundles/course/group/pages/GroupShow';
+import StatisticsIndex from 'bundles/course/statistics/pages/StatisticsIndex';
 
 const RoutedApp = (): JSX.Element => {
   return (
@@ -191,6 +192,11 @@ const RoutedApp = (): JSX.Element => {
           <Route element={<GroupIndex />} path="courses/:courseId/groups">
             <Route element={<GroupShow />} path=":groupCategoryId" />
           </Route>
+
+          <Route
+            element={<StatisticsIndex />}
+            path="/courses/:courseId/statistics"
+          />
         </Routes>
       </BrowserRouter>
     </App>

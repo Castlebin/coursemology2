@@ -19,6 +19,7 @@ import globalUserReducer from './bundles/users/store';
 import levelsReducer from './bundles/course/level/store';
 import notificationPopupReducer from 'lib/reducers/notificationPopup';
 import groupsReducer from './bundles/course/group/store';
+import statisticsReducer from './bundles/course/statistics/store';
 
 enableMapSet();
 
@@ -43,6 +44,7 @@ const rootReducer = combineReducers({
   videos: videosReducer,
   levels: levelsReducer,
   notificationPopup: notificationPopupReducer,
+  statistics: statisticsReducer,
 });
 
 export const store = configureStore({

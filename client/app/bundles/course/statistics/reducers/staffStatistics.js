@@ -6,7 +6,7 @@ const initialState = {
   staff: [],
 };
 
-export default function (state = initialState, action) {
+const reducer = (state = initialState, action) => {
   const { type } = action;
 
   switch (type) {
@@ -30,4 +30,6 @@ export default function (state = initialState, action) {
     default:
       return state;
   }
-}
+};
+
+export default reducer;

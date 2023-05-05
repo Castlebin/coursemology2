@@ -10,12 +10,7 @@ import NotificationBar from 'lib/components/core/NotificationBar';
 import PageHeader from 'lib/components/navigation/PageHeader';
 import useTranslation from 'lib/hooks/useTranslation';
 
-import {
-  fetchCoursePerformanceStatistics,
-  fetchCourseProgressionStatistics,
-  fetchStaffStatistics,
-  fetchStudentsStatistics,
-} from '../../actions';
+import { actions } from '../../store';
 import { courseIndexShape } from '../../propTypes/course';
 import { staffIndexShape } from '../../propTypes/staff';
 import { studentsIndexShape } from '../../propTypes/students';
@@ -97,7 +92,7 @@ const StatisticsIndex = ({
 
   useEffect(() => {
     dispatch(
-      fetchCourseProgressionStatistics(
+      actions.fetchCourseProgressionStatistics(
         t(translations.courseProgressionFailure),
       ),
     );
@@ -105,18 +100,18 @@ const StatisticsIndex = ({
 
   useEffect(() => {
     dispatch(
-      fetchCoursePerformanceStatistics(
+      actions.fetchCoursePerformanceStatistics(
         t(translations.coursePerformanceFailure),
       ),
     );
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(fetchStudentsStatistics(t(translations.studentsFailure)));
+    dispatch(actions.fetchStudentsStatistics(t(translations.studentsFailure)));
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(fetchStaffStatistics(t(translations.staffFailure)));
+    dispatch(actions.fetchStaffStatistics(t(translations.staffFailure)));
   }, [dispatch]);
 
   const handleChange = (_event, newValue) => {
@@ -161,7 +156,7 @@ StatisticsIndex.propTypes = {
 };
 
 export default connect((state) => ({
-  courseStatistics: state.courseStatistics,
-  studentsStatistics: state.studentsStatistics,
-  staffStatistics: state.staffStatistics,
+  courseStatistics: state.statistics.courseStatistics,
+  studentsStatistics: state.statistics.studentsStatistics,
+  staffStatistics: state.statistics.staffStatistics,
 }))(StatisticsIndex);
