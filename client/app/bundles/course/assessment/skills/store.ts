@@ -75,7 +75,6 @@ const reducer = produce((draft: SkillState, action: SkillsActionType) => {
     }
     case DELETE_SKILL: {
       const skillId = action.id;
-      console.log(skillId);
       if (draft.skills.byId[skillId]) {
         removeFromStore(draft.skills, skillId);
       }

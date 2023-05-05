@@ -11,7 +11,7 @@ import NotificationBar, {
   notificationShape,
 } from 'lib/components/core/NotificationBar';
 
-import { fetchCourseUsers, fetchGroupData } from '../../actions';
+import { actions } from '../../store';
 import actionTypes from '../../constants';
 import { categoryShape, groupShape } from '../../propTypes';
 
@@ -60,14 +60,14 @@ const Category = ({
 
   useEffect(() => {
     if (groupCategoryId) {
-      dispatch(fetchGroupData(groupCategoryId));
+      dispatch(actions.fetchGroupData(groupCategoryId));
     }
   }, [groupCategoryId]);
 
   // This is done as a separate call since it shouldn't slow down the render
   useEffect(() => {
     if (groupCategoryId) {
-      dispatch(fetchCourseUsers(groupCategoryId));
+      dispatch(actions.fetchCourseUsers(groupCategoryId));
     }
   }, [groupCategoryId]);
 
@@ -133,12 +133,12 @@ Category.propTypes = {
 };
 
 export default connect((state) => ({
-  isFetching: state.groupsFetch.isFetching,
-  hasFetchError: state.groupsFetch.hasFetchError,
-  groupCategory: state.groupsFetch.groupCategory,
-  groups: state.groupsFetch.groups,
-  canManageCategory: state.groupsFetch.canManageCategory,
-  canManageGroups: state.groupsFetch.canManageGroups,
+  isFetching: state.groups.isFetching,
+  hasFetchError: state.groups.hasFetchError,
+  groupCategory: state.groups.groupCategory,
+  groups: state.groups.groups,
+  canManageCategory: state.groups.canManageCategory,
+  canManageGroups: state.groups.canManageGroups,
   notification: state.notificationPopup,
-  isManagingGroups: state.groupsManage.isManagingGroups,
+  isManagingGroups: state.groups.isManagingGroups,
 }))(Category);

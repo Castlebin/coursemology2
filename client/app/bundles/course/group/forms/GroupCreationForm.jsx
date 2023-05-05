@@ -293,5 +293,7 @@ GroupCreationForm.propTypes = {
 };
 
 export default connect((state) => ({
-  ...state.groupsDialog,
+  isShown: state.groups.isShown,
+  dialogType: state.groups.dialogType,
+  isDisabled: state.groups.isDisabled,
 }))(GroupCreationForm);

@@ -194,6 +194,6 @@ ChangeSummaryTable.propTypes = {
 };
 
 export default connect((state) => ({
-  groups: state.groupsFetch.groups,
-  modifiedGroups: state.groupsManage.modifiedGroups,
+  groups: state.groups.groups,
+  modifiedGroups: state.groups.modifiedGroups,
 }))(ChangeSummaryTable);

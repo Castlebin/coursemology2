@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 import NotificationPopup from 'lib/containers/NotificationPopup';
 
-import { createCategory } from '../../actions';
+import { actions } from '../../store';
 import actionTypes, { dialogTypes } from '../../constants';
 import GroupFormDialog from '../../forms/GroupFormDialog';
 import NameDescriptionForm from '../../forms/NameDescriptionForm';
@@ -38,7 +38,7 @@ const PopupDialog = ({ dispatch, intl, isManagingGroups }) => {
   const onFormSubmit = useCallback(
     (data, setError) =>
       dispatch(
-        createCategory(
+        actions.createCategory(
           data,
           intl.formatMessage(translations.success),
           intl.formatMessage(translations.failure),
@@ -93,5 +93,5 @@ PopupDialog.propTypes = {
 };
 
 export default connect((state) => ({
-  isManagingGroups: state.groupsManage.isManagingGroups,
+  isManagingGroups: state.groups.isManagingGroups,
 }))(injectIntl(PopupDialog));

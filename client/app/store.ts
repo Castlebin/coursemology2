@@ -18,6 +18,7 @@ import videosReducer from './bundles/course/video/store';
 import globalUserReducer from './bundles/users/store';
 import levelsReducer from './bundles/course/level/store';
 import notificationPopupReducer from 'lib/reducers/notificationPopup';
+import groupsReducer from './bundles/course/group/store';
 
 enableMapSet();
 
@@ -35,6 +36,7 @@ const rootReducer = combineReducers({
   courses: coursesReducer,
   comments: commentsReducer,
   forums: forumsReducer,
+  groups: groupsReducer,
   leaderboard: leaderboardReducer,
   learningMap: learningMapReducer,
   folders: foldersReducer,

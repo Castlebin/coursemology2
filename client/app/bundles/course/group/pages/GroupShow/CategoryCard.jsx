@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 import ConfirmationDialog from 'lib/components/core/dialogs/ConfirmationDialog';
 
-import { deleteCategory, updateCategory } from '../../actions';
+import { actions } from '../../store';
 import GroupCard from '../../components/GroupCard';
 import actionTypes, { dialogTypes } from '../../constants';
 import GroupFormDialog from '../../forms/GroupFormDialog';
@@ -78,7 +78,7 @@ const CategoryCard = ({
         return undefined;
       }
       return dispatch(
-        updateCategory(
+        actions.updateCategory(
           category.id,
           data,
           intl.formatMessage(translations.updateSuccess, {
@@ -104,7 +104,7 @@ const CategoryCard = ({
     }
 
     return dispatch(
-      deleteCategory(
+      actions.deleteCategory(
         category.id,
         intl.formatMessage(translations.deleteSuccess, {
           categoryName: category.name,

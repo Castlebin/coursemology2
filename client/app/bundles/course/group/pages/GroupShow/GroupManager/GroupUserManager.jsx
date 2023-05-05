@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 
 import ConfirmationDialog from 'lib/components/core/dialogs/ConfirmationDialog';
 
-import { deleteGroup, updateGroup } from '../../../actions';
+import { actions } from 'bundles/course/group/store';
 import GroupCard from '../../../components/GroupCard';
 import actionTypes, { dialogTypes } from '../../../constants';
 import GroupFormDialog from '../../../forms/GroupFormDialog';
@@ -238,7 +238,7 @@ const GroupUserManager = ({
   const onFormSubmit = useCallback(
     (data, setError) =>
       dispatch(
-        updateGroup(
+        actions.updateGroup(
           categoryId,
           group.id,
           data,
@@ -262,7 +262,7 @@ const GroupUserManager = ({
   const handleDelete = useCallback(
     () =>
       dispatch(
-        deleteGroup(
+        actions.deleteGroup(
           categoryId,
           group.id,
           intl.formatMessage(translations.deleteSuccess, {
@@ -533,8 +533,8 @@ GroupUserManager.propTypes = {
 };
 
 export default connect((state) => ({
-  courseUsers: state.groupsManage.courseUsers,
-  originalGroup: state.groupsFetch.groups.find(
-    (g) => g.id === state.groupsManage.selectedGroupId,
+  courseUsers: state.groups.courseUsers,
+  originalGroup: state.groups.groups.find(
+    (g) => g.id === state.groups.selectedGroupId,
   ),
 }))(injectIntl(GroupUserManager));

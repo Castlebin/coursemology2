@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 import ConfirmationDialog from 'lib/components/core/dialogs/ConfirmationDialog';
 
-import { createGroups, updateGroupMembers } from '../../../actions';
+import { actions } from 'bundles/course/group/store';
 import GroupCard from '../../../components/GroupCard';
 import actionTypes, { dialogTypes } from '../../../constants';
 import GroupCreationForm from '../../../forms/GroupCreationForm';
@@ -173,7 +173,7 @@ const GroupManager = ({
       const existingNames = new Set(groups.map((g) => g.name));
       const groupData = getGroupData(data, existingNames);
       return dispatch(
-        createGroups(
+        actions.createGroups(
           category.id,
           { groups: groupData },
           getCreateGroupMessage(intl),
@@ -211,7 +211,7 @@ const GroupManager = ({
       }),
     );
     return dispatch(
-      updateGroupMembers(
+      actions.updateGroupMembers(
         category.id,
         { groups: finalGroups },
         intl.formatMessage(translations.updateMembersSuccess),
@@ -376,7 +376,7 @@ GroupManager.propTypes = {
 };
 
 export default connect((state) => ({
-  selectedGroupId: state.groupsManage.selectedGroupId,
-  modifiedGroups: state.groupsManage.modifiedGroups,
-  isUpdating: state.groupsManage.isUpdating,
+  selectedGroupId: state.groups.selectedGroupId,
+  modifiedGroups: state.groups.modifiedGroups,
+  isUpdating: state.groups.isUpdating,
 }))(injectIntl(GroupManager));
