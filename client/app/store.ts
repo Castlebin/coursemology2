@@ -21,6 +21,8 @@ import notificationPopupReducer from 'lib/reducers/notificationPopup';
 import groupsReducer from './bundles/course/group/store';
 import statisticsReducer from './bundles/course/statistics/store';
 import usersReducer from './bundles/course/users/store';
+import invitationsReducer from './bundles/course/user-invitations/store';
+import enrolRequestsReducer from './bundles/course/enrol-requests/store';
 
 enableMapSet();
 
@@ -47,6 +49,8 @@ const rootReducer = combineReducers({
   notificationPopup: notificationPopupReducer,
   statistics: statisticsReducer,
   users: usersReducer,
+  invitations: invitationsReducer,
+  enrolRequests: enrolRequestsReducer,
 });
 
 export const store = configureStore({

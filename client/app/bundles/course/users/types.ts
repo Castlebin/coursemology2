@@ -19,8 +19,6 @@ import {
 } from 'types/course/personalTimes';
 import { TimelineData } from 'types/course/referenceTimelines';
 import { EntityStore } from 'types/store';
-import { InvitationsState } from '../user-invitations/types';
-import { EnrolRequestsState } from '../enrol-requests/types';
 
 // Action Names
 export const SAVE_USER_LIST = 'course/users/SAVE_USER_LIST';
@@ -120,7 +118,7 @@ export type UsersActionType =
   | DeleteExperiencePointsRecordAction;
 
 // State Types
-export interface UsersState2 {
+export interface UsersState {
   users: EntityStore<CourseUserMiniEntity, CourseUserEntity>;
   userOptions: EntityStore<CourseUserBasicMiniEntity, CourseUserEntity>;
   permissions: ManageCourseUsersPermissions;
@@ -132,10 +130,4 @@ export interface UsersState2 {
   >;
   experiencePointsRecordsSettings: ExperiencePointsRecordSettings;
   timelines?: Record<TimelineData['id'], string>;
-}
-
-export interface UsersState {
-  users: UsersState2;
-  invitations: InvitationsState;
-  enrolRequests: EnrolRequestsState;
 }

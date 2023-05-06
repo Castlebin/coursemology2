@@ -4,7 +4,7 @@ import { AppState } from 'types/store';
 import { selectMiniEntities } from 'utilities/store';
 
 function getLocalState(state: AppState) {
-  return state.users.enrolRequests;
+  return state.enrolRequests;
 }
 
 export function getAllEnrolRequestEntities(state: AppState) {

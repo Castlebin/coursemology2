@@ -8,7 +8,7 @@ import { Operation } from 'types/store';
 
 import CourseAPI from 'api/course';
 
-import * as actions from './actions';
+import { actions } from './store';
 
 /**
  * Prepares and maps answer value in the react-hook-form into server side format.
@@ -59,7 +59,7 @@ export function fetchInvitations(): Operation {
 export function fetchPermissionsAndSharedData(): Operation {
   return async (dispatch) =>
     CourseAPI.userInvitations.getPermissionsAndSharedData().then((response) => {
-      dispatch(actions.savePermissions(response.data.permissions));
+      dispatch(actions.savePermission(response.data.permissions));
       dispatch(actions.saveSharedData(response.data.manageCourseUsersData));
     });
 }
