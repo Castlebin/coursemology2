@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom';
 import {
   AddCircle,
   AddCircleOutlineOutlined,
@@ -17,12 +18,16 @@ import {
   ForumOutlined,
   Groups,
   GroupsOutlined,
+  Home,
+  HomeOutlined,
   InsertChart,
   InsertChartOutlined,
   Leaderboard,
   LeaderboardOutlined,
   ManageAccounts,
   ManageAccountsOutlined,
+  Map as MapIcon,
+  MapOutlined,
   OfflineBolt,
   OfflineBoltOutlined,
   People,
@@ -44,7 +49,6 @@ import {
   ViewTimelineOutlined,
 } from '@mui/icons-material';
 import { Badge, Typography } from '@mui/material';
-import { Link, NavLink } from 'react-router-dom';
 import { SidebarItemData } from 'types/course/courses';
 
 const SIDEBAR_ICONS: Record<
@@ -72,6 +76,8 @@ const SIDEBAR_ICONS: Record<
   bolt: [OfflineBoltOutlined, OfflineBolt],
   random: [ViewTimelineOutlined, ViewTimeline],
   gear: [SettingsOutlined, Settings],
+  home: [HomeOutlined, Home],
+  map: [MapOutlined, MapIcon],
 };
 
 interface SidebarItemProps {
@@ -85,7 +91,7 @@ const SidebarItem = (props: SidebarItemProps): JSX.Element => {
   return (
     <NavLink
       className={({ isActive }): string =>
-        `no-underline ${isActive ? 'text-sky-800' : 'text-inherit'}`
+        `no-underline ${isActive ? 'text-primary' : 'text-inherit'}`
       }
       end
       to={item.path}
@@ -95,9 +101,13 @@ const SidebarItem = (props: SidebarItemProps): JSX.Element => {
 
         return (
           <div
-            className={`flex select-none items-center space-x-5 p-4 hover:bg-neutral-200 active:bg-neutral-300 ${
+            className={`flex select-none items-center space-x-5 p-4 transition-transform active:scale-95 active:rounded-xl ${
               !square ? 'rounded-xl' : ''
-            } ${isActive ? 'bg-sky-100' : ''}`}
+            } ${
+              isActive
+                ? 'bg-primary/10 hover:bg-primary/20 active:bg-primary/30'
+                : 'hover:bg-neutral-200 active:bg-neutral-300'
+            }`}
             role="button"
           >
             <Badge

@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 
-import { StoreProviderWrapper } from 'lib/components/wrappers/ProviderWrapper';
+import StoreProvider from 'lib/components/wrappers/StoreProvider';
 
 import LogsIndex from './pages/LogsIndex';
 import SubmissionEditIndex from './pages/SubmissionEditIndex';
@@ -16,13 +16,13 @@ const SubmissionRoutesWithStore = () => {
     '/courses/:courseId/assessments/:assessmentId/submissions/:submissionId/logs';
 
   return (
-    <StoreProviderWrapper store={store}>
+    <StoreProvider store={store}>
       <Routes>
         <Route element={<SubmissionsIndex />} exact path={submissionsIndex} />
         <Route element={<SubmissionEditIndex />} exact path={submissionEdit} />
         <Route element={<LogsIndex />} exact path={logs} />
       </Routes>
-    </StoreProviderWrapper>
+    </StoreProvider>
   );
 };
 

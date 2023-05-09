@@ -1,6 +1,5 @@
 import {
   AnnouncementData,
-  AnnouncementListData,
   AnnouncementPermissions,
 } from 'types/course/announcements';
 import { CourseListData, CourseStats } from 'types/system/courses';
@@ -41,7 +40,7 @@ import {
 } from './types';
 
 export function saveAnnouncementList(
-  announcementList: AnnouncementListData[],
+  announcementList: AnnouncementData[],
   announcementPermissions: AnnouncementPermissions,
 ): SaveAnnouncementListAction {
   return {

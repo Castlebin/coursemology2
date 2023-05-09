@@ -1,12 +1,13 @@
+import { ExpandMore } from '@mui/icons-material';
 import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
   Typography,
 } from '@mui/material';
-import SidebarItem from './SidebarItem';
 import { SidebarItemData } from 'types/course/courses';
-import { ExpandMore } from '@mui/icons-material';
+
+import SidebarItem from './SidebarItem';
 
 interface SidebarAccordionProps {
   containing: SidebarItemData[];

@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import SubmissionsIndex from 'bundles/course/assessment/submissions/pages/SubmissionsIndex';
 import DisbursementIndex from 'bundles/course/experience-points/disbursement/pages/DisbursementIndex';
@@ -48,7 +48,55 @@ import PersonalTimesShow from 'bundles/course/users/pages/PersonalTimesShow';
 import ExperiencePointsRecords from 'bundles/course/users/pages/ExperiencePointsRecords';
 
 import App from './App';
+import AppContainer from './AppContainer';
 import CourseContainer from './CourseContainer';
+import AppIndex from './AppIndex';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <AppContainer />,
+    loader: AppContainer.loader,
+    children: [
+      {
+        index: true,
+        element: <AppIndex />,
+      },
+      {
+        path: '/courses/:courseId',
+        element: <CourseContainer />,
+        loader: CourseContainer.loader,
+        handle: 'Home',
+        children: [
+          {
+            path: 'assessments',
+            handle: 'Assessments',
+            children: [
+              {
+                path: 'submissions',
+                handle: 'Submissions',
+                element: <SubmissionsIndex />,
+              },
+            ],
+          },
+          {
+            path: 'timelines',
+            element: <TimelineDesigner />,
+          },
+          {
+            path: 'users',
+            children: [
+              {
+                path: 'disburse_experience_points',
+                element: <DisbursementIndex />,
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+]);
 
 const RoutedApp = (): JSX.Element => {
   return (
@@ -252,6 +300,7 @@ const RoutedApp = (): JSX.Element => {
           </Route>
         </Routes>
       </BrowserRouter>
+      <RouterProvider router={router} />
     </App>
   );
 };

@@ -14,8 +14,12 @@ export type AnnouncementListDataPermissions = Permissions<
 export interface AnnouncementListData {
   id: number;
   title: string;
-  content: string; // HTML String
+  content: string;
   startTime: string;
+  markAsReadUrl: string;
+}
+
+export interface AnnouncementData extends AnnouncementListData {
   endTime: string;
   creator: CourseUserBasicListData;
   isUnread: boolean;
@@ -24,13 +28,15 @@ export interface AnnouncementListData {
   permissions: AnnouncementListDataPermissions;
 }
 
-export interface AnnouncementData extends AnnouncementListData {}
-
 export interface AnnouncementMiniEntity {
   id: number;
   title: string;
-  content: string; // HTML String
+  content: string;
   startTime: string;
+  markAsReadUrl: string;
+}
+
+export interface AnnouncementEntity extends AnnouncementMiniEntity {
   endTime: string;
   creator: CourseUserBasicMiniEntity;
   isUnread: boolean;
@@ -39,7 +45,6 @@ export interface AnnouncementMiniEntity {
   permissions: AnnouncementListDataPermissions;
 }
 
-export interface AnnouncementEntity extends AnnouncementMiniEntity {}
 export interface AnnouncementFormData {
   id?: number;
   title: string;

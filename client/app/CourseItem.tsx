@@ -1,21 +1,19 @@
-import { Add } from '@mui/icons-material';
+import { useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Avatar,
   Divider,
   List,
   ListItem,
   ListItemButton,
-  ListItemIcon,
   ListItemText,
   ListSubheader,
   Popover,
   Typography,
 } from '@mui/material';
-import SearchField from 'lib/components/core/fields/SearchField';
-import TextField from 'lib/components/core/fields/TextField';
-import { useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { CourseLayoutData } from 'types/course/courses';
+
+import SearchField from 'lib/components/core/fields/SearchField';
 
 interface CourseItemProps {
   in: CourseLayoutData;
@@ -35,6 +33,8 @@ const CourseItem = (props: CourseItemProps): JSX.Element => {
       course.title.toLowerCase().includes(filterCourseKeyword.toLowerCase()),
     );
   }, [filterCourseKeyword]);
+
+  const closePopup = (): void => setAnchorElement(undefined);
 
   return (
     <>
@@ -59,7 +59,9 @@ const CourseItem = (props: CourseItemProps): JSX.Element => {
       <Popover
         anchorEl={anchorElement}
         anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-        classes={{ paper: 'max-w-[50rem] rounded-xl shadow-lg' }}
+        classes={{
+          paper: 'max-w-[50rem] sm:max-w-full rounded-xl shadow-lg mr-[1.6rem]',
+        }}
         onClose={(): void => setAnchorElement(undefined)}
         open={Boolean(anchorElement)}
         PaperProps={{ variant: 'outlined' }}
@@ -85,13 +87,14 @@ const CourseItem = (props: CourseItemProps): JSX.Element => {
             </List>
 
             <List
-              className="-mt-5 max-h-[30rem] w-[50rem] overflow-scroll"
+              className="-mt-5 max-h-[30rem] overflow-scroll sm:max-w-full md:max-w-[50rem]"
               dense
             >
               {filteredCourses?.map((course) => (
                 <Link
                   key={course.url}
                   className="text-inherit no-underline"
+                  onClick={closePopup}
                   to={course.url}
                 >
                   <ListItem disablePadding tabIndex={0}>

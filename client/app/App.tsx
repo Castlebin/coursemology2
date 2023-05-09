@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import ProviderWrapper from 'lib/components/wrappers/ProviderWrapper';
+import Providers from 'lib/components/wrappers/Providers';
 
 import { store } from './store';
 
@@ -10,7 +10,7 @@ interface TEMPORARY_AppProps {
 }
 
 const App = (props: TEMPORARY_AppProps): JSX.Element => (
-  <ProviderWrapper store={store}>{props.children}</ProviderWrapper>
+  <Providers store={store}>{props.children}</Providers>
 );
 
 export default App;

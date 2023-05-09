@@ -1,4 +1,10 @@
 import produce from 'immer';
+import { AnnouncementData } from 'types/course/announcements';
+import {
+  createEntityStore,
+  removeAllFromStore,
+  saveListToStore,
+} from 'utilities/store';
 
 import {
   GlobalActionType,
@@ -6,12 +12,6 @@ import {
   SAVE_ANNOUNCEMENT_LIST,
   SaveAnnouncementListAction,
 } from './types';
-import {
-  createEntityStore,
-  removeAllFromStore,
-  saveListToStore,
-} from 'utilities/store';
-import { AnnouncementListData } from 'types/course/announcements';
 
 const initialState: GlobalAnnouncementState = {
   announcements: createEntityStore(),
@@ -35,7 +35,7 @@ const reducer = produce(
 );
 
 export function saveAnnouncementsList(
-  announcements: AnnouncementListData[],
+  announcements: AnnouncementData[],
 ): SaveAnnouncementListAction {
   return {
     type: SAVE_ANNOUNCEMENT_LIST,

@@ -2,7 +2,7 @@ import { Permissions } from 'types';
 
 import { AchievementBadgeData } from './assessment/assessments';
 import { TodoData } from './lesson-plan/todos';
-import { AnnouncementListData, AnnouncementMiniEntity } from './announcements';
+import { AnnouncementData, AnnouncementEntity } from './announcements';
 import { CourseUserListData, CourseUserRoles } from './courseUsers';
 import { NotificationData } from './notifications';
 
@@ -31,7 +31,7 @@ export interface CourseData extends CourseListData {
   instructors?: CourseUserListData[];
   // ---
   // Or this exists
-  currentlyActiveAnnouncements?: AnnouncementListData[];
+  currentlyActiveAnnouncements?: AnnouncementData[];
   assessmentTodos?: TodoData[];
   videoTodos?: TodoData[];
   surveyTodos?: TodoData[];
@@ -59,7 +59,7 @@ export interface CourseEntity extends CourseMiniEntity {
   instructors?: CourseUserListData[];
   // ---
   // Or this exists
-  currentlyActiveAnnouncements: AnnouncementMiniEntity[];
+  currentlyActiveAnnouncements: AnnouncementEntity[];
   assessmentTodos: TodoData[];
   videoTodos: TodoData[];
   surveyTodos: TodoData[];
@@ -92,6 +92,7 @@ export interface CourseUserProgressData {
 
 export interface CourseLayoutData {
   courseTitle: string;
+  courseUrl: string;
   courseLogoUrl: string;
   courseUserUrl: string;
   userName: string;

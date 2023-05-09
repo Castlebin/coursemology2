@@ -6,7 +6,7 @@ import { IconButton } from '@mui/material';
 import TitleBar from 'lib/components/navigation/TitleBar';
 
 interface Props {
-  title: ReactNode | string;
+  title: NonNullable<ReactNode>;
   returnLink?: string;
   toolbars?: ReactNode;
   children?: ReactNode;
@@ -20,14 +20,14 @@ const PageHeader: FC<Props> = (props) => {
     <TitleBar
       data-testid="TitleBar"
       iconElementLeft={
-        returnLink ? (
+        returnLink && (
           <IconButton
             data-testid="ArrowBackIconButton"
             onClick={(): void => navigate(returnLink)}
           >
             <ArrowBack data-testid="ArrowBack" htmlColor="white" />
           </IconButton>
-        ) : null
+        )
       }
       iconElementRight={children ?? toolbars ?? null}
       title={title}

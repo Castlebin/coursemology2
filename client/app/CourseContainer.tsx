@@ -1,72 +1,39 @@
-import { useState } from 'react';
-import { Outlet, useParams } from 'react-router-dom';
-import { ChevronLeft } from '@mui/icons-material';
-import { Avatar, Typography } from '@mui/material';
+import { ComponentRef, useRef } from 'react';
+import { LoaderFunction, Outlet, useLoaderData } from 'react-router-dom';
+import { MenuOutlined } from '@mui/icons-material';
+import { IconButton, Typography } from '@mui/material';
 import { CourseLayoutData } from 'types/course/courses';
 
 import CourseAPI from 'api/course';
-import LoadingIndicator from 'lib/components/core/LoadingIndicator';
-import Preload from 'lib/components/wrappers/Preload';
-import { COURSE_USER_ROLES } from 'lib/constants/sharedConstants';
-
-import SidebarAccordion from './SidebarAccordion';
-import SidebarItem from './SidebarItem';
-import CourseUserItem from './CourseUserItem';
-import CourseUserProgression from './CourseUserProgress';
 import Link from 'lib/components/core/Link';
-import CourseItem from './CourseItem';
 
-interface StatefulCourseContainerProps {
-  with: CourseLayoutData;
-}
+import Breadcrumb from './Breadcrumb';
+import Sidebar, { useShouldShowSidebarOpenButton } from './Sidebar';
 
-const StatefulCourseContainer = (
-  props: StatefulCourseContainerProps,
-): JSX.Element => {
-  const [data, setData] = useState(props.with);
+const CourseContainer = (): JSX.Element => {
+  const data = useLoaderData() as CourseLayoutData;
+
+  const sidebarRef = useRef<ComponentRef<typeof Sidebar>>(null);
+  const shouldShowOpenButton = useShouldShowSidebarOpenButton();
 
   return (
-    <main className="flex h-screen w-full">
-      <aside className="border-only-r-neutral-200 flex h-full w-80 shrink-0 flex-col bg-neutral-100">
-        <section className="border-only-b-neutral-200">
-          <CourseItem in={data} />
-          <CourseUserItem from={data} />
-          {data.progress && <CourseUserProgression from={data.progress} />}
-        </section>
-
-        <section className="h-full space-y-4 overflow-y-scroll px-3 py-4">
-          {data.sidebar && (
-            <div>
-              {data.sidebar.map((item) => (
-                <SidebarItem key={item.key} of={item} />
-              ))}
-            </div>
-          )}
-
-          {data.adminSidebar && (
-            <SidebarAccordion
-              containing={data.adminSidebar}
-              title="Administration"
-            />
-          )}
-        </section>
-
-        <section className="border-only-t-neutral-200">
-          <div
-            className="flex select-none items-center space-x-2 p-4 text-neutral-500 hover:bg-neutral-200 active:bg-neutral-300"
-            role="button"
-          >
-            <ChevronLeft />
-
-            <Typography className="leading-none" variant="caption">
-              Collapse sidebar
-            </Typography>
-          </div>
-        </section>
-      </aside>
+    <main className="flex h-full min-h-0 w-full">
+      <Sidebar ref={sidebarRef} from={data} />
 
       <aside className="h-full w-full overflow-scroll">
-        <div className="h-full min-h-screen w-full">
+        {shouldShowOpenButton ? (
+          <div className="flex h-[4rem] w-full items-center">
+            <IconButton onClick={(): void => sidebarRef.current?.open()}>
+              <MenuOutlined />
+            </IconButton>
+
+            <Breadcrumb className="h-[4rem] w-full overflow-hidden" />
+          </div>
+        ) : (
+          <Breadcrumb className="h-[4rem]" />
+        )}
+
+        <div className="h-full min-h-[calc(100%_-_4rem)] w-full">
           <Outlet />
         </div>
 
@@ -102,21 +69,12 @@ const StatefulCourseContainer = (
   );
 };
 
-const CourseContainer = (): JSX.Element => {
-  const params = useParams();
+const loader: LoaderFunction = async ({ params }) => {
   const id = parseInt(params?.courseId ?? '', 10) || undefined;
   if (!id) throw new Error(`CourseContainer was loaded with ID: ${id}.`);
 
-  const fetchLayoutData = async (): Promise<CourseLayoutData> => {
-    const response = await CourseAPI.courses.fetchLayout(id);
-    return response.data;
-  };
-
-  return (
-    <Preload render={<LoadingIndicator />} while={fetchLayoutData}>
-      {(data): JSX.Element => <StatefulCourseContainer with={data} />}
-    </Preload>
-  );
+  const response = await CourseAPI.courses.fetchLayout(id);
+  return response.data;
 };
 
-export default CourseContainer;
+export default Object.assign(CourseContainer, { loader });

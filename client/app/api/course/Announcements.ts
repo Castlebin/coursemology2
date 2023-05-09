@@ -1,7 +1,6 @@
 import { AxiosResponse } from 'axios';
 import {
   AnnouncementData,
-  AnnouncementListData,
   AnnouncementPermissions,
 } from 'types/course/announcements';
 
@@ -17,7 +16,7 @@ export default class AnnouncementsAPI extends BaseCourseAPI {
    */
   index(): Promise<
     AxiosResponse<{
-      announcements: AnnouncementListData[];
+      announcements: AnnouncementData[];
       permissions: AnnouncementPermissions;
     }>
   > {

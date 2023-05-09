@@ -36,10 +36,7 @@ export default {
         },
       },
       colors: {
-        'slot-1': `var(${SLOTTED_COLOR_VAR}-1)`,
-        'slot-2': `var(${SLOTTED_COLOR_VAR}-2)`,
-        'slot-3': `var(${SLOTTED_COLOR_VAR}-3)`,
-        'slot-4': `var(${SLOTTED_COLOR_VAR}-4)`,
+        primary: '#00BCD4',
       },
     },
   },
@@ -71,7 +68,10 @@ export default {
       matchUtilities(
         {
           'bg-fade-to-l': (value) => ({
-            background: `linear-gradient(90deg, transparent 0%, ${value} 20%)`,
+            background: `linear-gradient(90deg, transparent 0%, ${value} 25%)`,
+          }),
+          'bg-fade-to-r': (value) => ({
+            background: `linear-gradient(-90deg, transparent 0%, ${value} 25%)`,
           }),
         },
         { values: flattenColorPalette(theme('colors')), type: 'color' },
@@ -102,17 +102,31 @@ export default {
         { values: theme('spacing'), type: 'number' },
       );
     }),
-    plugin(({ matchUtilities, theme }) => {
-      matchUtilities(
-        {
-          'slot-1': (value) => ({ [`${SLOTTED_COLOR_VAR}-1`]: value }),
-          'slot-2': (value) => ({ [`${SLOTTED_COLOR_VAR}-2`]: value }),
-          'slot-3': (value) => ({ [`${SLOTTED_COLOR_VAR}-3`]: value }),
-          'slot-4': (value) => ({ [`${SLOTTED_COLOR_VAR}-4`]: value }),
+    plugin(
+      ({ matchUtilities, theme }) => {
+        matchUtilities(
+          {
+            'slot-1': (value) => ({ [`${SLOTTED_COLOR_VAR}-1`]: value }),
+            'slot-2': (value) => ({ [`${SLOTTED_COLOR_VAR}-2`]: value }),
+            'slot-3': (value) => ({ [`${SLOTTED_COLOR_VAR}-3`]: value }),
+            'slot-4': (value) => ({ [`${SLOTTED_COLOR_VAR}-4`]: value }),
+          },
+          { values: flattenColorPalette(theme('colors')), type: 'color' },
+        );
+      },
+      {
+        theme: {
+          extend: {
+            colors: {
+              'slot-1': `var(${SLOTTED_COLOR_VAR}-1)`,
+              'slot-2': `var(${SLOTTED_COLOR_VAR}-2)`,
+              'slot-3': `var(${SLOTTED_COLOR_VAR}-3)`,
+              'slot-4': `var(${SLOTTED_COLOR_VAR}-4)`,
+            },
+          },
         },
-        { values: flattenColorPalette(theme('colors')), type: 'color' },
-      );
-    }),
+      },
+    ),
   ],
   important: '#root',
 } satisfies Config;
