@@ -3,6 +3,8 @@ import { Outlet } from 'react-router-dom';
 import { loader } from './AppLoader';
 import GlobalAnnouncements from './GlobalAnnouncements';
 
+import NotificationPopup from 'lib/containers/NotificationPopup';
+
 const AppContainer = (): JSX.Element => {
   return (
     <div className="flex h-screen flex-col">
@@ -10,6 +12,8 @@ const AppContainer = (): JSX.Element => {
 
       <GlobalAnnouncements />
       <Outlet />
+
+      <NotificationPopup />
     </div>
   );
 };

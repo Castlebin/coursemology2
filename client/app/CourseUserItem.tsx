@@ -13,6 +13,7 @@ import {
 import { CourseLayoutData } from 'types/course/courses';
 
 import { COURSE_USER_ROLES } from 'lib/constants/sharedConstants';
+import { Link } from 'react-router-dom';
 
 interface CourseUserItemProps {
   from: CourseLayoutData;
@@ -95,7 +96,7 @@ const CourseUserItem = (props: CourseUserItemProps): JSX.Element => {
 
           {data.manageEmailSubscriptionUrl && (
             <ListItem disablePadding>
-              <ListItemButton>
+              <ListItemButton href={data.manageEmailSubscriptionUrl}>
                 <ListItemText>Manage email subscriptions</ListItemText>
               </ListItemButton>
             </ListItem>
@@ -114,7 +115,9 @@ const CourseUserItem = (props: CourseUserItemProps): JSX.Element => {
         >
           <ListItem disablePadding>
             <ListItemButton>
-              <ListItemText>Account settings</ListItemText>
+              <Link to="/user/profile/edit">
+                <ListItemText>Account settings</ListItemText>
+              </Link>
             </ListItemButton>
           </ListItem>
 

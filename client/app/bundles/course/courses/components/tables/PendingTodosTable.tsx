@@ -9,6 +9,7 @@ import {
   TableCell,
   TableHead,
   TableRow,
+  Typography,
 } from '@mui/material';
 import equal from 'fast-deep-equal';
 import { TodoData } from 'types/course/lesson-plan/todos';
@@ -230,7 +231,7 @@ const PendingTodosTable: FC<Props> = (props) => {
 
   return (
     <>
-      <h2>{header}</h2>
+      <Typography variant="h4">{header}</Typography>
       <Table>
         <TableHead>
           <TableRow>

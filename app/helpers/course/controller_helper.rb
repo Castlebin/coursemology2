@@ -68,16 +68,6 @@ module Course::ControllerHelper
     course_user_path(course_user.course, course_user)
   end
 
-  def url_to_user_or_course_user(user_or_course_user)
-    return url_to_course_user(user_or_course_user) if user_or_course_user.is_a?(CourseUser)
-
-    if (course_user = user_or_course_user.course_users.find_by(course: controller.current_course))
-      url_to_course_user(course_user)
-    else
-      user_path(user_or_course_user)
-    end
-  end
-
   # Display the course_user_badge given the course_user
   #
   # @param [CourseUser] course_user The CourseUser for which the badge is to be displayed

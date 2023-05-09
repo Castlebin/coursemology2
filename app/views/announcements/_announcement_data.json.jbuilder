@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-json.partial! 'announcement_list_data', announcement: announcement
+json.partial! 'announcements/announcement_list_data', announcement: announcement
 
 json.endTime announcement.end_at
 

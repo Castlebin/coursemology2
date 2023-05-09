@@ -25,7 +25,7 @@ const PageHeader: FC<Props> = (props) => {
             data-testid="ArrowBackIconButton"
             onClick={(): void => navigate(returnLink)}
           >
-            <ArrowBack data-testid="ArrowBack" htmlColor="white" />
+            <ArrowBack data-testid="ArrowBack" />
           </IconButton>
         )
       }

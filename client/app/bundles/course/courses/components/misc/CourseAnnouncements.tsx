@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
-import { Stack } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import { AnnouncementEntity } from 'types/course/announcements';
 
 import AnnouncementCard from '../../../announcements/components/misc/AnnouncementCard';
@@ -25,10 +25,14 @@ const CourseAnnouncements: FC<Props> = (props) => {
 
   return (
     <>
-      <h2>{intl.formatMessage(translations.announcementHeader)}</h2>
+      <Typography variant="h5">
+        {intl.formatMessage(translations.announcementHeader)}
+      </Typography>
 
       {announcements === null && (
-        <>{intl.formatMessage(translations.noAnnouncements)}</>
+        <Typography color="text.secondary" variant="body2">
+          {intl.formatMessage(translations.noAnnouncements)}
+        </Typography>
       )}
 
       {announcements && (

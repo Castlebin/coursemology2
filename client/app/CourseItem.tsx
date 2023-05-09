@@ -129,7 +129,9 @@ const CourseItem = (props: CourseItemProps): JSX.Element => {
         <List dense>
           <ListItem disablePadding>
             <ListItemButton>
-              <ListItemText>See all courses</ListItemText>
+              <Link to="/courses">
+                <ListItemText>See all courses</ListItemText>
+              </Link>
             </ListItemButton>
           </ListItem>
 

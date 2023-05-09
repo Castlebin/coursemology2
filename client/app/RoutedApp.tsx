@@ -1,56 +1,55 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import SubmissionsIndex from 'bundles/course/assessment/submissions/pages/SubmissionsIndex';
-import DisbursementIndex from 'bundles/course/experience-points/disbursement/pages/DisbursementIndex';
-import TimelineDesigner from 'bundles/course/reference-timelines/TimelineDesigner';
-import NewForumPostResponsePage from 'bundles/course/assessment/question/forum-post-responses/NewForumPostResponsePage';
-import EditForumPostResponsePage from 'bundles/course/assessment/question/forum-post-responses/EditForumPostResponsePage';
-import NewMcqMrqPage from 'bundles/course/assessment/question/multiple-responses/NewMcqMrqPage';
-import EditMcqMrqPage from 'bundles/course/assessment/question/multiple-responses/EditMcqMrqPage';
-import NewTextResponsePage from 'bundles/course/assessment/question/text-responses/NewTextResponsePage';
-import EditTextResponsePage from 'bundles/course/assessment/question/text-responses/EditTextResponsePage';
-import AccountSettings from 'bundles/user/AccountSettings';
-import NewVoicePage from 'bundles/course/assessment/question/voice-responses/NewVoicePage';
-import EditVoicePage from 'bundles/course/assessment/question/voice-responses/EditVoicePage';
 import GlobalAnnouncementIndex from 'bundles/announcements/pages/GlobalAnnouncementIndex';
-import AchievementsIndex from 'bundles/course/achievement/pages/AchievementsIndex';
 import AchievementShow from 'bundles/course/achievement/pages/AchievementShow';
+import AchievementsIndex from 'bundles/course/achievement/pages/AchievementsIndex';
 import AnnouncementsIndex from 'bundles/course/announcements/pages/AnnouncementsIndex';
+import EditForumPostResponsePage from 'bundles/course/assessment/question/forum-post-responses/EditForumPostResponsePage';
+import NewForumPostResponsePage from 'bundles/course/assessment/question/forum-post-responses/NewForumPostResponsePage';
+import EditMcqMrqPage from 'bundles/course/assessment/question/multiple-responses/EditMcqMrqPage';
+import NewMcqMrqPage from 'bundles/course/assessment/question/multiple-responses/NewMcqMrqPage';
+import EditTextResponsePage from 'bundles/course/assessment/question/text-responses/EditTextResponsePage';
+import NewTextResponsePage from 'bundles/course/assessment/question/text-responses/NewTextResponsePage';
+import EditVoicePage from 'bundles/course/assessment/question/voice-responses/EditVoicePage';
+import NewVoicePage from 'bundles/course/assessment/question/voice-responses/NewVoicePage';
 import SkillsIndex from 'bundles/course/assessment/skills/pages/SkillsIndex';
-import CoursesIndex from 'bundles/course/courses/pages/CoursesIndex';
+import SubmissionsIndex from 'bundles/course/assessment/submissions/pages/SubmissionsIndex';
 import CourseShow from 'bundles/course/courses/pages/CourseShow';
+import CoursesIndex from 'bundles/course/courses/pages/CoursesIndex';
 import CommentIndex from 'bundles/course/discussion/topics/pages/CommentIndex';
-import ForumsIndex from 'bundles/course/forum/pages/ForumsIndex';
+import UserRequests from 'bundles/course/enrol-requests/pages/UserRequests';
+import DisbursementIndex from 'bundles/course/experience-points/disbursement/pages/DisbursementIndex';
 import ForumShow from 'bundles/course/forum/pages/ForumShow';
+import ForumsIndex from 'bundles/course/forum/pages/ForumsIndex';
 import ForumTopicShow from 'bundles/course/forum/pages/ForumTopicShow';
+import GroupIndex from 'bundles/course/group/pages/GroupIndex';
+import GroupShow from 'bundles/course/group/pages/GroupShow';
 import LeaderboardIndex from 'bundles/course/leaderboard/pages/LeaderboardIndex';
 import LearningMap from 'bundles/course/learning-map/containers/LearningMap';
+import Level from 'bundles/course/level/pages/Level';
 import FolderShow from 'bundles/course/material/folders/pages/FolderShow';
-import VideosIndex from 'bundles/course/video/pages/VideosIndex';
+import TimelineDesigner from 'bundles/course/reference-timelines/TimelineDesigner';
+import StatisticsIndex from 'bundles/course/statistics/pages/StatisticsIndex';
+import InvitationsIndex from 'bundles/course/user-invitations/pages/InvitationsIndex';
+import InviteUsers from 'bundles/course/user-invitations/pages/InviteUsers';
+import ExperiencePointsRecords from 'bundles/course/users/pages/ExperiencePointsRecords';
+import ManageStaff from 'bundles/course/users/pages/ManageStaff';
+import ManageStudents from 'bundles/course/users/pages/ManageStudents';
+import PersonalTimes from 'bundles/course/users/pages/PersonalTimes';
+import PersonalTimesShow from 'bundles/course/users/pages/PersonalTimesShow';
+import UsersIndex from 'bundles/course/users/pages/UsersIndex';
 import VideoShow from 'bundles/course/video/pages/VideoShow';
+import VideosIndex from 'bundles/course/video/pages/VideosIndex';
 import VideoSubmissionEdit from 'bundles/course/video/submission/pages/VideoSubmissionEdit';
 import VideoSubmissionShow from 'bundles/course/video/submission/pages/VideoSubmissionShow';
 import VideoSubmissionsIndex from 'bundles/course/video/submission/pages/VideoSubmissionsIndex';
+import AccountSettings from 'bundles/user/AccountSettings';
 import UserShow from 'bundles/users/pages/UserShow';
-import NotificationPopup from 'lib/containers/NotificationPopup';
-import Level from 'bundles/course/level/pages/Level';
-import GroupIndex from 'bundles/course/group/pages/GroupIndex';
-import GroupShow from 'bundles/course/group/pages/GroupShow';
-import StatisticsIndex from 'bundles/course/statistics/pages/StatisticsIndex';
-import UsersIndex from 'bundles/course/users/pages/UsersIndex';
-import ManageStudents from 'bundles/course/users/pages/ManageStudents';
-import UserRequests from 'bundles/course/enrol-requests/pages/UserRequests';
-import InviteUsers from 'bundles/course/user-invitations/pages/InviteUsers';
-import InvitationsIndex from 'bundles/course/user-invitations/pages/InvitationsIndex';
-import ManageStaff from 'bundles/course/users/pages/ManageStaff';
-import PersonalTimes from 'bundles/course/users/pages/PersonalTimes';
-import PersonalTimesShow from 'bundles/course/users/pages/PersonalTimesShow';
-import ExperiencePointsRecords from 'bundles/course/users/pages/ExperiencePointsRecords';
 
 import App from './App';
 import AppContainer from './AppContainer';
-import CourseContainer from './CourseContainer';
 import AppIndex from './AppIndex';
+import CourseContainer from './CourseContainer';
 
 const router = createBrowserRouter([
   {
@@ -63,36 +62,331 @@ const router = createBrowserRouter([
         element: <AppIndex />,
       },
       {
-        path: '/courses/:courseId',
-        element: <CourseContainer />,
-        loader: CourseContainer.loader,
-        handle: 'Home',
+        path: 'courses',
         children: [
           {
-            path: 'assessments',
-            handle: 'Assessments',
+            index: true,
+            element: <CoursesIndex />,
+          },
+          {
+            path: ':courseId',
+            element: <CourseContainer />,
+            loader: CourseContainer.loader,
+            handle: 'Home',
             children: [
               {
-                path: 'submissions',
-                handle: 'Submissions',
-                element: <SubmissionsIndex />,
+                index: true,
+                element: <CourseShow />,
               },
-            ],
-          },
-          {
-            path: 'timelines',
-            element: <TimelineDesigner />,
-          },
-          {
-            path: 'users',
-            children: [
               {
-                path: 'disburse_experience_points',
-                element: <DisbursementIndex />,
+                path: 'assessments',
+                handle: 'Assessments',
+                children: [
+                  {
+                    index: true,
+                  },
+                  {
+                    path: 'submissions',
+                    handle: 'Submissions',
+                    element: <SubmissionsIndex />,
+                  },
+                  {
+                    path: 'skills',
+                    element: <SkillsIndex />,
+                  },
+                  {
+                    path: ':assessmentId',
+                    children: [
+                      {
+                        path: 'question',
+                        children: [
+                          {
+                            path: 'forum_post_responses',
+                            children: [
+                              {
+                                path: 'new',
+                                element: <NewForumPostResponsePage />,
+                              },
+                              {
+                                path: 'edit',
+                                element: <EditForumPostResponsePage />,
+                              },
+                            ],
+                          },
+                          {
+                            path: 'multiple_responses',
+                            children: [
+                              {
+                                path: 'new',
+                                element: <NewMcqMrqPage />,
+                              },
+                              {
+                                path: 'edit',
+                                element: <EditMcqMrqPage />,
+                              },
+                            ],
+                          },
+                          {
+                            path: 'text_responses',
+                            children: [
+                              {
+                                path: 'new',
+                                element: <NewTextResponsePage />,
+                              },
+                              {
+                                path: 'edit',
+                                element: <EditTextResponsePage />,
+                              },
+                            ],
+                          },
+                          {
+                            path: 'voice_responses',
+                            children: [
+                              {
+                                path: 'new',
+                                element: <NewVoicePage />,
+                              },
+                              {
+                                path: 'edit',
+                                element: <EditVoicePage />,
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                path: 'achievements',
+                children: [
+                  {
+                    index: true,
+                    element: <AchievementsIndex />,
+                  },
+                  {
+                    path: ':achievementId',
+                    children: [
+                      {
+                        index: true,
+                        element: <AchievementShow />,
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                path: 'comments',
+                element: <CommentIndex />,
+              },
+              {
+                path: 'leaderboard',
+                element: <LeaderboardIndex />,
+              },
+              {
+                path: 'learning_map',
+                element: <LearningMap />,
+              },
+              {
+                path: 'levels',
+                element: <Level />,
+              },
+              {
+                path: 'statistics',
+                element: <StatisticsIndex />,
+              },
+              {
+                path: 'students',
+                element: <ManageStudents />,
+              },
+              {
+                path: 'staff',
+                element: <ManageStaff />,
+              },
+              {
+                path: 'enrol_requests',
+                element: <UserRequests />,
+              },
+              {
+                path: 'user_invitations',
+                element: <InvitationsIndex />,
+              },
+              {
+                path: 'groups',
+                children: [
+                  {
+                    index: true,
+                    element: <GroupIndex />,
+                  },
+                  {
+                    path: ':groupCategoryId',
+                    element: <GroupShow />,
+                  },
+                ],
+              },
+              {
+                path: 'forums',
+                children: [
+                  {
+                    index: true,
+                    element: <ForumsIndex />,
+                  },
+                  {
+                    path: ':forumId',
+                    children: [
+                      {
+                        index: true,
+                        element: <ForumShow />,
+                      },
+                      {
+                        path: 'topics',
+                        children: [
+                          {
+                            path: ':topicId',
+                            element: <ForumTopicShow />,
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                path: 'materials',
+                children: [
+                  {
+                    path: 'folders',
+                    children: [
+                      {
+                        path: ':folderId',
+                        element: <FolderShow />,
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                path: 'videos',
+                children: [
+                  {
+                    index: true,
+                    element: <VideosIndex />,
+                  },
+                  {
+                    path: ':videoId',
+                    children: [
+                      {
+                        index: true,
+                        element: <VideoShow />,
+                      },
+                      {
+                        path: 'submissions',
+                        children: [
+                          {
+                            index: true,
+                            element: <VideoSubmissionsIndex />,
+                          },
+                          {
+                            path: ':submissionId',
+                            children: [
+                              {
+                                index: true,
+                                element: <VideoSubmissionShow />,
+                              },
+                              {
+                                path: 'edit',
+                                element: <VideoSubmissionEdit />,
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                path: 'announcements',
+                children: [
+                  {
+                    index: true,
+                    element: <AnnouncementsIndex />,
+                  },
+                ],
+              },
+              {
+                path: 'timelines',
+                element: <TimelineDesigner />,
+              },
+              {
+                path: 'users',
+                children: [
+                  {
+                    index: true,
+                    element: <UsersIndex />,
+                  },
+                  {
+                    path: 'disburse_experience_points',
+                    element: <DisbursementIndex />,
+                  },
+                  {
+                    path: 'personal_times',
+                    element: <PersonalTimes />,
+                  },
+                  {
+                    path: 'invite',
+                    element: <InviteUsers />,
+                  },
+                  {
+                    path: ':userId',
+                    children: [
+                      {
+                        index: true,
+                        element: <UserShow />,
+                      },
+                      {
+                        path: 'personal_times',
+                        element: <PersonalTimesShow />,
+                      },
+                      {
+                        path: 'experience_points_records',
+                        element: <ExperiencePointsRecords />,
+                      },
+                    ],
+                  },
+                ],
               },
             ],
           },
         ],
+      },
+      {
+        path: 'user',
+        children: [
+          {
+            path: 'profile',
+            children: [
+              {
+                path: 'edit',
+                element: <AccountSettings />,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        path: 'users',
+        children: [
+          {
+            path: ':userId',
+            element: <UserShow />,
+          },
+        ],
+      },
+      {
+        path: 'announcements',
+        element: <GlobalAnnouncementIndex />,
       },
     ],
   },
@@ -101,205 +395,6 @@ const router = createBrowserRouter([
 const RoutedApp = (): JSX.Element => {
   return (
     <App>
-      <BrowserRouter>
-        <Routes>
-          <Route element={<CourseContainer />} path="/courses/:courseId">
-            <Route
-              element={<SubmissionsIndex />}
-              path="assessments/submissions"
-            />
-
-            <Route element={<TimelineDesigner />} path="timelines" />
-
-            <Route
-              element={<DisbursementIndex />}
-              path="/courses/:courseId/users/disburse_experience_points"
-            />
-
-            <Route
-              element={<NewForumPostResponsePage />}
-              path="courses/:courseId/assessments/:assessmentId/question/forum_post_responses/new"
-            />
-
-            <Route
-              element={<EditForumPostResponsePage />}
-              path="/courses/:courseId/assessments/:assessmentId/question/forum_post_responses/:questionId/edit"
-            />
-
-            <Route
-              element={<NewMcqMrqPage />}
-              path="/courses/:courseId/assessments/:assessmentId/question/multiple_responses/new"
-            />
-
-            <Route
-              element={<EditMcqMrqPage />}
-              path="/courses/:courseId/assessments/:assessmentId/question/multiple_responses/:questionId/edit"
-            />
-
-            <Route
-              element={<NewTextResponsePage />}
-              path="courses/:courseId/assessments/:assessmentId/question/text_responses/new"
-            />
-
-            <Route
-              element={<EditTextResponsePage />}
-              path="/courses/:courseId/assessments/:assessmentId/question/text_responses/:questionId/edit"
-            />
-
-            <Route
-              element={<NewVoicePage />}
-              path="courses/:courseId/assessments/:assessmentId/question/voice_responses/new"
-            />
-
-            <Route
-              element={<EditVoicePage />}
-              path="/courses/:courseId/assessments/:assessmentId/question/voice_responses/:questionId/edit"
-            />
-
-            <Route element={<AccountSettings />} path="/user/profile/edit" />
-
-            <Route
-              element={<GlobalAnnouncementIndex />}
-              path="/announcements"
-            />
-
-            <Route
-              element={<AchievementsIndex />}
-              path="/courses/:courseId/achievements/"
-            />
-
-            <Route
-              element={<AchievementShow />}
-              path="/courses/:courseId/achievements/:achievementId"
-            />
-
-            <Route
-              element={<AnnouncementsIndex />}
-              path="courses/:courseId/announcements"
-            />
-
-            <Route
-              element={<SkillsIndex />}
-              path="/courses/:courseId/assessments/skills"
-            />
-
-            <Route element={<CoursesIndex />} path="/courses" />
-
-            <Route element={<CourseShow />} path="/courses/:courseId" />
-
-            <Route
-              element={<CommentIndex />}
-              path="/courses/:courseId/comments"
-            />
-
-            <Route element={<ForumsIndex />} path="courses/:courseId/forums" />
-
-            <Route
-              element={<ForumShow />}
-              path="courses/:courseId/forums/:forumId"
-            />
-
-            <Route
-              element={<ForumTopicShow />}
-              path="courses/:courseId/forums/:forumId/topics/:topicId"
-            />
-
-            <Route
-              element={<LeaderboardIndex />}
-              path="/courses/:courseId/leaderboard/"
-            />
-
-            <Route
-              element={<LearningMap />}
-              path="/courses/:courseId/learning_map"
-            />
-
-            <Route
-              element={<FolderShow />}
-              path="/courses/:courseId/materials/folders/:folderId"
-            />
-
-            <Route element={<VideosIndex />} path="courses/:courseId/videos" />
-            <Route
-              element={<VideoShow />}
-              path="courses/:courseId/videos/:videoId"
-            />
-            <Route
-              element={<VideoSubmissionsIndex />}
-              path="courses/:courseId/videos/:videoId/submissions"
-            />
-            <Route
-              element={<VideoSubmissionShow />}
-              path="courses/:courseId/videos/:videoId/submissions/:submissionId"
-            />
-            <Route
-              element={<VideoSubmissionEdit />}
-              path="courses/:courseId/videos/:videoId/submissions/:submissionId/edit"
-            />
-
-            <Route element={<UserShow />} path="/users/:userId" />
-
-            <Route
-              element={
-                <div>
-                  <NotificationPopup />
-                  <Level />
-                </div>
-              }
-              path="/courses/:courseId/levels"
-            />
-
-            <Route element={<GroupIndex />} path="courses/:courseId/groups">
-              <Route element={<GroupShow />} path=":groupCategoryId" />
-            </Route>
-
-            <Route
-              element={<StatisticsIndex />}
-              path="/courses/:courseId/statistics"
-            />
-
-            <Route element={<UsersIndex />} path="/courses/:courseId/users" />
-            <Route
-              element={<UserShow />}
-              path="/courses/:courseId/users/:userId"
-            />
-            <Route
-              element={<ManageStudents />}
-              path="/courses/:courseId/students"
-            />
-            <Route
-              element={<UserRequests />}
-              path="/courses/:courseId/enrol_requests"
-            />
-            <Route
-              element={<InviteUsers />}
-              path="/courses/:courseId/users/invite/"
-            />
-            <Route
-              element={<InvitationsIndex />}
-              path="/courses/:courseId/user_invitations"
-            />
-            <Route element={<ManageStaff />} path="/courses/:courseId/staff" />
-            <Route
-              element={<PersonalTimes />}
-              path="/courses/:courseId/users/personal_times"
-            />
-            <Route
-              element={<PersonalTimesShow />}
-              path="/courses/:courseId/users/:userId/personal_times"
-            />
-            <Route
-              element={<ExperiencePointsRecords />}
-              path="/courses/:courseId/users/:userId/experience_points_records"
-            />
-
-            <Route
-              element={<DisbursementIndex />}
-              path="users/disburse_experience_points"
-            />
-          </Route>
-        </Routes>
-      </BrowserRouter>
       <RouterProvider router={router} />
     </App>
   );

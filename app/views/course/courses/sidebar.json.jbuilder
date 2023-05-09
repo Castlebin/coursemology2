@@ -2,7 +2,7 @@
 json.courseTitle current_course.title
 json.courseUrl course_path(current_course)
 json.courseLogoUrl url_to_course_logo(current_course)
-json.courseUserUrl url_to_user_or_course_user(current_course_user || current_user)
+json.courseUserUrl url_to_user_or_course_user(current_course_user, current_user)
 json.userName current_user.name
 
 if can?(:read, current_course)

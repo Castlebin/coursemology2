@@ -18,14 +18,16 @@ const TitleBar = (props: TitleBarProps): JSX.Element => {
       elevation={0}
       position="static"
     >
-      <Toolbar className="min-h-0 px-8 pb-6 pt-4">
-        <div className="-ml-4 mr-2">{iconElementLeft}</div>
+      <Toolbar className="flex items-center justify-between px-8 py-4">
+        <div className="flex min-h-[4rem] w-full items-center">
+          <div className="-ml-4 mr-2">{iconElementLeft}</div>
 
-        <Typography className="line-clamp-2" color="inherit" variant="h5">
-          {title}
-        </Typography>
+          <Typography className="line-clamp-2" color="inherit" variant="h5">
+            {title}
+          </Typography>
+        </div>
 
-        {iconElementRight}
+        <div className="flex shrink-0 items-center">{iconElementRight}</div>
       </Toolbar>
     </AppBar>
   );
