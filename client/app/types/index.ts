@@ -10,6 +10,10 @@ export type Permissions<T extends string> = {
  */
 export type RecursiveArray<T> = (T | RecursiveArray<T>)[];
 
+export interface WithPageTitle {
+  pageTitle: string;
+}
+
 /**
  * Declare global types below.
  */

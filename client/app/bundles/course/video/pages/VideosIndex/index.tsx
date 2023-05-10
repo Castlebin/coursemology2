@@ -1,13 +1,20 @@
-import { FC, ReactElement, useEffect, useState } from 'react';
+import { ReactElement, useState } from 'react';
 import { defineMessages } from 'react-intl';
-import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Button } from '@mui/material';
-import { AppDispatch, AppState } from 'types/store';
+import { FetchVideosData } from 'types/course/videos';
 
 import LoadingIndicator from 'lib/components/core/LoadingIndicator';
 import PageHeader from 'lib/components/navigation/PageHeader';
+import deferred, {
+  createDeferredHandler,
+  deferrable,
+  DeferredHandler,
+} from 'lib/hooks/router/defer';
+import { dispatchable, loads } from 'lib/hooks/router/loaders';
+import { useIsNavigationLoading } from 'lib/hooks/router/navigation';
+import { useAppDispatch, useAppSelector } from 'lib/hooks/store';
 import useTranslation from 'lib/hooks/useTranslation';
 
 import VideoTabs from '../../components/misc/VideoTabs';
@@ -43,13 +50,16 @@ const translations = defineMessages({
   },
 });
 
-const VideosIndex: FC = () => {
+const VideosIndex = (): JSX.Element => {
   const { t } = useTranslation();
-  const [isLoading, setIsLoading] = useState(true);
+
   const [isOpen, setIsOpen] = useState(false);
-  const videoMetadata = useSelector((state: AppState) =>
-    getVideoMetadata(state),
-  );
+
+  const isLoading = useIsNavigationLoading();
+
+  const dispatch = useAppDispatch();
+
+  const videoMetadata = useAppSelector(getVideoMetadata);
 
   // Set the tab first.
   const [searchParams, setSearchParams] = useSearchParams();
@@ -60,20 +70,11 @@ const VideosIndex: FC = () => {
 
   // When a video is edited and moved to another tab, we need to filter the updated videos
   // in the redux store.
-  const videos = useSelector((state: AppState) => getAllVideos(state)).filter(
+  const videos = useAppSelector(getAllVideos).filter(
     (video) => video.tabId === tabId,
   );
-  const videoPermissions = useSelector((state: AppState) =>
-    getVideoPermissions(state),
-  );
-  const dispatch = useDispatch<AppDispatch>();
 
-  useEffect(() => {
-    setIsLoading(true);
-    dispatch(fetchVideos(tabId))
-      .finally(() => setIsLoading(false))
-      .catch(() => toast.error(t(translations.fetchVideosFailure)));
-  }, [dispatch, tabId]);
+  const videoPermissions = useAppSelector(getVideoPermissions);
 
   const headerToolbars: ReactElement[] = [];
 
@@ -103,6 +104,7 @@ const VideosIndex: FC = () => {
   return (
     <>
       <PageHeader title={t(translations.header)} toolbars={headerToolbars} />
+
       {!isLoading && isOpen && (
         <VideoNew
           currentTab={tabId}
@@ -110,7 +112,9 @@ const VideosIndex: FC = () => {
           open={isOpen}
         />
       )}
+
       <VideoTabs currentTab={tabId} setCurrentTab={setSearchParams} />
+
       {isLoading ? (
         <LoadingIndicator />
       ) : (
@@ -124,4 +128,16 @@ const VideosIndex: FC = () => {
   );
 };
 
-export default VideosIndex;
+const loader = dispatchable((dispatch, { request }) => {
+  const url = new URL(request.url);
+  const searchParams = new URLSearchParams(url.search);
+  const tabId = parseInt(searchParams.get('tab') ?? '', 10) || undefined;
+
+  return deferrable(fetchVideos(dispatch, tabId));
+});
+
+const handle: DeferredHandler<FetchVideosData> = createDeferredHandler(
+  (_, data) => data.pageTitle,
+);
+
+export default loads(deferred(VideosIndex), { loader, handle });

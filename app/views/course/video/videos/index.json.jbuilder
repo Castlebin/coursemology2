@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+json.partial! 'layouts/page_title', title: @settings.title || t('breadcrumbs.course.video.videos.index')
 
 can_analyze = can?(:analyze, @videos)
 

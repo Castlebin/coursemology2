@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -10,8 +10,10 @@ import {
 import { AppDispatch, AppState } from 'types/store';
 
 import BackendPagination from 'lib/components/core/layouts/BackendPagination';
-import LoadingIndicator from 'lib/components/core/LoadingIndicator';
 import PageHeader from 'lib/components/navigation/PageHeader';
+import deferred, { deferrable } from 'lib/hooks/router/defer';
+import { StaticHandler, dispatchable, loads } from 'lib/hooks/router/loaders';
+import { Descriptor } from 'lib/hooks/useTranslation';
 
 import SubmissionFilter from '../../components/misc/SubmissionFilter';
 import SubmissionTabs from '../../components/misc/SubmissionTabs';
@@ -131,78 +133,71 @@ const SubmissionsIndex: FC<Props> = (props) => {
     }
   };
 
-  const [pageIsLoading, setPageIsLoading] = useState(true);
-  useEffect(() => {
-    dispatch(fetchSubmissions())
-      .finally(() => {
-        setPageIsLoading(false);
-      })
-      .catch(() =>
-        toast.error(intl.formatMessage(translations.fetchSubmissionsFailure)),
-      );
-  }, [dispatch]);
-
   return (
     <>
       <PageHeader title={intl.formatMessage(translations.header)} />
-      {pageIsLoading ? (
-        <LoadingIndicator />
-      ) : (
-        <>
-          <SubmissionTabs
-            canManage={submissionPermissions.canManage}
-            isTeachingStaff={submissionPermissions.isTeachingStaff}
-            setIsTabChanging={setIsTabChanging}
-            setPageNum={setPageNum}
-            setTableIsLoading={setTableIsLoading}
-            setTabValue={setTabValue}
-            tabs={tabs}
-            tabValue={tabValue}
-          />
 
-          <SubmissionFilter
-            key={`submission-filter-${tabValue}`}
-            categoryNum={tabValue - 2}
-            filter={filter}
-            handleFilterOnClick={handleFilter}
-            selectedFilter={selectedFilter}
-            setPageNum={setPageNum}
-            setSelectedFilter={setSelectedFilter}
-            setTableIsLoading={setTableIsLoading}
-            showDetailFilter={submissionPermissions.canManage && tabValue > 1}
-            tabCategories={tabs.categories}
-          />
+      <SubmissionTabs
+        canManage={submissionPermissions.canManage}
+        isTeachingStaff={submissionPermissions.isTeachingStaff}
+        setIsTabChanging={setIsTabChanging}
+        setPageNum={setPageNum}
+        setTableIsLoading={setTableIsLoading}
+        setTabValue={setTabValue}
+        tabs={tabs}
+        tabValue={tabValue}
+      />
 
-          {!isTabChanging && (
-            <BackendPagination
-              handlePageChange={handlePageChange}
-              pageNum={pageNum}
-              rowCount={submissionCount}
-              rowsPerPage={ROWS_PER_PAGE}
-            />
-          )}
+      <SubmissionFilter
+        key={`submission-filter-${tabValue}`}
+        categoryNum={tabValue - 2}
+        filter={filter}
+        handleFilterOnClick={handleFilter}
+        selectedFilter={selectedFilter}
+        setPageNum={setPageNum}
+        setSelectedFilter={setSelectedFilter}
+        setTableIsLoading={setTableIsLoading}
+        showDetailFilter={submissionPermissions.canManage && tabValue > 1}
+        tabCategories={tabs.categories}
+      />
 
-          <SubmissionsTable
-            isGamified={isGamified}
-            isPendingTab={submissionPermissions.isTeachingStaff && tabValue < 2}
-            pageNum={pageNum}
-            rowsPerPage={ROWS_PER_PAGE}
-            submissions={submissions}
-            tableIsLoading={tableIsLoading}
-          />
+      {!isTabChanging && (
+        <BackendPagination
+          handlePageChange={handlePageChange}
+          pageNum={pageNum}
+          rowCount={submissionCount}
+          rowsPerPage={ROWS_PER_PAGE}
+        />
+      )}
 
-          {!isTabChanging && submissions.length > 15 && !tableIsLoading && (
-            <BackendPagination
-              handlePageChange={handlePageChange}
-              pageNum={pageNum}
-              rowCount={submissionCount}
-              rowsPerPage={ROWS_PER_PAGE}
-            />
-          )}
-        </>
+      <SubmissionsTable
+        isGamified={isGamified}
+        isPendingTab={submissionPermissions.isTeachingStaff && tabValue < 2}
+        pageNum={pageNum}
+        rowsPerPage={ROWS_PER_PAGE}
+        submissions={submissions}
+        tableIsLoading={tableIsLoading}
+      />
+
+      {!isTabChanging && submissions.length > 15 && !tableIsLoading && (
+        <BackendPagination
+          handlePageChange={handlePageChange}
+          pageNum={pageNum}
+          rowCount={submissionCount}
+          rowsPerPage={ROWS_PER_PAGE}
+        />
       )}
     </>
   );
 };
 
-export default injectIntl(SubmissionsIndex);
+const loader = dispatchable((dispatch) =>
+  deferrable(fetchSubmissions(dispatch)),
+);
+
+const handle: StaticHandler = () => translations.header;
+
+export default loads(deferred(injectIntl(SubmissionsIndex)), {
+  loader,
+  handle,
+});

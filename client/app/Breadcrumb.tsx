@@ -1,20 +1,55 @@
 import {
   ReactNode,
   RefObject,
+  Suspense,
   UIEventHandler,
+  forwardRef,
   useEffect,
   useLayoutEffect,
   useRef,
   useState,
 } from 'react';
-import { Link, useMatches } from 'react-router-dom';
+import {
+  Await,
+  Link,
+  Params,
+  defer,
+  useMatches,
+  useNavigation,
+} from 'react-router-dom';
 import {
   ChevronLeft,
   ChevronRight,
   HomeOutlined,
   NavigateNext,
 } from '@mui/icons-material';
-import { Breadcrumbs, IconButton, Slide, Typography } from '@mui/material';
+import {
+  Breadcrumbs,
+  Grow,
+  IconButton,
+  Skeleton,
+  Slide,
+  Typography,
+} from '@mui/material';
+
+import useTranslation, {
+  Descriptor,
+  translatable,
+} from 'lib/hooks/useTranslation';
+import {
+  DeferredHandler,
+  DeferredLoaderData,
+  extractDeferredData,
+  isDeferredData,
+  isPromise,
+} from 'lib/hooks/router/defer';
+import {
+  StaticHandler,
+  DataHandler,
+  isStaticHandler,
+  isDataHandler,
+} from 'lib/hooks/router/loaders';
+import Preload from 'lib/components/wrappers/Preload';
 
 interface BreadcrumbProps {
   className?: string;
@@ -26,23 +61,35 @@ interface CrumbProps {
   to?: string | false;
 }
 
-const Crumb = (props: CrumbProps): JSX.Element => {
-  const { to: pathname } = props;
+interface CrumbData {
+  id: string;
+  pathname: string;
+  title: string | Descriptor | undefined;
+}
 
-  const crumb = props.home ? (
-    <HomeOutlined />
-  ) : (
-    <Typography variant="body2">{props.children}</Typography>
-  );
+const Crumb = forwardRef<HTMLAnchorElement, CrumbProps>(
+  (props, ref): JSX.Element => {
+    const { to: pathname } = props;
 
-  if (!pathname) return crumb;
+    const crumb = props.home ? (
+      <HomeOutlined />
+    ) : (
+      <Typography ref={ref} variant="body2">
+        {props.children}
+      </Typography>
+    );
 
-  return (
-    <Link className="flex" to={pathname}>
-      {crumb}
-    </Link>
-  );
-};
+    if (!pathname) return crumb;
+
+    return (
+      <Link ref={ref} className="flex" to={pathname}>
+        {crumb}
+      </Link>
+    );
+  },
+);
+
+Crumb.displayName = 'Crumb';
 
 interface UseSlidersHook {
   showStart: boolean;
@@ -84,8 +131,14 @@ const useSliders = (ref: RefObject<HTMLDivElement>): UseSlidersHook => {
   };
 };
 
-const Breadcrumb = (props: BreadcrumbProps): JSX.Element => {
-  const matches = useMatches();
+interface ActualBreadcrumbProps {
+  in: (CrumbData | Promise<CrumbData>)[];
+}
+
+const ActualBreadcrumb = (props: ActualBreadcrumbProps): JSX.Element => {
+  const { in: crumbs } = props;
+
+  const { t } = useTranslation();
 
   const ref = useRef<HTMLDivElement>(null);
 
@@ -99,9 +152,9 @@ const Breadcrumb = (props: BreadcrumbProps): JSX.Element => {
   }, []);
 
   return (
-    <div className={`relative flex items-center ${props.className}`}>
+    <>
       <Slide direction="right" in={showStart}>
-        <div className="bg-fade-to-r-white absolute left-0 top-0 flex h-full items-center pl-2 pr-5">
+        <div className="absolute left-0 top-0 flex h-full items-center pl-2 pr-5 bg-fade-to-r-white">
           <IconButton
             onClick={(): void =>
               ref.current?.scrollBy({
@@ -117,7 +170,7 @@ const Breadcrumb = (props: BreadcrumbProps): JSX.Element => {
       </Slide>
 
       <Slide direction="left" in={showEnd}>
-        <div className="bg-fade-to-l-white absolute right-0 top-0 flex h-full items-center pl-5 pr-2">
+        <div className="absolute right-0 top-0 flex h-full items-center pl-5 pr-2 bg-fade-to-l-white">
           <IconButton
             onClick={(): void =>
               ref.current?.scrollBy({
@@ -138,23 +191,94 @@ const Breadcrumb = (props: BreadcrumbProps): JSX.Element => {
         onScroll={handleScroll}
       >
         <Breadcrumbs
-          classes={{ separator: 'mx-2', ol: 'flex-nowrap' }}
+          classes={{
+            separator: 'mx-2',
+            ol: 'flex-nowrap',
+            li: 'flex items-center',
+          }}
           className="w-fit"
           component="div"
           maxItems={1000}
           separator={<NavigateNext fontSize="small" />}
         >
-          {matches.map((match, index) => (
-            <Crumb
-              key={match.id}
-              home={!index}
-              to={index < matches.length - 1 && match.pathname}
-            >
-              {match.handle as string}
-            </Crumb>
-          ))}
+          {crumbs.map((crumb, index) =>
+            isPromise(crumb) ? (
+              <Grow key={index} in>
+                <Skeleton width="10rem" />
+              </Grow>
+            ) : (
+              <Grow key={crumb.id} in>
+                <Crumb
+                  home={!index}
+                  to={index < crumbs.length - 1 && crumb.pathname}
+                >
+                  {translatable(crumb.title) ? t(crumb.title) : crumb.title}
+                </Crumb>
+              </Grow>
+            ),
+          )}
         </Breadcrumbs>
       </nav>
+    </>
+  );
+};
+
+interface Match<D> {
+  id: string;
+  pathname: string;
+  params: Params;
+  data: D | DeferredLoaderData<D>;
+  handle: StaticHandler | DataHandler<D> | DeferredHandler<D>;
+}
+
+const createCrumbData = <D,>(match: Match<D>, data?: D): CrumbData => {
+  let title: string | Descriptor | undefined;
+
+  if (isStaticHandler(match.handle)) {
+    title = match.handle(match.params);
+  } else if (isDataHandler(match.handle)) {
+    title = match.handle(match.params, data);
+  } else {
+    throw new Error(`Invalid handler type in ${match.toString()}`);
+  }
+
+  return { id: match.id, pathname: match.pathname, title };
+};
+
+const Breadcrumb = (props: BreadcrumbProps): JSX.Element => {
+  const matches = useMatches() as Match<unknown>[];
+  const crumbs = matches.reduce<(CrumbData | Promise<CrumbData>)[]>(
+    (validCrumbs, match) => {
+      const handle = match.handle;
+      if (typeof handle !== 'function') return validCrumbs;
+
+      const data = match.data;
+      if (isDataHandler(handle) && isDeferredData(data)) {
+        validCrumbs.push(
+          extractDeferredData(data).then((resolved) =>
+            createCrumbData(match, resolved),
+          ),
+        );
+      } else {
+        validCrumbs.push(createCrumbData(match, data));
+      }
+
+      return validCrumbs;
+    },
+    [],
+  );
+
+  return (
+    <div className={`relative flex items-center ${props.className}`}>
+      <Preload
+        render={<ActualBreadcrumb in={crumbs} />}
+        syncsWith={[matches]}
+        while={(): Promise<CrumbData[]> => Promise.all(crumbs)}
+      >
+        {(crums, refreshable): JSX.Element => {
+          return refreshable(<ActualBreadcrumb in={crums.filter(Boolean)} />);
+        }}
+      </Preload>
     </div>
   );
 };

@@ -1,21 +1,25 @@
+import { FetchSubmissionsData } from 'types/course/assessment/submissions';
 import { Operation } from 'types/store';
 
 import CourseAPI from 'api/course';
 import { saveSubmissionList } from 'bundles/course/assessment/submissions/store';
+import { Dispatch } from 'lib/hooks/store';
 
-export function fetchSubmissions(): Operation {
-  return async (dispatch) =>
-    CourseAPI.submissions.index().then((response) => {
-      const data = response.data;
-      dispatch(
-        saveSubmissionList(
-          data.submissions,
-          data.metaData,
-          data.permissions,
-          false,
-        ),
-      );
-    });
+export async function fetchSubmissions(
+  dispatch: Dispatch,
+): Promise<FetchSubmissionsData> {
+  const { data } = await CourseAPI.submissions.index();
+
+  dispatch(
+    saveSubmissionList(
+      data.submissions,
+      data.metaData,
+      data.permissions,
+      false,
+    ),
+  );
+
+  return data;
 }
 
 export function fetchMyStudentsPendingSubmissions(): Operation {

@@ -1,4 +1,4 @@
-import { Permissions } from 'types';
+import { Permissions, WithPageTitle } from 'types';
 
 import { TimelineAlgorithm } from './personalTimes';
 
@@ -54,6 +54,13 @@ export interface VideoData extends VideoListData {
     video: { videoUrl: string };
     statistics: object;
   };
+}
+
+export interface FetchVideosData extends WithPageTitle {
+  videoTabs: VideoTab[];
+  videos: VideoListData[];
+  metadata: VideoMetadata;
+  permissions: VideoPermissions;
 }
 
 /**

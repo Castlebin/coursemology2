@@ -49,6 +49,7 @@ import UserShow from 'bundles/users/pages/UserShow';
 import App from './App';
 import AppContainer from './AppContainer';
 import AppIndex from './AppIndex';
+import AppLoading from './AppLoading';
 import CourseContainer from './CourseContainer';
 
 const router = createBrowserRouter([
@@ -57,43 +58,30 @@ const router = createBrowserRouter([
     element: <AppContainer />,
     loader: AppContainer.loader,
     children: [
-      {
-        index: true,
-        element: <AppIndex />,
-      },
+      { index: true, element: <AppIndex /> },
       {
         path: 'courses',
         children: [
-          {
-            index: true,
-            element: <CoursesIndex />,
-          },
+          { index: true, element: <CoursesIndex /> },
           {
             path: ':courseId',
             element: <CourseContainer />,
             loader: CourseContainer.loader,
-            handle: 'Home',
+            handle: (): string => 'Home',
             children: [
-              {
-                index: true,
-                element: <CourseShow />,
-              },
+              { index: true, element: <CourseShow /> },
               {
                 path: 'assessments',
                 handle: 'Assessments',
                 children: [
-                  {
-                    index: true,
-                  },
+                  { index: true },
                   {
                     path: 'submissions',
-                    handle: 'Submissions',
+                    loader: SubmissionsIndex.loader,
+                    handle: SubmissionsIndex.handle,
                     element: <SubmissionsIndex />,
                   },
-                  {
-                    path: 'skills',
-                    element: <SkillsIndex />,
-                  },
+                  { path: 'skills', element: <SkillsIndex /> },
                   {
                     path: ':assessmentId',
                     children: [
@@ -116,14 +104,8 @@ const router = createBrowserRouter([
                           {
                             path: 'multiple_responses',
                             children: [
-                              {
-                                path: 'new',
-                                element: <NewMcqMrqPage />,
-                              },
-                              {
-                                path: 'edit',
-                                element: <EditMcqMrqPage />,
-                              },
+                              { path: 'new', element: <NewMcqMrqPage /> },
+                              { path: 'edit', element: <EditMcqMrqPage /> },
                             ],
                           },
                           {
@@ -142,14 +124,8 @@ const router = createBrowserRouter([
                           {
                             path: 'voice_responses',
                             children: [
-                              {
-                                path: 'new',
-                                element: <NewVoicePage />,
-                              },
-                              {
-                                path: 'edit',
-                                element: <EditVoicePage />,
-                              },
+                              { path: 'new', element: <NewVoicePage /> },
+                              { path: 'edit', element: <EditVoicePage /> },
                             ],
                           },
                         ],
@@ -161,77 +137,34 @@ const router = createBrowserRouter([
               {
                 path: 'achievements',
                 children: [
-                  {
-                    index: true,
-                    element: <AchievementsIndex />,
-                  },
+                  { index: true, element: <AchievementsIndex /> },
                   {
                     path: ':achievementId',
-                    children: [
-                      {
-                        index: true,
-                        element: <AchievementShow />,
-                      },
-                    ],
+                    children: [{ index: true, element: <AchievementShow /> }],
                   },
                 ],
               },
-              {
-                path: 'comments',
-                element: <CommentIndex />,
-              },
-              {
-                path: 'leaderboard',
-                element: <LeaderboardIndex />,
-              },
-              {
-                path: 'learning_map',
-                element: <LearningMap />,
-              },
-              {
-                path: 'levels',
-                element: <Level />,
-              },
-              {
-                path: 'statistics',
-                element: <StatisticsIndex />,
-              },
-              {
-                path: 'students',
-                element: <ManageStudents />,
-              },
-              {
-                path: 'staff',
-                element: <ManageStaff />,
-              },
-              {
-                path: 'enrol_requests',
-                element: <UserRequests />,
-              },
-              {
-                path: 'user_invitations',
-                element: <InvitationsIndex />,
-              },
+              { path: 'comments', element: <CommentIndex /> },
+              { path: 'leaderboard', element: <LeaderboardIndex /> },
+              { path: 'learning_map', element: <LearningMap /> },
+              { path: 'levels', element: <Level /> },
+              { path: 'statistics', element: <StatisticsIndex /> },
+              { path: 'students', element: <ManageStudents /> },
+              { path: 'staff', element: <ManageStaff /> },
+              { path: 'enrol_requests', element: <UserRequests /> },
+              { path: 'user_invitations', element: <InvitationsIndex /> },
+              { path: 'timelines', element: <TimelineDesigner /> },
               {
                 path: 'groups',
                 children: [
-                  {
-                    index: true,
-                    element: <GroupIndex />,
-                  },
-                  {
-                    path: ':groupCategoryId',
-                    element: <GroupShow />,
-                  },
+                  { index: true, element: <GroupIndex /> },
+                  { path: ':groupCategoryId', element: <GroupShow /> },
                 ],
               },
               {
                 path: 'forums',
                 children: [
-                  {
-                    index: true,
-                    element: <ForumsIndex />,
-                  },
+                  { index: true, element: <ForumsIndex /> },
                   {
                     path: ':forumId',
                     children: [
@@ -257,12 +190,7 @@ const router = createBrowserRouter([
                 children: [
                   {
                     path: 'folders',
-                    children: [
-                      {
-                        path: ':folderId',
-                        element: <FolderShow />,
-                      },
-                    ],
+                    children: [{ path: ':folderId', element: <FolderShow /> }],
                   },
                 ],
               },
@@ -271,22 +199,18 @@ const router = createBrowserRouter([
                 children: [
                   {
                     index: true,
+                    loader: VideosIndex.loader,
+                    handle: VideosIndex.handle,
                     element: <VideosIndex />,
                   },
                   {
                     path: ':videoId',
                     children: [
-                      {
-                        index: true,
-                        element: <VideoShow />,
-                      },
+                      { index: true, element: <VideoShow /> },
                       {
                         path: 'submissions',
                         children: [
-                          {
-                            index: true,
-                            element: <VideoSubmissionsIndex />,
-                          },
+                          { index: true, element: <VideoSubmissionsIndex /> },
                           {
                             path: ':submissionId',
                             children: [
@@ -311,40 +235,26 @@ const router = createBrowserRouter([
                 children: [
                   {
                     index: true,
+                    loader: AnnouncementsIndex.loader,
+                    handle: AnnouncementsIndex.handle,
                     element: <AnnouncementsIndex />,
                   },
                 ],
               },
               {
-                path: 'timelines',
-                element: <TimelineDesigner />,
-              },
-              {
                 path: 'users',
                 children: [
-                  {
-                    index: true,
-                    element: <UsersIndex />,
-                  },
+                  { index: true, element: <UsersIndex /> },
                   {
                     path: 'disburse_experience_points',
                     element: <DisbursementIndex />,
                   },
-                  {
-                    path: 'personal_times',
-                    element: <PersonalTimes />,
-                  },
-                  {
-                    path: 'invite',
-                    element: <InviteUsers />,
-                  },
+                  { path: 'personal_times', element: <PersonalTimes /> },
+                  { path: 'invite', element: <InviteUsers /> },
                   {
                     path: ':userId',
                     children: [
-                      {
-                        index: true,
-                        element: <UserShow />,
-                      },
+                      { index: true, element: <UserShow /> },
                       {
                         path: 'personal_times',
                         element: <PersonalTimesShow />,
@@ -361,33 +271,9 @@ const router = createBrowserRouter([
           },
         ],
       },
-      {
-        path: 'user',
-        children: [
-          {
-            path: 'profile',
-            children: [
-              {
-                path: 'edit',
-                element: <AccountSettings />,
-              },
-            ],
-          },
-        ],
-      },
-      {
-        path: 'users',
-        children: [
-          {
-            path: ':userId',
-            element: <UserShow />,
-          },
-        ],
-      },
-      {
-        path: 'announcements',
-        element: <GlobalAnnouncementIndex />,
-      },
+      { path: 'user/profile/edit', element: <AccountSettings /> },
+      { path: 'users/:userId', element: <UserShow /> },
+      { path: 'announcements', element: <GlobalAnnouncementIndex /> },
     ],
   },
 ]);
@@ -395,7 +281,7 @@ const router = createBrowserRouter([
 const RoutedApp = (): JSX.Element => {
   return (
     <App>
-      <RouterProvider router={router} />
+      <RouterProvider fallbackElement={<AppLoading />} router={router} />
     </App>
   );
 };

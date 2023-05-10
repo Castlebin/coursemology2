@@ -1,9 +1,10 @@
 import { Outlet } from 'react-router-dom';
 
+import NotificationPopup from 'lib/containers/NotificationPopup';
+import { loads } from 'lib/hooks/router/loaders';
+
 import { loader } from './AppLoader';
 import GlobalAnnouncements from './GlobalAnnouncements';
-
-import NotificationPopup from 'lib/containers/NotificationPopup';
 
 const AppContainer = (): JSX.Element => {
   return (
@@ -18,4 +19,4 @@ const AppContainer = (): JSX.Element => {
   );
 };
 
-export default Object.assign(AppContainer, { loader });
+export default loads(AppContainer, { loader });

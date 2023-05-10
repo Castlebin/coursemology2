@@ -10,8 +10,8 @@ $(() => {
   const root = createRoot(document.getElementById('app-root') as HTMLElement);
 
   root.render(
-    <StrictMode>
-      <RoutedApp />
-    </StrictMode>,
+    // <StrictMode>
+    <RoutedApp />,
+    // </StrictMode>,
   );
 });

@@ -1,12 +1,17 @@
-import { FC, useEffect, useState } from 'react';
-import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
-import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
-import { AppDispatch, AppState } from 'types/store';
+import { useState } from 'react';
+import { defineMessages } from 'react-intl';
+import { useSelector } from 'react-redux';
+import { FetchAnnouncementsData } from 'types/course/announcements';
 
-import LoadingIndicator from 'lib/components/core/LoadingIndicator';
 import Note from 'lib/components/core/Note';
 import PageHeader from 'lib/components/navigation/PageHeader';
+import deferred, {
+  createDeferredHandler,
+  deferrable,
+  DeferredHandler,
+} from 'lib/hooks/router/defer';
+import { dispatchable, loads } from 'lib/hooks/router/loaders';
+import useTranslation from 'lib/hooks/useTranslation';
 
 import NewAnnouncementButton from '../../components/buttons/NewAnnouncementButton';
 import AnnouncementsDisplay from '../../components/misc/AnnouncementsDisplay';
@@ -21,8 +26,6 @@ import {
   getAnnouncementPermissions,
 } from '../../selectors';
 import AnnouncementNew from '../AnnouncementNew';
-
-interface Props extends WrappedComponentProps {}
 
 const translations = defineMessages({
   fetchAnnouncementsFailure: {
@@ -43,34 +46,18 @@ const translations = defineMessages({
   },
 });
 
-const AnnouncementsIndex: FC<Props> = (props) => {
-  const { intl } = props;
+const AnnouncementsIndex = (): JSX.Element => {
+  const { t } = useTranslation();
 
-  // For new announcements form dialog
   const [isOpen, setIsOpen] = useState(false);
 
-  const [isLoading, setIsLoading] = useState(true);
-
-  const announcements = useSelector((state: AppState) =>
-    getAllAnnouncementMiniEntities(state),
-  );
-  const announcementPermissions = useSelector((state: AppState) =>
-    getAnnouncementPermissions(state),
-  );
-  const dispatch = useDispatch<AppDispatch>();
-
-  useEffect(() => {
-    dispatch(fetchAnnouncements())
-      .catch(() =>
-        toast.error(intl.formatMessage(translations.fetchAnnouncementsFailure)),
-      )
-      .finally(() => setIsLoading(false));
-  }, [dispatch]);
+  const announcements = useSelector(getAllAnnouncementMiniEntities);
+  const announcementPermissions = useSelector(getAnnouncementPermissions);
 
   return (
     <>
       <PageHeader
-        title={intl.formatMessage(translations.header)}
+        title={t(translations.header)}
         toolbars={
           announcementPermissions.canCreate
             ? [
@@ -82,29 +69,32 @@ const AnnouncementsIndex: FC<Props> = (props) => {
             : undefined
         }
       />
-      {isLoading ? (
-        <LoadingIndicator />
+
+      {announcements.length === 0 ? (
+        <Note message={t(translations.noAnnouncements)} />
       ) : (
-        <>
-          {announcements.length === 0 ? (
-            <Note message={intl.formatMessage(translations.noAnnouncements)} />
-          ) : (
-            <AnnouncementsDisplay
-              announcementPermissions={announcementPermissions}
-              announcements={announcements}
-              deleteOperation={deleteAnnouncement}
-              updateOperation={updateAnnouncement}
-            />
-          )}
-          <AnnouncementNew
-            createOperation={createAnnouncement}
-            onClose={(): void => setIsOpen(false)}
-            open={isOpen}
-          />
-        </>
+        <AnnouncementsDisplay
+          announcementPermissions={announcementPermissions}
+          announcements={announcements}
+          deleteOperation={deleteAnnouncement}
+          updateOperation={updateAnnouncement}
+        />
       )}
+      <AnnouncementNew
+        createOperation={createAnnouncement}
+        onClose={(): void => setIsOpen(false)}
+        open={isOpen}
+      />
     </>
   );
 };
 
-export default injectIntl(AnnouncementsIndex);
+const loader = dispatchable((dispatch) =>
+  deferrable(fetchAnnouncements(dispatch)),
+);
+
+const handle: DeferredHandler<FetchAnnouncementsData> = createDeferredHandler(
+  (_, data) => data.pageTitle,
+);
+
+export default loads(deferred(AnnouncementsIndex), { loader, handle });

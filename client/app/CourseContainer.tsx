@@ -6,6 +6,7 @@ import { CourseLayoutData } from 'types/course/courses';
 
 import CourseAPI from 'api/course';
 import Link from 'lib/components/core/Link';
+import { loads } from 'lib/hooks/router/loaders';
 
 import Breadcrumb from './Breadcrumb';
 import Sidebar, { useShouldShowSidebarOpenButton } from './Sidebar';
@@ -37,7 +38,7 @@ const CourseContainer = (): JSX.Element => {
           <Outlet />
         </div>
 
-        <footer className="border-only-t-neutral-200 flex max-w-[1000px] flex-col space-y-5 p-5">
+        <footer className="flex max-w-[1000px] flex-col space-y-5 p-5 border-only-t-neutral-200">
           <Typography variant="body2">
             Coursemology is an open-source education research project actively
             developed by the{' '}
@@ -77,4 +78,4 @@ const loader: LoaderFunction = async ({ params }) => {
   return response.data;
 };
 
-export default Object.assign(CourseContainer, { loader });
+export default loads(CourseContainer, { loader });

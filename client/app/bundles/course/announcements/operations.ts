@@ -1,7 +1,12 @@
-import { AnnouncementFormData } from 'types/course/announcements';
+import {
+  AnnouncementFormData,
+  FetchAnnouncementsData,
+} from 'types/course/announcements';
 import { Operation } from 'types/store';
 
 import CourseAPI from 'api/course';
+import { Dispatch } from 'lib/hooks/store';
+
 import { actions } from './store';
 
 /**
@@ -28,14 +33,12 @@ const formatAttributes = (data: AnnouncementFormData): FormData => {
   return payload;
 };
 
-export function fetchAnnouncements(): Operation {
-  return async (dispatch) =>
-    CourseAPI.announcements.index().then((response) => {
-      const data = response.data;
-      dispatch(
-        actions.saveAnnouncementList(data.announcements, data.permissions),
-      );
-    });
+export async function fetchAnnouncements(
+  dispatch: Dispatch,
+): Promise<FetchAnnouncementsData> {
+  const { data } = await CourseAPI.announcements.index();
+  dispatch(actions.saveAnnouncementList(data.announcements, data.permissions));
+  return data;
 }
 
 export function createAnnouncement(formData: AnnouncementFormData): Operation {

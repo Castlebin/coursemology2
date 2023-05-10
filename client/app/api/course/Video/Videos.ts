@@ -1,5 +1,6 @@
 import { AxiosResponse } from 'axios';
 import {
+  FetchVideosData,
   VideoData,
   VideoListData,
   VideoMetadata,
@@ -11,6 +12,7 @@ import {
 } from 'types/course/videos';
 
 import BaseVideoAPI from './Base';
+import { APIResponse } from 'api/types';
 
 export default class VideosAPI extends BaseVideoAPI {
   get #urlPrefix(): string {
@@ -20,14 +22,7 @@ export default class VideosAPI extends BaseVideoAPI {
   /**
    * Fetches a list of videos in a course.
    */
-  index(currentTabId?: number): Promise<
-    AxiosResponse<{
-      videoTabs: VideoTab[];
-      videos: VideoListData[];
-      metadata: VideoMetadata;
-      permissions: VideoPermissions;
-    }>
-  > {
+  index(currentTabId?: number): APIResponse<FetchVideosData> {
     return this.client.get(this.#urlPrefix, {
       params: { tab: currentTabId },
     });

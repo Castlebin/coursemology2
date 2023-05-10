@@ -1,4 +1,4 @@
-import { Permissions } from 'types';
+import { Permissions, WithPageTitle } from 'types';
 
 import {
   CourseUserBasicListData,
@@ -26,6 +26,11 @@ export interface AnnouncementData extends AnnouncementListData {
   isSticky: boolean;
   isCurrentlyActive: boolean;
   permissions: AnnouncementListDataPermissions;
+}
+
+export interface FetchAnnouncementsData extends WithPageTitle {
+  announcements: AnnouncementData[];
+  permissions: AnnouncementPermissions;
 }
 
 export interface AnnouncementMiniEntity {

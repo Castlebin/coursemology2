@@ -88,3 +88,9 @@ export interface SubmissionMiniEntity {
 
   permissions: SubmissionListDataPermissions;
 }
+
+export interface FetchSubmissionsData {
+  submissions: SubmissionListData[];
+  metaData: SubmissionsMetaData;
+  permissions: SubmissionPermissions;
+}

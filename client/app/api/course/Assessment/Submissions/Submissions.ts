@@ -1,11 +1,12 @@
-import { AxiosResponse } from 'axios';
 import {
+  FetchSubmissionsData,
   SubmissionListData,
   SubmissionPermissions,
   SubmissionsMetaData,
 } from 'types/course/assessment/submissions';
 
 import BaseCourseAPI from 'api/course/Base';
+import { APIResponse } from 'api/types';
 
 export default class SubmissionsAPI extends BaseCourseAPI {
   get #urlPrefix(): string {
@@ -15,35 +16,25 @@ export default class SubmissionsAPI extends BaseCourseAPI {
   /**
    * Fetches a list of achievements in a course.
    */
-  index(): Promise<
-    AxiosResponse<{
-      submissions: SubmissionListData[];
-      metaData: SubmissionsMetaData;
-      permissions: SubmissionPermissions;
-    }>
-  > {
+  index(): APIResponse<FetchSubmissionsData> {
     return this.client.get(this.#urlPrefix);
   }
 
-  pending(isMyStudents: boolean): Promise<
-    AxiosResponse<{
-      submissions: SubmissionListData[];
-      metaData: SubmissionsMetaData;
-      permissions: SubmissionPermissions;
-    }>
-  > {
+  pending(isMyStudents: boolean): APIResponse<{
+    submissions: SubmissionListData[];
+    metaData: SubmissionsMetaData;
+    permissions: SubmissionPermissions;
+  }> {
     return this.client.get(`${this.#urlPrefix}/pending`, {
       params: { my_students: isMyStudents },
     });
   }
 
-  category(categoryId: number): Promise<
-    AxiosResponse<{
-      submissions: SubmissionListData[];
-      metaData: SubmissionsMetaData;
-      permissions: SubmissionPermissions;
-    }>
-  > {
+  category(categoryId: number): APIResponse<{
+    submissions: SubmissionListData[];
+    metaData: SubmissionsMetaData;
+    permissions: SubmissionPermissions;
+  }> {
     return this.client.get(this.#urlPrefix, {
       params: { category: categoryId },
     });
@@ -58,13 +49,11 @@ export default class SubmissionsAPI extends BaseCourseAPI {
     groupId: number | null,
     userId: number | null,
     pageNum: number | null,
-  ): Promise<
-    AxiosResponse<{
-      submissions: SubmissionListData[];
-      metaData: SubmissionsMetaData;
-      permissions: SubmissionPermissions;
-    }>
-  > {
+  ): APIResponse<{
+    submissions: SubmissionListData[];
+    metaData: SubmissionsMetaData;
+    permissions: SubmissionPermissions;
+  }> {
     return this.client.get(this.#urlPrefix, {
       params: {
         'filter[category_id]': categoryId,
@@ -82,13 +71,11 @@ export default class SubmissionsAPI extends BaseCourseAPI {
   filterPending(
     myStudents: boolean,
     pageNum: number | null,
-  ): Promise<
-    AxiosResponse<{
-      submissions: SubmissionListData[];
-      metaData: SubmissionsMetaData;
-      permissions: SubmissionPermissions;
-    }>
-  > {
+  ): APIResponse<{
+    submissions: SubmissionListData[];
+    metaData: SubmissionsMetaData;
+    permissions: SubmissionPermissions;
+  }> {
     return this.client.get(
       `${this.#urlPrefix}/pending?my_students=${myStudents}`,
       {

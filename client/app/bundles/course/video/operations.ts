@@ -1,16 +1,26 @@
-import { VideoFormData } from 'types/course/videos';
+import { FetchVideosData, VideoFormData } from 'types/course/videos';
 import { Operation } from 'types/store';
 
 import CourseAPI from 'api/course';
+import { Dispatch } from 'lib/hooks/store';
 
 import { videoActions as actions } from './store';
 
-export function fetchVideos(currentTabId?: number): Operation {
-  return async (dispatch) =>
-    CourseAPI.video.videos.index(currentTabId).then((response) => {
-      const data = response.data;
-      dispatch(actions.saveVideoList(data));
-    });
+// export function fetchVideos(currentTabId?: number): Operation {
+//   return async (dispatch) =>
+//     CourseAPI.video.videos.index(currentTabId).then((response) => {
+//       const data = response.data;
+//       dispatch(actions.saveVideoList(data));
+//     });
+// }
+
+export async function fetchVideos(
+  dispatch: Dispatch,
+  currentTabId?: number,
+): Promise<FetchVideosData> {
+  const { data } = await CourseAPI.video.videos.index(currentTabId);
+  dispatch(actions.saveVideoList(data));
+  return data;
 }
 
 export function loadVideo(videoId: number): Operation {
