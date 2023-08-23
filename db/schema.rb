@@ -857,6 +857,7 @@ ActiveRecord::Schema.define(version: 2023_09_04_095037) do
     t.integer "offset_ms", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "blocks", default: false, null: false
   end
 
   create_table "course_monitoring_sessions", force: :cascade do |t|
