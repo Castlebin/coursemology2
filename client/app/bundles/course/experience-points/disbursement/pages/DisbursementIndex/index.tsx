@@ -7,6 +7,7 @@ import {
 } from 'react-intl';
 import { Group } from '@mui/icons-material';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import StarIcon from '@mui/icons-material/Star';
 import { Tab, Tabs } from '@mui/material';
 import palette from 'theme/palette';
 
@@ -15,6 +16,7 @@ import LoadingIndicator from 'lib/components/core/LoadingIndicator';
 import { useAppDispatch } from 'lib/hooks/store';
 import toast from 'lib/hooks/toast';
 
+import ExperiencePointsTable from '../../components/tables/ExperiencePointsTable';
 import { fetchDisbursements, fetchForumDisbursements } from '../../operations';
 import ForumDisbursement from '../ForumDisbursement';
 import GeneralDisbursement from '../GeneralDisbursement';
@@ -30,6 +32,10 @@ const translations = defineMessages({
     id: 'course.experiencePoints.disbursement.DisbursementIndex.disbursements',
     defaultMessage: 'Disburse Experience Points',
   },
+  experiencePoints: {
+    id: 'course.experiencePoints.disbursement.DisbursementIndex.experienceTab',
+    defaultMessage: 'Experience Point Details',
+  },
   forumTab: {
     id: 'course.experiencePoints.disbursement.DisbursementIndex.forumTab',
     defaultMessage: 'Forum Participation',
@@ -44,7 +50,7 @@ const DisbursementIndex: FC<Props> = (props) => {
   const { intl } = props;
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(true);
-  const [tabValue, setTabValue] = useState('forum-disbursement-tab');
+  const [tabValue, setTabValue] = useState('experience-points-tab');
 
   useEffect(() => {
     Promise.all([
@@ -56,6 +62,15 @@ const DisbursementIndex: FC<Props> = (props) => {
       })
       .finally(() => setIsLoading(false));
   }, [dispatch]);
+
+  let componentToRender: JSX.Element;
+  if (tabValue === 'forum-disbursement-tab') {
+    componentToRender = <ForumDisbursement />;
+  } else if (tabValue === 'general-disbursement-tab') {
+    componentToRender = <GeneralDisbursement />;
+  } else {
+    componentToRender = <ExperiencePointsTable />;
+  }
 
   return (
     <Page title={intl.formatMessage(translations.disbursements)} unpadded>
@@ -75,6 +90,13 @@ const DisbursementIndex: FC<Props> = (props) => {
             variant="fullWidth"
           >
             <Tab
+              icon={<StarIcon />}
+              id="experience-points-tab"
+              label={<FormattedMessage {...translations.experiencePoints} />}
+              style={{ color: palette.submissionIcon.person }}
+              value="experience-points-tab"
+            />
+            <Tab
               icon={<FormatListBulletedIcon />}
               id="forum-disbursement-tab"
               label={<FormattedMessage {...translations.forumTab} />}
@@ -90,11 +112,7 @@ const DisbursementIndex: FC<Props> = (props) => {
             />
           </Tabs>
 
-          {tabValue === 'general-disbursement-tab' ? (
-            <GeneralDisbursement />
-          ) : (
-            <ForumDisbursement />
-          )}
+          {componentToRender}
         </>
       )}
     </Page>
