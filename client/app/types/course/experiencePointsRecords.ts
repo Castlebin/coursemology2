@@ -14,6 +14,11 @@ export interface ExperiencePointsRecordSettings {
   rowCount: number;
 }
 
+export interface AllExperiencePointsRecords {
+  rowCount: number;
+  experiencePointRecords: ExperiencePointsRecordListData[];
+}
+
 export interface PointsReason {
   isManuallyAwarded: boolean;
   text: string;
