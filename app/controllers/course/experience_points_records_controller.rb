@@ -27,7 +27,7 @@ class Course::ExperiencePointsRecordsController < Course::ComponentController
           @experience_points_records.active.
           preload([{ actable: [:assessment, :survey] }, :updater]).order(updated_at: :desc)
         @experience_points_count = @experience_points_records.count
-        @experience_points_records = @experience_points_records.paginated(new_page_params)
+        @experience_points_records = @experience_points_records.paginated(page_param)
       end
     end
   end
