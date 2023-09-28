@@ -52,7 +52,7 @@ const ExperiencePointsIndex: FC<Props> = (props) => {
   const { intl } = props;
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(true);
-  const [tabValue, setTabValue] = useState('experience-points-tab');
+  const [tabValue, setTabValue] = useState('forum-disbursement-tab');
 
   useEffect(() => {
     Promise.all([

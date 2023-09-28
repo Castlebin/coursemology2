@@ -4,6 +4,19 @@ class Course::ExperiencePointsRecordsController < Course::ComponentController
   load_and_authorize_resource :experience_points_record, through: :course_user,
                                                          class: Course::ExperiencePointsRecord.name
 
+  skip_load_resource :course_user, only: :index_all
+  skip_load_and_authorize_resource :experience_points_record, only: :index_all
+
+  def index_all
+    respond_to do |format|
+      format.json do
+        @experience_points_records = 
+          Course::ExperiencePointsRecord.where(course_user_id: @course.course_users.pluck(:id))
+        byebug
+      end
+    end
+  end
+  
   def index
     respond_to do |format|
       format.json do
