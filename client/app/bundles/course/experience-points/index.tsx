@@ -21,7 +21,7 @@ import {
 } from './disbursement/operations';
 import ForumDisbursement from './disbursement/pages/ForumDisbursement';
 import GeneralDisbursement from './disbursement/pages/GeneralDisbursement';
-import ExperiencePointsTable from './ExperiencePointsTable';
+import ExperiencePointsDetails from './ExperiencePointsDetails';
 
 type Props = WrappedComponentProps;
 
@@ -71,7 +71,7 @@ const ExperiencePointsIndex: FC<Props> = (props) => {
   } else if (tabValue === 'general-disbursement-tab') {
     componentToRender = <GeneralDisbursement />;
   } else {
-    componentToRender = <ExperiencePointsTable />;
+    componentToRender = <ExperiencePointsDetails />;
   }
 
   return (
