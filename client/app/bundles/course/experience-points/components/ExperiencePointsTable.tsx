@@ -30,8 +30,8 @@ const ExperiencePointsTable: FC<Props> = (props) => {
         </TableHead>
 
         <TableBody>
-          {records.map((item) => (
-            <ExperiencePointsTableRow key={item.id} record={item} />
+          {records.map((record) => (
+            <ExperiencePointsTableRow key={record.id} record={record} />
           ))}
         </TableBody>
       </Table>

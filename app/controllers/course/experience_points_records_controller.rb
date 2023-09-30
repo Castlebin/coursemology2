@@ -8,11 +8,13 @@ class Course::ExperiencePointsRecordsController < Course::ComponentController
   skip_load_and_authorize_resource :experience_points_record, only: :index_all
 
   def index_all
+    authorize!(:read_all_exp_points, @course)
     respond_to do |format|
       format.json do
         @experience_points_records = 
           Course::ExperiencePointsRecord.where(course_user_id: @course.course_users.pluck(:id))
-        byebug
+        preload_exp_points_updater
+        preload_and_count_experience_points
       end
     end
   end
@@ -20,14 +22,8 @@ class Course::ExperiencePointsRecordsController < Course::ComponentController
   def index
     respond_to do |format|
       format.json do
-        updater_ids = @experience_points_records.active.pluck(:updater_id)
-        @course_user_preload_service =
-          Course::CourseUserPreloadService.new(updater_ids, current_course)
-        @experience_points_records =
-          @experience_points_records.active.
-          preload([{ actable: [:assessment, :survey] }, :updater]).order(updated_at: :desc)
-        @experience_points_count = @experience_points_records.count
-        @experience_points_records = @experience_points_records.paginated(page_param)
+        preload_exp_points_updater
+        preload_and_count_experience_points
       end
     end
   end
@@ -60,6 +56,20 @@ class Course::ExperiencePointsRecordsController < Course::ComponentController
 
   def experience_points_record_params
     params.require(:experience_points_record).permit(:points_awarded, :reason)
+  end
+
+  def preload_and_count_experience_points
+    @experience_points_records =
+      @experience_points_records.active.
+      preload([{ actable: [:assessment, :survey] }, :updater]).order(updated_at: :desc)
+    @experience_points_count = @experience_points_records.count
+    @experience_points_records = @experience_points_records.paginated(page_param)
+  end
+
+  def preload_exp_points_updater
+    updater_ids = @experience_points_records.active.pluck(:updater_id)
+    @updater_preload_service =
+      Course::CourseUserPreloadService.new(updater_ids, current_course)
   end
 
   # @return [Course::ExperiencePointsComponent]

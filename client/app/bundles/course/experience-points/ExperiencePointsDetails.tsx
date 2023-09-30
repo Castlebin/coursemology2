@@ -26,13 +26,15 @@ const ExperiencePointsDetails = (): JSX.Element => {
   const { t } = useTranslation();
 
   const [pageNum, setPageNum] = useState(1);
+  const fetchExperienceInPage = (): ExperiencePointsData => {
+    return fetchAllExperiencePointsRecord(pageNum);
+  };
 
   return (
     <Preload
       render={<LoadingIndicator />}
-      while={(): ExperiencePointsData =>
-        fetchAllExperiencePointsRecord(pageNum)
-      }
+      syncsWith={[pageNum]}
+      while={fetchExperienceInPage}
     >
       {(data): JSX.Element => (
         <Page title={t(translations.experiencePointsHistory)} unpadded>
