@@ -1,13 +1,11 @@
 # frozen_string_literal: true
 class Course::ExperiencePointsRecordsController < Course::ComponentController
-  load_resource :course_user, through: :course, id_param: :user_id
+  load_resource :course_user, through: :course, id_param: :user_id, except: :index
   load_and_authorize_resource :experience_points_record, through: :course_user,
-                                                         class: Course::ExperiencePointsRecord.name
+                                                         class: Course::ExperiencePointsRecord.name,
+                                                         except: :index
 
-  skip_load_resource :course_user, only: :index_all
-  skip_load_and_authorize_resource :experience_points_record, only: :index_all
-
-  def index_all
+  def index
     authorize!(:read_all_exp_points, @course)
     respond_to do |format|
       format.json do
@@ -19,7 +17,7 @@ class Course::ExperiencePointsRecordsController < Course::ComponentController
     end
   end
   
-  def index
+  def show_user_exp
     respond_to do |format|
       format.json do
         preload_exp_points_updater
