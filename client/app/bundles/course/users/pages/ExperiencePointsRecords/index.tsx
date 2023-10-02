@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { defineMessages } from 'react-intl';
+import { CloudDownload } from '@mui/icons-material';
+import { Button, Typography } from '@mui/material';
 
-import DownloadButton from 'lib/components/core/buttons/DownloadButton';
 import BackendPagination from 'lib/components/core/layouts/BackendPagination';
 import Page from 'lib/components/core/layouts/Page';
 import { getCourseUserURL } from 'lib/helpers/url-builders';
@@ -36,7 +37,14 @@ const ExperiencePointsRecords = (): JSX.Element => {
 
   const records = useAppSelector(getExperiencePointsRecordsSettings);
 
-  const downloadButton = <DownloadButton href="">Download CSV</DownloadButton>;
+  const downloadButton = (
+    <Button variant="outlined">
+      <div className="flex w-fit items-center space-x-4 p-4 no-underline">
+        <CloudDownload color="info" />
+        <Typography color="links">Download CSV</Typography>
+      </div>
+    </Button>
+  );
 
   return (
     <Page
