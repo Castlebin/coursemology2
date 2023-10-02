@@ -16,13 +16,12 @@ export default class ExperiencePointsRecordAPI extends BaseCourseAPI {
    * Fetches all experience points records from all user
    */
   indexAll(
+    studentId: number | null,
     pageNum: number = 1,
   ): Promise<AxiosResponse<AllExperiencePointsRecords>> {
-    return this.client.get(
-      `${
-        this.#urlPrefix
-      }/experience_points_records?filter[page_num]=${pageNum}`,
-    );
+    return this.client.get(`${this.#urlPrefix}/experience_points_records`, {
+      params: { 'filter[page_num]': pageNum, 'filter[user_id]': studentId },
+    });
   }
 
   /**

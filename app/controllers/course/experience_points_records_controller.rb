@@ -9,8 +9,13 @@ class Course::ExperiencePointsRecordsController < Course::ComponentController
     authorize!(:read_all_exp_points, @course)
     respond_to do |format|
       format.json do
-        @experience_points_records = 
-          Course::ExperiencePointsRecord.where(course_user_id: @course.course_users.pluck(:id))
+        if filter_and_page_params[:user_id].present?
+          @experience_points_records = 
+            Course::ExperiencePointsRecord.where(course_user_id: filter_and_page_params[:user_id])
+        else
+          @experience_points_records = 
+            Course::ExperiencePointsRecord.where(course_user_id: @course.course_users.pluck(:id))
+        end
         preload_exp_points_updater
         preload_and_count_experience_points
       end
@@ -56,12 +61,18 @@ class Course::ExperiencePointsRecordsController < Course::ComponentController
     params.require(:experience_points_record).permit(:points_awarded, :reason)
   end
 
+  def filter_and_page_params
+    return {} if params[:filter].blank?
+
+    params[:filter].permit(:page_num, :user_id)
+  end
+
   def preload_and_count_experience_points
     @experience_points_records =
       @experience_points_records.active.
       preload([{ actable: [:assessment, :survey] }, :updater]).order(updated_at: :desc)
     @experience_points_count = @experience_points_records.count
-    @experience_points_records = @experience_points_records.paginated(page_param)
+    @experience_points_records = @experience_points_records.paginated(filter_and_page_params)
   end
 
   def preload_exp_points_updater

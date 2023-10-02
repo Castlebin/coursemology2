@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { defineMessages } from 'react-intl';
+import { ExperiencePointsNameFilterData } from 'types/course/experiencePointsRecords';
 
 import DownloadButton from 'lib/components/core/buttons/DownloadButton';
 import BackendPagination from 'lib/components/core/layouts/BackendPagination';
@@ -9,6 +10,7 @@ import Preload from 'lib/components/wrappers/Preload';
 import useTranslation from 'lib/hooks/useTranslation';
 
 import ExperiencePointsTable from './components/ExperiencePointsTable';
+import ExperiencePointsFilter from './ExperiencePointsFilter';
 import {
   ExperiencePointsData,
   fetchAllExperiencePointsRecord,
@@ -27,8 +29,19 @@ const ExperiencePointsDetails = (): JSX.Element => {
   const { t } = useTranslation();
 
   const [pageNum, setPageNum] = useState(1);
+
+  // For filtering
+  const [selectedFilter, setSelectedFilter] = useState<{
+    name: ExperiencePointsNameFilterData | null;
+  }>({
+    name: null,
+  });
+
   const fetchExperienceInPage = (): ExperiencePointsData => {
-    return fetchAllExperiencePointsRecord(pageNum);
+    return fetchAllExperiencePointsRecord(
+      selectedFilter.name ? selectedFilter.name.id : null,
+      pageNum,
+    );
   };
 
   const downloadButton = <DownloadButton href="">Download CSV</DownloadButton>;
@@ -36,7 +49,7 @@ const ExperiencePointsDetails = (): JSX.Element => {
   return (
     <Preload
       render={<LoadingIndicator />}
-      syncsWith={[pageNum]}
+      syncsWith={[pageNum, selectedFilter]}
       while={fetchExperienceInPage}
     >
       {(data): JSX.Element => (
@@ -45,6 +58,14 @@ const ExperiencePointsDetails = (): JSX.Element => {
           title={t(translations.experiencePointsHistory)}
           unpadded
         >
+          <Page.PaddedSection>
+            <ExperiencePointsFilter
+              filter={data.filter}
+              selectedFilter={selectedFilter}
+              setSelectedFilter={setSelectedFilter}
+            />
+          </Page.PaddedSection>
+
           <BackendPagination
             handlePageChange={setPageNum}
             pageNum={pageNum}
