@@ -9,9 +9,9 @@ class Course::ExperiencePointsRecordsController < Course::ComponentController
     authorize!(:read_all_exp_points, @course)
     respond_to do |format|
       format.json do
-        if filter_and_page_params[:user_id].present?
+        if filter_and_page_params[:student_id].present?
           @experience_points_records = 
-            Course::ExperiencePointsRecord.where(course_user_id: filter_and_page_params[:user_id])
+            Course::ExperiencePointsRecord.where(course_user_id: filter_and_page_params[:student_id])
         else
           @experience_points_records = 
             Course::ExperiencePointsRecord.where(course_user_id: @course.course_users.pluck(:id))
@@ -64,7 +64,7 @@ class Course::ExperiencePointsRecordsController < Course::ComponentController
   def filter_and_page_params
     return {} if params[:filter].blank?
 
-    params[:filter].permit(:page_num, :user_id)
+    params[:filter].permit(:page_num, :student_id)
   end
 
   def preload_and_count_experience_points
