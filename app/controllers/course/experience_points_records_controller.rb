@@ -10,10 +10,10 @@ class Course::ExperiencePointsRecordsController < Course::ComponentController
     respond_to do |format|
       format.json do
         if filter_and_page_params[:student_id].present?
-          @experience_points_records = 
+          @experience_points_records =
             Course::ExperiencePointsRecord.where(course_user_id: filter_and_page_params[:student_id])
         else
-          @experience_points_records = 
+          @experience_points_records =
             Course::ExperiencePointsRecord.where(course_user_id: @course.course_users.pluck(:id))
         end
         preload_exp_points_updater
@@ -21,7 +21,7 @@ class Course::ExperiencePointsRecordsController < Course::ComponentController
       end
     end
   end
-  
+
   def show_user_exp
     respond_to do |format|
       format.json do
@@ -33,22 +33,19 @@ class Course::ExperiencePointsRecordsController < Course::ComponentController
 
   def download
     authorize!(:read_all_exp_points, @course)
-    if filter_download_params[:student_id].present?
-      @experience_points_records = 
-        Course::ExperiencePointsRecord.where(course_user_id: filter_download_params[:student_id])
-    else
-      @experience_points_records = 
-        Course::ExperiencePointsRecord.where(course_user_id: @course.course_users.pluck(:id))
-    end
-    experience_points_records_ids = @experience_points_records.pluck(:id)
+
+    @experience_points_records = fetch_experience_points_records
+    experience_points_records_ids = @experience_points_records.active.pluck(:id)
+
     if experience_points_records_ids.empty?
-      return render json: { error:
-        I18n.t('course.experience_points_records.download.no_experience_points') },
-        status: :bad_request
+      return render json: {
+        error: I18n.t('course.experience_points_records.download.no_experience_points')
+      }, status: :bad_request
     end
 
     job = Course::ExperiencePointsDownloadJob.
           perform_later(current_course, filter_download_params[:student_id]).job
+
     respond_to do |format|
       format.json { render partial: 'jobs/submitted', locals: { job: job } }
     end
@@ -79,6 +76,14 @@ class Course::ExperiencePointsRecordsController < Course::ComponentController
   end
 
   private
+
+  def fetch_experience_points_records
+    if filter_download_params[:student_id].present?
+      Course::ExperiencePointsRecord.where(course_user_id: filter_download_params[:student_id])
+    else
+      Course::ExperiencePointsRecord.where(course_user_id: @course.course_users.pluck(:id))
+    end
+  end
 
   def experience_points_record_params
     params.require(:experience_points_record).permit(:points_awarded, :reason)

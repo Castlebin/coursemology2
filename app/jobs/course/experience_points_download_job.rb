@@ -1,4 +1,4 @@
-#frozen_string_literal: true
+# frozen_string_literal: true
 class Course::ExperiencePointsDownloadJob < ApplicationJob
   include TrackableJob
   queue_as :lowest

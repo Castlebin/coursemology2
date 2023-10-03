@@ -134,7 +134,7 @@ Rails.application.routes.draw do
   scope module: 'course' do
     resources :courses, except: [:new, :edit, :update] do
       get 'sidebar', on: :member
-      
+
       get 'experience_points_records' => 'experience_points_records#index'
       get 'download_experience_points' => 'experience_points_records#download'
 
