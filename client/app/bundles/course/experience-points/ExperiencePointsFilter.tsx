@@ -16,6 +16,7 @@ interface Props extends WrappedComponentProps {
       name: ExperiencePointsNameFilterData | null;
     }>
   >;
+  setPageNum: Dispatch<SetStateAction<number>>;
 }
 
 const translations = defineMessages({
@@ -38,7 +39,7 @@ const translations = defineMessages({
 });
 
 const ExperiencePointsFilter: FC<Props> = (props) => {
-  const { intl, filter, selectedFilter, setSelectedFilter } = props;
+  const { intl, filter, selectedFilter, setSelectedFilter, setPageNum } = props;
   const disableButton = Object.values(selectedFilter).every((x) => x === null);
 
   return (
@@ -51,6 +52,7 @@ const ExperiencePointsFilter: FC<Props> = (props) => {
             disablePortal
             getOptionLabel={(option): string => option.name}
             onChange={(_, value: { id: number; name: string } | null): void => {
+              setPageNum(1);
               setSelectedFilter({
                 ...selectedFilter,
                 name: value,
@@ -74,6 +76,7 @@ const ExperiencePointsFilter: FC<Props> = (props) => {
           color="secondary"
           disabled={disableButton}
           onClick={(): void => {
+            setPageNum(1);
             setSelectedFilter({
               name: null,
             });

@@ -116,6 +116,7 @@ const ExperiencePointsDetails = (): JSX.Element => {
             <ExperiencePointsFilter
               filter={data.filter}
               selectedFilter={selectedFilter}
+              setPageNum={setPageNum}
               setSelectedFilter={setSelectedFilter}
             />
           </Page.PaddedSection>
