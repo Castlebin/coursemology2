@@ -1,4 +1,5 @@
 import { AllExperiencePointsRecords } from 'types/course/experiencePointsRecords';
+import { JobSubmitted } from 'types/jobs';
 
 import CourseAPI from 'api/course';
 
@@ -12,5 +13,13 @@ export const fetchAllExperiencePointsRecord = async (
     studentId,
     pageNum,
   );
+  return response.data;
+};
+
+export const downloadExperiencePoints = async (
+  studentId: number | null,
+): Promise<JobSubmitted> => {
+  const response = await CourseAPI.experiencePointsRecord.download(studentId);
+
   return response.data;
 };

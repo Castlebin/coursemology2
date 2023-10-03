@@ -136,6 +136,7 @@ Rails.application.routes.draw do
       get 'sidebar', on: :member
       
       get 'experience_points_records' => 'experience_points_records#index'
+      get 'download_experience_points' => 'experience_points_records#download'
 
       namespace :admin do
         get '/' => 'admin#index'
