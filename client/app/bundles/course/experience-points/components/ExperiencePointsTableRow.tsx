@@ -3,7 +3,7 @@ import { TableCell, TableRow } from '@mui/material';
 import { AllExperiencePointsRecordMiniEntity } from 'types/course/experiencePointsRecords';
 
 import Link from 'lib/components/core/Link';
-import { formatLongDateTime } from 'lib/moment';
+import { formatMiniDateTime } from 'lib/moment';
 
 interface Props {
   record: AllExperiencePointsRecordMiniEntity;
@@ -14,6 +14,7 @@ const ExperiencePointsTableRow: FC<Props> = (props) => {
 
   return (
     <TableRow key={record.id} hover id={`record-${record.id}`}>
+      <TableCell>{formatMiniDateTime(record.updatedAt)}</TableCell>
       <TableCell>
         {record.userExperienceUrl ? (
           <Link to={record.userExperienceUrl}>{record.courseUserName}</Link>
@@ -21,8 +22,6 @@ const ExperiencePointsTableRow: FC<Props> = (props) => {
           record.courseUserName
         )}
       </TableCell>
-
-      <TableCell>{formatLongDateTime(record.updatedAt)}</TableCell>
 
       <TableCell>
         <Link to={record.updater.userUrl ?? '#'}>{record.updater.name}</Link>
@@ -38,7 +37,9 @@ const ExperiencePointsTableRow: FC<Props> = (props) => {
         )}
       </TableCell>
 
-      <TableCell>{record.pointsAwarded}</TableCell>
+      <TableCell className="max-md:!hidden text-right">
+        {record.pointsAwarded}
+      </TableCell>
     </TableRow>
   );
 };

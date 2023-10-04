@@ -1,7 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import {
-  Paper,
   Table,
   TableBody,
   TableCell,
@@ -9,6 +8,7 @@ import {
   TableRow,
 } from '@mui/material';
 
+import TableContainer from 'lib/components/core/layouts/TableContainer';
 import LoadingIndicator from 'lib/components/core/LoadingIndicator';
 import { getCourseUserId } from 'lib/helpers/url-helpers';
 import { useAppDispatch, useAppSelector } from 'lib/hooks/store';
@@ -56,7 +56,7 @@ const ExperiencePointsTable: FC<Props> = (props) => {
   }
 
   return (
-    <Paper elevation={4} sx={{ margin: '12px 0px' }}>
+    <TableContainer dense variant="bare">
       <Table size="small">
         <TableHead>
           <TableRow>
@@ -89,7 +89,7 @@ const ExperiencePointsTable: FC<Props> = (props) => {
           </TableBody>
         )}
       </Table>
-    </Paper>
+    </TableContainer>
   );
 };
 

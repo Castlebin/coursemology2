@@ -155,7 +155,7 @@ const translations = defineMessages({
   },
   experiencePointsAwarded: {
     id: 'lib.translations.table.column.experiencePointsAwarded',
-    defaultMessage: 'Experience Points Awarded',
+    defaultMessage: 'Exp Awarded',
   },
   updatedAt: {
     id: 'lib.translations.table.column.updatedAt',

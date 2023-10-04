@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import { defineMessages } from 'react-intl';
-import { CloudDownload } from '@mui/icons-material';
-import { Button, Typography } from '@mui/material';
 import { ExperiencePointsNameFilterData } from 'types/course/experiencePointsRecords';
 
 import { setNotification } from 'lib/actions';
@@ -11,10 +9,9 @@ import LoadingIndicator from 'lib/components/core/LoadingIndicator';
 import Preload from 'lib/components/wrappers/Preload';
 import pollJob from 'lib/helpers/jobHelpers';
 import { useAppDispatch } from 'lib/hooks/store';
-import useTranslation from 'lib/hooks/useTranslation';
 
 import ExperiencePointsTable from './components/ExperiencePointsTable';
-import ExperiencePointsFilter from './ExperiencePointsFilter';
+import ExperiencePointsFilterDownload from './ExperiencePointsFilterDownload';
 import {
   downloadExperiencePoints,
   ExperiencePointsData,
@@ -46,7 +43,6 @@ const translations = defineMessages({
 const DOWNLOAD_JOB_POLL_INTERVAL_MS = 2000;
 
 const ExperiencePointsDetails = (): JSX.Element => {
-  const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
   const [pageNum, setPageNum] = useState(1);
@@ -91,15 +87,6 @@ const ExperiencePointsDetails = (): JSX.Element => {
       .catch(handleDownloadFailure);
   };
 
-  const downloadButton = (
-    <Button onClick={handleOnClick} variant="outlined">
-      <div className="flex w-fit items-center space-x-4 p-4 no-underline">
-        <CloudDownload color="info" />
-        <Typography color="links">Download CSV</Typography>
-      </div>
-    </Button>
-  );
-
   return (
     <Preload
       render={<LoadingIndicator />}
@@ -107,14 +94,11 @@ const ExperiencePointsDetails = (): JSX.Element => {
       while={fetchExperienceInPage}
     >
       {(data): JSX.Element => (
-        <Page
-          actions={downloadButton}
-          title={t(translations.experiencePointsHistory)}
-          unpadded
-        >
+        <Page unpadded>
           <Page.PaddedSection>
-            <ExperiencePointsFilter
+            <ExperiencePointsFilterDownload
               filter={data.filter}
+              onClick={handleOnClick}
               selectedFilter={selectedFilter}
               setPageNum={setPageNum}
               setSelectedFilter={setSelectedFilter}
