@@ -6,12 +6,10 @@ json.records @experience_points_records do |record|
   json.userExperienceUrl course_user_experience_points_records_path(current_course, record.course_user_id)
 end
 
-if can?(:read_all_exp_points, current_course)
-  students = current_course.course_users.order_alphabetically.student
-  json.filters do
-    json.names students do |student|
-      json.id student.id
-      json.name student.name
-    end
+students = current_course.course_users.order_alphabetically.student
+json.filters do
+  json.names students do |student|
+    json.id student.id
+    json.name student.name
   end
 end
