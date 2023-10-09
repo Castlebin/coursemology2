@@ -27,7 +27,7 @@ const translations = defineMessages({
   },
   pointsAwarded: {
     id: 'course.experiencePoints.disbursement.DisbursementTable.pointsAwarded',
-    defaultMessage: 'Exp Awarded',
+    defaultMessage: 'EXP Awarded',
   },
   copy: {
     id: 'course.experiencePoints.disbursement.DisbursementTable.copy',
