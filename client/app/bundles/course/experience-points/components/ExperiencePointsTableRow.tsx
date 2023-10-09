@@ -1,12 +1,12 @@
 import { FC } from 'react';
 import { TableCell, TableRow } from '@mui/material';
-import { AllExperiencePointsRecordMiniEntity } from 'types/course/experiencePointsRecords';
+import { ExperiencePointsRecordMiniEntity } from 'types/course/experiencePointsRecords';
 
 import Link from 'lib/components/core/Link';
 import { formatMiniDateTime } from 'lib/moment';
 
 interface Props {
-  record: AllExperiencePointsRecordMiniEntity;
+  record: ExperiencePointsRecordMiniEntity;
 }
 
 const ExperiencePointsTableRow: FC<Props> = (props) => {
@@ -16,10 +16,10 @@ const ExperiencePointsTableRow: FC<Props> = (props) => {
     <TableRow key={record.id} hover id={`record-${record.id}`}>
       <TableCell>{formatMiniDateTime(record.updatedAt)}</TableCell>
       <TableCell>
-        {record.userExperienceUrl ? (
-          <Link to={record.userExperienceUrl}>{record.courseUserName}</Link>
+        {record.student.userUrl ? (
+          <Link to={record.student.userUrl}>{record.student.name}</Link>
         ) : (
-          record.courseUserName
+          record.student.name
         )}
       </TableCell>
 

@@ -8,15 +8,14 @@ import {
   TableRow,
 } from '@mui/material';
 
+import { fetchUserExperiencePointsRecord } from 'course/experience-points/operations';
+import { getAllExpPointsRecordsEntities } from 'course/experience-points/selectors';
 import TableContainer from 'lib/components/core/layouts/TableContainer';
 import LoadingIndicator from 'lib/components/core/LoadingIndicator';
 import { getCourseUserId } from 'lib/helpers/url-helpers';
 import { useAppDispatch, useAppSelector } from 'lib/hooks/store';
 import toast from 'lib/hooks/toast';
 import tableTranslations from 'lib/translations/table';
-
-import { fetchExperiencePointsRecord } from '../../operations';
-import { getAllExperiencePointsRecordsEntities } from '../../selectors';
 
 import ExperiencePointsTableRow from './ExperiencePointsTableRow';
 
@@ -36,13 +35,11 @@ const ExperiencePointsTable: FC<Props> = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useAppDispatch();
 
-  const experiencePointsRecords = useAppSelector(
-    getAllExperiencePointsRecordsEntities,
-  );
+  const records = useAppSelector(getAllExpPointsRecordsEntities);
 
   useEffect(() => {
     setIsLoading(true);
-    dispatch(fetchExperiencePointsRecord(+getCourseUserId()!, page))
+    dispatch(fetchUserExperiencePointsRecord(+getCourseUserId()!, page))
       .catch(() =>
         toast.error(intl.formatMessage(translations.fetchRecordsFailure)),
       )
@@ -79,7 +76,7 @@ const ExperiencePointsTable: FC<Props> = (props) => {
           <LoadingIndicator />
         ) : (
           <TableBody>
-            {experiencePointsRecords.map((item) => (
+            {records.map((item) => (
               <ExperiencePointsTableRow
                 key={item.id}
                 id={item.id}
