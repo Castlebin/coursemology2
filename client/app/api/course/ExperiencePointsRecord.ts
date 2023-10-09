@@ -51,9 +51,10 @@ export default class ExperiencePointsRecordAPI extends BaseCourseAPI {
   update(
     params: UpdateExperiencePointsRecordPatchData,
     recordId: number,
+    studentId?: number,
   ): Promise<AxiosResponse<ExperiencePointsRecordListData>> {
     const url = `${this.#urlPrefix}/users/${
-      this.courseUserId
+      this.courseUserId ?? studentId
     }/experience_points_records/${recordId}`;
     return this.client.patch(url, params);
   }
@@ -61,9 +62,9 @@ export default class ExperiencePointsRecordAPI extends BaseCourseAPI {
   /**
    * Delete an experience points record for a user
    */
-  delete(recordId: number): Promise<AxiosResponse<void>> {
+  delete(recordId: number, studentId?: number): Promise<AxiosResponse<void>> {
     const url = `${this.#urlPrefix}/users/${
-      this.courseUserId
+      this.courseUserId ?? studentId
     }/experience_points_records/${recordId}`;
     return this.client.delete(url);
   }
