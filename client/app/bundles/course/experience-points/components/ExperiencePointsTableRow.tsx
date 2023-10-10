@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, memo, useEffect, useState } from 'react';
 import { TableCell, TableRow, TextField } from '@mui/material';
 import equal from 'fast-deep-equal';
 import {
@@ -12,6 +12,7 @@ import { formatMiniDateTime } from 'lib/moment';
 
 interface Props {
   id: number;
+  isStudentPage?: boolean;
   record: ExperiencePointsRecordMiniEntity;
 }
 
@@ -25,7 +26,7 @@ const onlyNumberInput = (evt): void => {
 };
 
 const ExperiencePointsTableRow: FC<Props> = (props) => {
-  const { record, id } = props;
+  const { record, id, isStudentPage } = props;
   const [isDirty, setIsDirty] = useState(false);
   const [rowData, setRowData] = useState({
     id,
@@ -101,13 +102,15 @@ const ExperiencePointsTableRow: FC<Props> = (props) => {
   return (
     <TableRow key={record.id} hover id={`record-${record.id}`}>
       <TableCell>{formatMiniDateTime(record.updatedAt)}</TableCell>
-      <TableCell>
-        {record.student.userUrl ? (
-          <Link to={record.student.userUrl}>{record.student.name}</Link>
-        ) : (
-          record.student.name
-        )}
-      </TableCell>
+      {!isStudentPage && (
+        <TableCell>
+          {record.student.userUrl ? (
+            <Link to={record.student.userUrl}>{record.student.name}</Link>
+          ) : (
+            record.student.name
+          )}
+        </TableCell>
+      )}
 
       <TableCell>
         <Link to={record.updater.userUrl ?? '#'}>{record.updater.name}</Link>
@@ -145,4 +148,6 @@ const ExperiencePointsTableRow: FC<Props> = (props) => {
   );
 };
 
-export default ExperiencePointsTableRow;
+export default memo(ExperiencePointsTableRow, (prevProps, nextProps) =>
+  equal(prevProps.record, nextProps.record),
+);

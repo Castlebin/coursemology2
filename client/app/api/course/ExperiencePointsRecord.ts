@@ -33,9 +33,8 @@ export default class ExperiencePointsRecordAPI extends BaseCourseAPI {
     pageNum: number = 1,
   ): Promise<AxiosResponse<ExperiencePointsRecords>> {
     return this.client.get(
-      `${
-        this.#urlPrefix
-      }/users/${userId}/experience_points_records?filter[page_num]=${pageNum}`,
+      `${this.#urlPrefix}/users/${userId}/experience_points_records`,
+      { params: { 'filter[page_num]': pageNum } },
     );
   }
 

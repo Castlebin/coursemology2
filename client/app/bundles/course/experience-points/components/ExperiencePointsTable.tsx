@@ -9,7 +9,10 @@ import { useAppDispatch, useAppSelector } from 'lib/hooks/store';
 import useTranslation from 'lib/hooks/useTranslation';
 import tableTranslations from 'lib/translations/table';
 
-import { fetchAllExperiencePointsRecord } from '../operations';
+import {
+  fetchAllExperiencePointsRecord,
+  fetchUserExperiencePointsRecord,
+} from '../operations';
 import { getAllExpPointsRecordsEntities } from '../selectors';
 
 import ExperiencePointsTableRow from './ExperiencePointsTableRow';
@@ -17,6 +20,7 @@ import ExperiencePointsTableRow from './ExperiencePointsTableRow';
 interface Props {
   studentId?: number;
   pageNum: number;
+  isStudentPage?: boolean;
 }
 
 const translations = defineMessages({
@@ -27,7 +31,7 @@ const translations = defineMessages({
 });
 
 const ExperiencePointsTable: FC<Props> = (props) => {
-  const { studentId, pageNum } = props;
+  const { studentId, pageNum, isStudentPage } = props;
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useAppDispatch();
 
@@ -35,9 +39,13 @@ const ExperiencePointsTable: FC<Props> = (props) => {
 
   const records = useAppSelector(getAllExpPointsRecordsEntities);
 
+  const fetchExperiencePoints = isStudentPage
+    ? fetchUserExperiencePointsRecord(studentId!, pageNum)
+    : fetchAllExperiencePointsRecord(studentId, pageNum);
+
   useEffect(() => {
     setIsLoading(true);
-    dispatch(fetchAllExperiencePointsRecord(studentId, pageNum))
+    dispatch(fetchExperiencePoints)
       .catch(() =>
         dispatch(setNotification(t(translations.fetchRecordsFailure))),
       )
@@ -54,7 +62,7 @@ const ExperiencePointsTable: FC<Props> = (props) => {
     <TableContainer dense variant="bare">
       <TableHead>
         <TableCell>{t(tableTranslations.updatedAt)}</TableCell>
-        <TableCell>{t(tableTranslations.name)}</TableCell>
+        {!isStudentPage && <TableCell>{t(tableTranslations.name)}</TableCell>}
         <TableCell>{t(tableTranslations.updater)}</TableCell>
         <TableCell>{t(tableTranslations.reason)}</TableCell>
         <TableCell>{t(tableTranslations.experiencePointsAwarded)}</TableCell>
@@ -66,6 +74,7 @@ const ExperiencePointsTable: FC<Props> = (props) => {
           <ExperiencePointsTableRow
             key={record.id}
             id={record.id}
+            isStudentPage={isStudentPage}
             record={record}
           />
         ))}
