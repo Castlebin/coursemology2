@@ -41,7 +41,8 @@ class Course::ExperiencePointsRecordsController < Course::ComponentController
   end
 
   def update
-    if @experience_points_record.update(experience_points_record_params)
+    valid_for_update = record_can_be_updated?
+    if valid_for_update && @experience_points_record.update(experience_points_record_params)
       course_user = CourseUser.find_by(course: current_course, id: @experience_points_record.updater)
       user = course_user || @experience_points_record.updater
 
@@ -51,6 +52,8 @@ class Course::ExperiencePointsRecordsController < Course::ComponentController
                      updatedAt: @experience_points_record.updated_at,
                      updater: { id: user.id, name: user.name,
                                 userUrl: url_to_user_or_course_user(current_course, user) } }, status: :ok
+    elsif !valid_for_update
+      render json: { errors: t('course.experience_points.disbursement.exceed_threshold') }, status: :bad_request
     else
       render json: { errors: @experience_points_record.errors.full_messages.to_sentence }, status: :bad_request
     end
@@ -102,6 +105,41 @@ class Course::ExperiencePointsRecordsController < Course::ComponentController
     updater_ids = @experience_points_records.active.pluck(:updater_id)
     @updater_preload_service =
       Course::CourseUserPreloadService.new(updater_ids, current_course)
+  end
+
+  def record_can_be_updated?
+    return true if @experience_points_record.manually_awarded?
+
+    specific = @experience_points_record.specific
+    actable = specific.actable
+
+    case actable
+    when Course::Assessment::Submission
+      update_submission_record(specific)
+
+    when Course::Survey::Response
+      update_survey_record(specific)
+    end
+  end
+
+  def update_submission_record(submission)
+    assessment = submission.assessment
+    can_get_bonus_points = assessment.bonus_end_at && submission.submitted_at <= assessment.bonus_end_at
+    experience_points_record_params[:points_awarded] <= if can_get_bonus_points
+                                                          assessment.base_exp + assessment.time_bonus_exp
+                                                        else
+                                                          assessment.base_exp
+                                                        end
+  end
+
+  def update_survey_record(response)
+    survey = response.survey
+    can_get_bonus_points = survey.bonus_end_at && response.submitted_at <= survey.bonus_end_at
+    experience_points_record_params[:points_awarded] <= if can_get_bonus_points
+                                                          survey.base_exp + survey.time_bonus_exp
+                                                        else
+                                                          survey.base_exp
+                                                        end
   end
 
   # @return [Course::ExperiencePointsComponent]

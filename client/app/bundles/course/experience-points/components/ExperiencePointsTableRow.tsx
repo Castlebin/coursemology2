@@ -62,7 +62,7 @@ const ExperiencePointsTableRow: FC<Props> = (props) => {
   const onUpdatePoints = (value: string): void => {
     const newData: ExperiencePointsRowData = {
       ...rowData,
-      pointsAwarded: maxExp ? Math.min(+value, maxExp) : +value,
+      pointsAwarded: maxExp ? Math.max(Math.min(+value, maxExp), 0) : +value,
     };
     setIsDirty(
       !equal(newData, defaultRowData) && rowData.reason.trim().length > 0,

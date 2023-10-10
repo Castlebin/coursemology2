@@ -3,5 +3,6 @@ en:
     experience_points:
       disbursement:
         sidebar_title: "Experience Points"
+        exceed_threshold: "The value entered is not within permitted threshold"
         new:
           header: "Disburse Experience Points"
