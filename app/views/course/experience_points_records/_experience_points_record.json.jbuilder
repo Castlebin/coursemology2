@@ -25,11 +25,25 @@ json.reason do
     when Course::Assessment::Submission
       submission = specific
       assessment = submission.assessment
+      can_get_bonus_points = assessment.bonus_end_at && submission.submitted_at <= assessment.bonus_end_at
+      if can_get_bonus_points
+        json.maxExp assessment.base_exp + assessment.time_bonus_exp
+      else
+        json.maxExp assessment.base_exp
+      end
+
       json.text assessment.title
       json.link edit_course_assessment_submission_path(course, assessment, submission)
     when Course::Survey::Response
       response = specific
       survey = response.survey
+      can_get_bonus_points = survey.bonus_end_at && response.submitted_at <= survey.bonus_end_at
+      if can_get_bonus_points
+        json.maxExp survey.base_exp + survey.time_bonus_exp
+      else
+        json.maxExp survey.base_exp
+      end
+
       json.text survey.title
       if can?(:read_answers, response)
         json.link course_survey_response_path(course, survey, response)

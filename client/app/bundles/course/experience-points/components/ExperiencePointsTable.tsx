@@ -75,6 +75,7 @@ const ExperiencePointsTable: FC<Props> = (props) => {
             key={record.id}
             id={record.id}
             isStudentPage={isStudentPage}
+            maxExp={record.reason.maxExp}
             record={record}
           />
         ))}

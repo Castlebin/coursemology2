@@ -14,6 +14,7 @@ interface Props {
   id: number;
   isStudentPage?: boolean;
   record: ExperiencePointsRecordMiniEntity;
+  maxExp?: number;
 }
 
 const onlyNumberInput = (evt): void => {
@@ -26,7 +27,7 @@ const onlyNumberInput = (evt): void => {
 };
 
 const ExperiencePointsTableRow: FC<Props> = (props) => {
-  const { record, id, isStudentPage } = props;
+  const { record, id, isStudentPage, maxExp } = props;
   const [isDirty, setIsDirty] = useState(false);
   const [rowData, setRowData] = useState({
     id,
@@ -59,16 +60,14 @@ const ExperiencePointsTableRow: FC<Props> = (props) => {
   };
 
   const onUpdatePoints = (value: string): void => {
-    if (!Number.isNaN(+value)) {
-      const newData: ExperiencePointsRowData = {
-        ...rowData,
-        pointsAwarded: +value,
-      };
-      setIsDirty(
-        !equal(newData, defaultRowData) && rowData.reason.trim().length > 0,
-      );
-      setRowData(newData);
-    }
+    const newData: ExperiencePointsRowData = {
+      ...rowData,
+      pointsAwarded: maxExp ? Math.min(+value, maxExp) : +value,
+    };
+    setIsDirty(
+      !equal(newData, defaultRowData) && rowData.reason.trim().length > 0,
+    );
+    setRowData(newData);
   };
 
   const handleSave = (newData: ExperiencePointsRowData): void => {
@@ -126,7 +125,7 @@ const ExperiencePointsTableRow: FC<Props> = (props) => {
             onChange={(e): void => onUpdatePoints(e.target.value)}
             onKeyPress={onlyNumberInput}
             type="number"
-            value={rowData.pointsAwarded.toString()}
+            value={rowData.pointsAwarded}
             variant="standard"
           />
         ) : (

@@ -26,6 +26,7 @@ export interface PointsReason {
   isManuallyAwarded: boolean;
   text: string;
   link: string;
+  maxExp?: number;
 }
 
 export interface ExperiencePointsRecordListData {
