@@ -77,7 +77,7 @@ class Course::ExperiencePointsRecord < ApplicationRecord
   end
 
   def validate_limit_exp_points_on_association
-    return if manually_awarded? || !specific
+    return if manually_awarded?
 
     case specific.actable
     when Course::Assessment::Submission
@@ -90,19 +90,25 @@ class Course::ExperiencePointsRecord < ApplicationRecord
   def validate_submission_points
     submission = specific
     assessment = submission.assessment
-    can_get_bonus_points = assessment.bonus_end_at && submission.submitted_at <= assessment.bonus_end_at
-    max_exp_points = can_get_bonus_points ? assessment.base_exp + assessment.time_bonus_exp : assessment.base_exp
 
-    add_points_error('assignment', max_exp_points) if points_awarded > max_exp_points
+    bonus_end_at = assessment.bonus_end_at
+    submitted_at = submission.submitted_at
+    has_bonus_points = bonus_end_at && submitted_at && submitted_at <= bonus_end_at
+    max_exp_points = has_bonus_points ? assessment.base_exp + assessment.time_bonus_exp : assessment.base_exp
+
+    add_points_error('assignment', max_exp_points) if points_awarded && points_awarded > max_exp_points
   end
 
   def validate_survey_points
     response = specific
     survey = response.survey
-    can_get_bonus_points = survey.bonus_end_at && response.submitted_at <= survey.bonus_end_at
-    max_exp_points = can_get_bonus_points ? survey.base_exp + survey.time_bonus_exp : survey.base_exp
 
-    add_points_error('survey', max_exp_points) if points_awarded > max_exp_points
+    bonus_end_at = survey.bonus_end_at
+    submitted_at = response.submitted_at
+    has_bonus_points = bonus_end_at && submitted_at && submitted_at <= bonus_end_at
+    max_exp_points = has_bonus_points ? survey.base_exp + survey.time_bonus_exp : survey.base_exp
+
+    add_points_error('survey', max_exp_points) if points_awarded && points_awarded > max_exp_points
   end
 
   def add_points_error(type, max_exp_points)

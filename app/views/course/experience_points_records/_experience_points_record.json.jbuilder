@@ -9,9 +9,9 @@ json.updater do
 end
 
 json.student do
-  json.id record.course_user_id
+  json.id record.course_user.id
   json.name record.course_user.name
-  json.userUrl course_user_experience_points_records_path(current_course, record.course_user_id)
+  json.userUrl course_user_experience_points_records_path(current_course, record.course_user.id)
 end
 
 json.reason do
