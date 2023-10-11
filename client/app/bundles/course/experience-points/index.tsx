@@ -7,7 +7,6 @@ import {
 } from 'react-intl';
 import { Box, Tab, Tabs } from '@mui/material';
 import { tabsStyle } from 'theme/mui-style';
-import palette from 'theme/palette';
 
 import Page from 'lib/components/core/layouts/Page';
 import LoadingIndicator from 'lib/components/core/LoadingIndicator';
@@ -35,7 +34,7 @@ const translations = defineMessages({
   },
   experiencePointsHistory: {
     id: 'course.experiencePoints.disbursement.DisbursementIndex.experienceTab',
-    defaultMessage: 'Experience Point History',
+    defaultMessage: 'History',
   },
   forumDisbursementTab: {
     id: 'course.experiencePoints.disbursement.DisbursementIndex.forumTab',
@@ -98,7 +97,10 @@ const ExperiencePointsIndex: FC<Props> = (props) => {
                       {...translations.experiencePointsHistory}
                     />
                   }
-                  style={{ color: palette.submissionIcon.person }}
+                  style={{
+                    minHeight: 48,
+                    textDecoration: 'none',
+                  }}
                   value="experience-points-tab"
                 />
                 <Tab
@@ -106,7 +108,10 @@ const ExperiencePointsIndex: FC<Props> = (props) => {
                   label={
                     <FormattedMessage {...translations.forumDisbursementTab} />
                   }
-                  style={{ color: palette.submissionIcon.person }}
+                  style={{
+                    minHeight: 48,
+                    textDecoration: 'none',
+                  }}
                   value="forum-disbursement-tab"
                 />
                 <Tab
@@ -116,7 +121,10 @@ const ExperiencePointsIndex: FC<Props> = (props) => {
                       {...translations.generalDisbursementTab}
                     />
                   }
-                  style={{ color: palette.submissionIcon.person }}
+                  style={{
+                    minHeight: 48,
+                    textDecoration: 'none',
+                  }}
                   value="general-disbursement-tab"
                 />
               </Tabs>
