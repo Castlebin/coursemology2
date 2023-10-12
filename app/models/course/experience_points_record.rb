@@ -81,8 +81,12 @@ class Course::ExperiencePointsRecord < ApplicationRecord
 
     case specific.actable
     when Course::Assessment::Submission
+      return unless specific.assessment
+
       validate_submission_points
     when Course::Survey::Response
+      return unless specific.survey
+
       validate_survey_points
     end
   end
@@ -90,8 +94,8 @@ class Course::ExperiencePointsRecord < ApplicationRecord
   def validate_submission_points
     submission = specific
     assessment = submission.assessment
-    max_exp_points = assessment.base_exp + assessment.time_bonus_exp
 
+    max_exp_points = (assessment.base_exp || 0) + (assessment.time_bonus_exp || 0)
     add_points_error('assignment', max_exp_points) if points_awarded && points_awarded > max_exp_points
     add_negative_points_error('assignment') if points_awarded && points_awarded < 0
   end
@@ -99,8 +103,8 @@ class Course::ExperiencePointsRecord < ApplicationRecord
   def validate_survey_points
     response = specific
     survey = response.survey
-    max_exp_points = survey.base_exp + survey.time_bonus_exp
 
+    max_exp_points = (survey.base_exp || 0) + (survey.time_bonus_exp || 0)
     add_points_error('survey', max_exp_points) if points_awarded && points_awarded > max_exp_points
     add_negative_points_error('assignment') if points_awarded && points_awarded < 0
   end
